@@ -1,0 +1,215 @@
+% Soul Up - Challenge Next 2026 - Desafio 01
+% Documento introdutorio: Problema, Solucao e Diferenciais
+% Formatacao: abntex2 (ABNT NBR 14724:2011)
+\documentclass[
+  12pt,
+  a4paper,
+  oneside,
+  chapter=TITLE,
+  section=TITLE,
+  brazil
+]{abntex2}
+
+% Pacotes
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{times}
+\usepackage{microtype}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[alf]{abntex2cite}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    citecolor=blue, % Cor das citações
+}
+
+% Configuracao abntex2
+\titulo{Desafio 01: Sistema de Gamificação Sustentável --- Problema, Solu\c{c}\~ao e Diferenciais \\Challenge Next 2026 -- Soul Up + FIAP}
+
+\local{S\~ao Paulo}
+\data{2026}
+\instituicao{Faculdade de Informática e Administra\c{c}\~ao Paulista -- FIAP}
+\tipotrabalho{Relat\'orio T\'ecnico}
+\author{Felipe Lima \\ Giovanni Zorzetto \\  Raphael Gomes}
+\begin{document}
+\frenchspacing
+
+
+
+% Folha de rosto
+\imprimirfolhaderosto
+
+% Sumario
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% Elementos textuais
+\textual
+
+% ============================================================
+\chapter{Introdução}
+% ============================================================
+
+A \textbf{Soul Up} é uma plataforma que converte o tempo que os usuários passam em aplicativos em benefícios reais. Hoje, as pessoas valorizam seu tempo e atenção, e é fundamental recompensá-las por isso. Dentro da plataforma, os usuários podem acumular os chamados \textbf{pontos ECOA} e trocá-los por recompensas diariamente.
+
+Este documento faz parte do \textit{Desafio 01} do \textit{Challenge Next 2026}, realizado em colaboração com a \textbf{FIAP}. O objetivo central é desenvolver uma solução que permita a acumulação dos \textbf{pontos ECOA} através de postagens de ações sustentáveis, criando um sistema capaz de avaliar, pontuar e recompensar essas ações de forma justa e escalável, visto que a sustentabilidade e a conscientização ambiental são assuntos que vem permeando as empresas e encarados como essenciáis no pensamento profissional.
+
+\section{O Problema e Desafios}
+
+Embora a ideia seja conceitualmente simples, a implementação enfrenta desafios técnicos significativos:
+\begin{itemize}
+    \item \textbf{Sistema de atribuição de valor:} Cada ação sustentável tem a sua carga de impacto variável, logo não são iguais. Portanto desenvolver um sistema para calcular a importância(0 a 100) de cada ação e converter em mais ou menos pontos é vital.
+    \item \textbf{Ranking Eficiente:} Possibilidade de usuários competirem entre si comparando os pontos acumulados em meses. O usuário com a maior pontuação terá sua conta de energia totalmente quitada.
+    \item \textbf{Segurança:} Necessidade de garantir que o acúmulo de pontos seja imune a fraudes e erros de processamento. Desenvolver uma maneira de anti-fraude ao postar ações sustentáveis. Verificação de integridade dos dados postados (gerado por IA, mesma postagem todos os dias, plágio de postagens).
+    \item \textbf{Desempenho (Escalabilidade):} O sistema deve suportar uma alta carga de acessos simultâneos sem comprometer a estabilidade.
+\end{itemize}
+
+\section{A Solução: PostUp}
+
+Para solucionar esse problema, criamos a proposta \textbf{PostUp}. Na prática, o usuário poderá fazer postágens de ações sustentáveis e o nosso sistema será responsável por auditar a informação, avaliar o post em uma escala de impacto positivo, e converter a ação em pontos ou dinheiro.
+
+A arquitetura do PostUp foi projetada sobre quatro pilares principais:
+\begin{enumerate}
+    \item \textbf{Algoritmo de classificação de impacto positivo:} Um algoritmo desenvolvido para definir uma escala de importância perante as postagens em nível de sustentabilidade.
+    \item \textbf{Implementação de Ranking:} Desenvolver um sistema de comparação eficiente e seguro entro os usuários recompensando-os pelas posições adquiridas.
+    \item \textbf{Sistema de Segurança e IA:} Camada projetada especificamente para prevenir atividades fraudulentas usando uma IA treinada para auditar a integridade das informações postadas, evitando posts duplicados, plagiados ou gerados artificialmente.. 
+    \item \textbf{Camada de Integração:} Uma interface Amigável com proposta gamificada para trazer conforto para o usuário e facilidade de uso do sistema.
+\end{enumerate}
+
+\section{Diferenciais da Solução}
+
+A solução PostUp destaca-se pelos seguintes recursos:
+
+\begin{enumerate}[label={[\arabic*]}]
+    \item Mecanismo de prevenção de fraudes em tempo real;
+    \item Algoritmo inteligente para avaliação, considerando impacto ambiental real;
+    \item IA integrada para auditoria;
+    \item Score dinâmico, avaliando postagens em grau de base, impacto, frequência, dificuldade e confiabilidade;
+    \item Trsnparência do Impacto (CO$^2$ economizado, litros de água poupados e energia economizada);
+    \item Validação por geolocalização.
+    \item Posts Compartilhados e Pontuação Multiplicada.
+\end{enumerate}
+
+% ============================================================
+\chapter{Objetivos}
+% ============================================================
+O desenvolvimento da solução \textbf{PostUp} tem como objetovo principal atender aos requisitos propostos pela empresa parceira \textit{SoulUp} sendo esses a implementaçã de um sistema gamificado para recompensar usuários com base em atividades sustentáveis. Além disso é uma peça fundamentál no nosso aprendizado como estudantes de Análise e Desenvolvimento de Sistemas, tais qual a oportunidade de aprender a trabalhar em equipe e colocar em prática conceitos vistos ao longo do curso.
+
+Para tal, o sistema busca usar posts dos usuários para demonstrar suas contribuições ao meio ambiente, com a possibilidade de comparar essas contribuições com outros usuários por meio de um ranking com score dinâmico(pontuação variável de acordo com parâmetros reáis). Adicionalmente, o sistema oferecerá um sistema de verificação de integridade com Inteligência Artificial e uso de dados Geolicalizados para Segurança.
+
+Ao desenvolver o sistema, outros objetivos serão atingidos. Por usar da gamificação e da competição para tratar de assuntos sustentáveis, os usuários se sentirão mais motivados a fortalecer seu impacto ambiental positivo e estabelecerão como costume ações que mesmo simples fazem a diferença. Tratar de sustentabilidade não é apenas ter o conhecimento do que fazer, mas sim ter a sabedoria para agir, e o PostUp promove uma abordagem muito favorável nesse sentido.
+
+Além do mais, a solução visa promover a plataforma da SoulUp como divertida, funcional e confiável. Através de uma interface amigável e focada no utilizador para de maneira discreta demostrar hospitalidade e empatia ao usuário, convidando-os para participar e compartilhar com outros.
+
+% ============================================================
+\chapter{Justificativa}
+% ============================================================
+A proposta deste trabalho fundamenta-se na premissa de que a utilização de um sistema de atribuição de recompensa por ações sustentáveis pode impactar positivamente no incentivo aos usuários agirem, e esse é o principal pilar que estrutura a nossa solução, motivar as pessoas a agirem.
+
+A pertinência desta abordagem é corroborada atravéz de um método desenvolvido por Dacid Kolb discorrido em seu livro \citeonline{kolb1984}, onde aborda o tema do \textit{Aprendizado Experiencial} e o divide em quatro etapas: [1] Experiência Completa (o indivíduo vivencia uma situação prática); [2] Observação Reflexiva (reflete sobre a experiência); [3] Conceitusalização Abstrata (experiência transmformada em conceitos, teorias ou modelos mentáis para entendimento); [4] Experimentação Ativa (Conhecimento adquirido é testado em novas situações). Esse ciclo é contínuo e garante o aprendizado por maio de padronização e repetição de comportamento como especificado no artigo \citeonline{eduvem_kolb}. Através do PostUp, incentivamos o indivíduo à prática e repetição para fixação de conhecimento, nesse caso sobre sustentabilidade.
+
+Para comprovar a eficácia desse modelo nos dias atuáis o artigo \citeonline{wijnenmeijer2022kolb} mostra que a Universidade Técnica de Munique, Alemanha, propôs um desafio para 6 alunos de medicina adotarem a Aprendizagem Experiencial de Kolb no decorrer de seu curso e ao final notaram uma forte ligação entre teoria, treinamento por simulação e prática. Logo envidenciando que a fonte de qualquer aprendizado está na ação, foco principal ao desenvolver a solução.
+
+% ============================================================
+\chapter{Requisitos}
+% ============================================================
+\section{Funcionáis}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|p{8cm}|}
+\hline
+\textbf{ID} & \textbf{Definição} & \textbf{Descrição} \\
+\hline
+RF01 & Realizar postagem & Usuários cadastrados poderão postar ações sustentáveis através de arquivos. \\
+\hline
+RF02 & Manter postagem & O usuário poderá editar, gerenciar ou remover suas postagens. \\
+\hline
+RF03 & Avaliação & O sistema, através de algoritmo, deverá avaliar o grau de impacto sustentável, de 0 a 100, com base em dados reais. \\
+\hline
+RF04 & Score dinâmico & O sistema deve atribuir pontos eco pelo nível da avaliação. \\
+\hline
+RF05 & Ranking & O sistema mostrará um ranking mensal entre os usuários. \\
+\hline
+RF06 & Top 1 & O usuário que ficar no top 1 mensal terá sua conta de luz quitada. \\
+\hline
+RF07 & Verificação por IA & O sistema terá uma IA treinada para verificar a integridade de uma postagem. \\
+\hline
+RF08 & Geolocalização & O sistema implementará uma validação por geolocalização. \\
+\hline
+RF09 & Interface & O sistema proporcionará uma interface intuitiva para melhor experiência do usuário. \\
+\hline
+RF10 & Upload & o usuário poderá subir arquivos salvas no dispositivo ou acessar a camera. \\
+\hline
+RF11 & Post compartilhado & O usuário poderá fazer posts em conjunto com outros usuários, aumentando a quantidade de pontos ganhos. \\
+\hline
+\end{tabular}
+\caption{Requisitos Funcionais do Sistema}
+\label{tab:requisitos_funcionais}
+\end{table}
+
+\newpage
+\section{Não Funcionáis}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|p{10cm}|}
+\hline
+\textbf{ID} & \textbf{Descrição} \\
+\hline
+RNF01 & O sistema funcionará 24 horas por dia, 7 dias por semana, com até 0,1\% de taxa de indisponibilidade. \\
+\hline
+RNF02 & O sistema deve ser compatível com os navegadores: Google Chrome, Microsoft Edge e Mozilla Firefox. \\
+\hline
+RNF03 & O sistema não perderá desempenho com até 1000 acessos simultâneos. \\
+\hline
+RNF04 & O tempo de carregamento das páginas não deve ultrapassar 3 segundos, considerando uma conexão de 10 Mbps. \\
+\hline
+RNF05 & O sistema suportará arquivos de, no máximo, 30 MB. \\
+\hline
+RNF06 & O usuário deve se cadastrar para ter acesso à aplicação. \\
+\hline
+RNF07 & O sistema assegura a proteção dos dados dos usuários segundo a LGPD. \\
+\hline
+\end{tabular}
+\caption{Requisitos Não Funcionais do Sistema}
+\label{tab:requisitos_nao_funcionais}
+\end{table}
+
+\section{Regras de Negócio}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|p{10cm}|}
+\hline
+\textbf{ID} & \textbf{Descrição} \\
+\hline
+RN01 & Caso o usuário poste um arquivo fora do tamanho permitido, o sistema deve informá-lo. \\
+\hline
+RN02 & Caso não seja possível acessar a geolocalização do usuário, ele deverá ativar as permissões do aplicativo nas configurações. \\
+\hline
+RN03 & Caso não seja possível acessar a câmera do usuário, ele deverá ativar as permissões do aplicativo nas configurações. \\
+\hline
+RN04 & Caso o usuário tente publicar a mesma foto já publicada, o sistema deverá avisá-lo de que a foto já está postada. \\
+\hline
+RN05 & Caso o sistema detecte qualquer tipo de fraude na postagem, os pontos ECOA não serão computados. \\
+\hline
+\end{tabular}
+\caption{Regras de Negócio do Sistema}
+\label{tab:regras_negocio}
+\end{table}
+    
+% Elementos pos-textuais
+\postextual
+
+\bibliography{referencias}
+
+\end{document}
