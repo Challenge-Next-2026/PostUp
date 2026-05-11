@@ -50,17 +50,17 @@
 > #### Felipe Lima de Oliveira
 > <img src="./front-end/img/image.png" width="200"></img>
 > 1. Turma 1TDSPH
-> 2. RMXXXXXX
+> 2. RM569947
 > 3. <https://www.linkedin.com/in/felipe-lima-a4215832a/>
 > 4. <https://github.com/felipelima2005>
-> 5. <xxxxxxxxxx@gmail.com>
+> 5. <felipelimaoliveira2008@gmail.com>
 > #### Raphael Gomes Brito
-> <img src="./front-end/img/image.png" width="200"></img>
+> <img src="./front-end/img/3x4 Raphael Gomes.jpeg" width="200"></img>
 > 1. Turma 1TDSPH
-> 2. RMXXXXXX
-> 3. <https://www.linkedin.com/in/xxxxxxxxx>
+> 2. RM572637
+> 3. <https://www.linkedin.com/in/raphaelbritorgb/>
 > 4. <https://github.com/PhaelRGB>
-> 5. <xxxxxxxxxx@gmail.com>
+> 5. <raphael.rgb07@gmail.com>
 > ---
 > ### 5. Representação do Projeto
 > ---
