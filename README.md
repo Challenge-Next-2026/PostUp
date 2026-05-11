@@ -39,6 +39,36 @@
 >   - Local onde se encontra a identidade visual do projeto
 >   - Separado em pastas: pages(HTML), css(Styles), js(Scripts) e img(Imagens)
 > ---
-> ### Credenciais
-> 1. <https://www.linkedin.com/in/giovanni-zorzetto-oliveira-8375b9305>
-> 2. <gigiozetto@gmail.com>
+> ### 4. Credenciais
+> #### Giovanni Zorzetto Oliveira
+> <img src="./front-end/img/IMG-20260328-WA0007.jpg" width="200"></img>
+> 1. Turma 1TDSPH
+> 2. RM569464
+> 3. <https://www.linkedin.com/in/giovanni-zorzetto-oliveira-8375b9305>
+> 4. <https://github.com/Gizetto61>
+> 5. <gigiozetto@gmail.com>
+> #### Felipe Lima de Oliveira
+> <img src="./front-end/img/image.png" width="200"></img>
+> 1. Turma 1TDSPH
+> 2. RMXXXXXX
+> 3. <https://www.linkedin.com/in/felipe-lima-a4215832a/>
+> 4. <https://github.com/felipelima2005>
+> 5. <xxxxxxxxxx@gmail.com>
+> #### Raphael Gomes Brito
+> <img src="./front-end/img/image.png" width="200"></img>
+> 1. Turma 1TDSPH
+> 2. RMXXXXXX
+> 3. <https://www.linkedin.com/in/xxxxxxxxx>
+> 4. <https://github.com/PhaelRGB>
+> 5. <xxxxxxxxxx@gmail.com>
+> ---
+> ### 5. Representação do Projeto
+> ---
+> ### 6. Link do Repositório
+> - <https://github.com/Challenge-Next-2026/PostUp>
+> ---
+> ### 7. Contato
+> - <challengeCFGR.2026@gmail.com>
+> - +55 (11) 94306-3646
+> - +55 (11) 96993-7538
+> - +55 (11) 94169-6111
