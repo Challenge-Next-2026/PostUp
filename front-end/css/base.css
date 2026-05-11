@@ -12,15 +12,16 @@
   
     --primary-dark : #12959e; /* Cor primaria escura */
     --bg-primary: #fff; /* Cor fundo principal */
-    --bd-dark: #e5e7eb /* Cor fundo principal escuro */
-    --primary: #44c0c5/* Cor primária */
+    --bd-dark: #e5e7eb; /* Cor fundo principal escuro */
+    --primary:#44c0c5;/* Cor primária */
     --secondary-dark:#799b00; /* Cor secundaria escura */
     --secondary:#a9be18; /* Cor secundaria */
     --text-main:#000; /*Cor para os textos principais ou gerais */
     --text-title:#fefdfd; /*Cor para títulos */
 
     --titulo-main: 4rem; /* Base de tamanho para títulos principais */
-    --sub-titulo: 3rem; /* Base de tamanho para sub-títulos principais */
+    --sub-titulo: 2.5rem; /* Base de tamanho para sub-títulos principais */
+    --fonte-texto:  "BIZ UDGothic", sans-serif; /* Fonte para texto */
 }
 
 
