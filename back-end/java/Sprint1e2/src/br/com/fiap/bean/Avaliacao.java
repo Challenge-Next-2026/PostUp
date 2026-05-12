@@ -18,8 +18,8 @@ public class Avaliacao extends Postagem
     public Avaliacao(){
     }
 
-    public Avaliacao(int idUsuario, String nome, String email, String senha, LocalDate dataCadastro, int idPostagem, String titulo, String descricao, LocalDate dataPostagem, Boolean status, int idAvaliacao, String criterio, int notaImpacto, int notaFrequencia, int notaDificuldade, int notaConfiabilidade, LocalDate dataAvaliacao) {
-        super(idUsuario, nome, email, senha, dataCadastro, idPostagem, titulo, descricao, dataPostagem, status);
+    public Avaliacao(int idPostagem, String titulo, String descricao, LocalDate dataPostagem, Boolean status, int idAvaliacao, String criterio, int notaImpacto, int notaFrequencia, int notaDificuldade, int notaConfiabilidade, LocalDate dataAvaliacao) {
+        super(idPostagem, titulo, descricao, dataPostagem, status);
         this.idAvaliacao = idAvaliacao;
         this.criterio = criterio;
         this.notaImpacto = notaImpacto;

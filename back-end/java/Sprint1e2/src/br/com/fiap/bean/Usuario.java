@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Usuario
+public class Usuario extends Postagem
 {
     // Atributos
     private int idUsuario;

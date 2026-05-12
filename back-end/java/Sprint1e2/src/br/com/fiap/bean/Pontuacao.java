@@ -15,8 +15,8 @@ public class Pontuacao extends Postagem
 
     }
 
-    public Pontuacao(int idUsuario, String nome, String email, String senha, LocalDate dataCadastro, int idPostagem, String titulo, String descricao, LocalDate dataPostagem, Boolean status, int idPontuacao, int valor, LocalDate dataPontuacao) {
-        super(idUsuario, nome, email, senha, dataCadastro, idPostagem, titulo, descricao, dataPostagem, status);
+    public Pontuacao(int idPostagem, String titulo, String descricao, LocalDate dataPostagem, Boolean status, int idPontuacao, int valor, LocalDate dataPontuacao) {
+        super(idPostagem, titulo, descricao, dataPostagem, status);
         this.idPontuacao = idPontuacao;
         this.valor = valor;
         this.dataPontuacao = dataPontuacao;
