@@ -5,6 +5,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     color: var(--text-main);
+    border-bottom: 5px solid var(--primary-dark);
 }
 
 .hero__container{
