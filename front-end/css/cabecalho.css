@@ -6,6 +6,10 @@
     font-size: var(--sub-titulo);
     color: var(--text-title);
     font-family: var(--fonte-texto);
+    border-bottom: 4px solid var(--secondary-dark) ;
+    position: sticky;
+    top: 0
+    
 }
 
 .cabecalho__navbar,
@@ -34,7 +38,26 @@
 .cabecalho__item:hover{
     transition: 1s;
     text-decoration: underline;
-    text-decoration-color: var(--primary-dark);
-    border: 3px solid var(--primary);
+    text-decoration-color: var(--secondary);
+    border: 3px solid var(--bg-dark);
     border-radius: 7px;
+    background-color: var(--primary-dark);
+    color:var(--bg-dark);
 }
+
+.cabecalho__item__contato{
+    justify-content: flex-end;
+    padding: 1rem;
+    font-size: 2rem;
+}
+
+.cabecalho__item__contato:hover{
+    transition: 1s;
+    text-decoration: underline;
+    text-decoration-color: var(--primary-dark);
+    border: 3px solid var(--bg-dark);
+    border-radius: 7px;
+    background-color: var(--secondary-dark);
+    color:var(--bg-dark);
+}
+
