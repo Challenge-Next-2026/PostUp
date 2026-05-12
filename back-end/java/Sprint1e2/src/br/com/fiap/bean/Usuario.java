@@ -2,6 +2,7 @@ package br.com.fiap.bean;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Usuario
 {
@@ -83,13 +84,15 @@ public class Usuario
         }
     }
 
-    public void alterarEmail(String email)
+    public void alterarEmail(List <Usuario> usuarios, int id)
     {
-        setEmail(email);
+        String email = JOptionPane.showInputDialog("Informe o novo email:");
+        usuarios.get(id).setEmail(email);
     }
 
-    public void alterarSenha(String senha)
+    public void alterarSenha(List <Usuario> usuarios, int id)
     {
-        setSenha(senha);
+        String senha = JOptionPane.showInputDialog("Informe a nova senha:");
+        usuarios.get(id).setSenha(senha);
     }
 }
