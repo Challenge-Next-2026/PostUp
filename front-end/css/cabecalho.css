@@ -1,5 +1,5 @@
 .cabecalho{
-    background-color: var(--bg-primary);
+    background-color: var(--primary-dark);
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 1.5);
     width: 100%;
     height: auto;
@@ -7,7 +7,7 @@
     font-size: var(--sub-titulo);
     color: var(--text-main);
     font-family: var(--fonte-texto);
-    border-bottom: 4px solid var(--secondary-dark) ;
+    border-bottom: 5px solid var(--secondary-dark) ;
     position: sticky;
     top: 0
     
@@ -33,18 +33,22 @@
 .cabecalho__item{
     margin: 0rem;
     padding: 1rem;
+    color: var(--bg-dark);
+    font-weight: 2.5rem;
     justify-content: space-between;
+    text-decoration: underline;
+    text-decoration-color: var(--secondary);
+    line-height: 3rem;
 
 }
 
 .cabecalho__item:hover{
-    transition: 0.7s;
-    text-decoration: underline;
-    text-decoration-color: var(--secondary);
-    border: 2.5px solid var(--bg-dark);
+    transition: 0.5s;
+    text-decoration: none;
+    border: 3px solid var(--bg-dark);
     border-radius: 7px;
-    background-color: var(--primary-dark);
-    color:var(--bg-dark);
+    background-color: var(--secondary);
+    color:var(--text-main);
 }
 
 .cabecalho__item__contato{
@@ -54,7 +58,7 @@
 }
 
 .cabecalho__item__contato:hover{
-    transition: 0.7s;
+    transition: 0.5s;
     text-decoration: underline;
     text-decoration-color: var(--primary-dark);
     border: 3px solid var(--bg-dark);
