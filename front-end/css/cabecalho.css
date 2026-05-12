@@ -1,5 +1,5 @@
 .cabecalho{
-    background-color: var(--primary);
+    background-color: var(--bg-primary);
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 1.5);
     width: 100%;
     height: auto;
@@ -31,8 +31,9 @@
 }
 
 .cabecalho__item{
-    margin: 0.5rem;
+    margin: 0rem;
     padding: 1rem;
+    justify-content: space-between;
 
 }
 

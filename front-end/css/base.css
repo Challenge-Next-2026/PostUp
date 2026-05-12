@@ -18,10 +18,13 @@
     --secondary:#a9be18; /* Cor secundaria */
     --text-main:#000; /*Cor para os textos principais ou gerais */
     --text-title:#fefdfd; /*Cor para títulos */
+    --titulo-hero: 6rem;
+    --slogan: 2.7rem;
 
     --titulo-main: 4rem; /* Base de tamanho para títulos principais */
     --sub-titulo: 2.5rem; /* Base de tamanho para sub-títulos principais */
     --fonte-texto:  "BIZ UDGothic", sans-serif; /* Fonte para texto */
+    --fonte-principal: "BIZ UDPGothic", sans-serif;
 }
 
 
