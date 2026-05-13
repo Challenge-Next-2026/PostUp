@@ -18,14 +18,6 @@ public class Postagem extends Arquivo
     public Postagem() {
     }
 
-    public Postagem(int idPostagem, String titulo, String descricao, LocalDate dataPostagem, Boolean status) {
-        this.idPostagem = idPostagem;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.dataPostagem = dataPostagem;
-        this.status = status;
-    }
-
     // Getter e Setter
     public int getIdPostagem() {
         return idPostagem;
@@ -68,13 +60,17 @@ public class Postagem extends Arquivo
     }
 
     // Metodos da classe
+    // Criar uma ou mais postagems dentro de um usuário
     public void criarPostagem(List <Usuario> usuarios, int id, List <Postagem> postagems, int contador)
     {
+        // verificação se o usuário informado é existente
         if (usuarios.get(id - 1) != null) {
             LocalDate dataAtual = LocalDate.now();
             String titulo, descricao;
             Boolean status = true;
+            // tratamento de erros
             try {
+                // Preenchimento de indice nas listas usuarios e postagens
                 titulo = JOptionPane.showInputDialog("Título:");
                 usuarios.get(id - 1).setTitulo(titulo);
                 postagems.get(contador - 1).setTitulo(titulo);
@@ -93,11 +89,13 @@ public class Postagem extends Arquivo
         }
     }
 
+    // Metodo semelhante ao criarPostagem()
     public void editarPostagem(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem)
     {
         LocalDate dataAtual = LocalDate.now();
         String titulo, descricao;
         Boolean status = true;
+        // Tratamento de erros
         try {
             titulo = JOptionPane.showInputDialog("Novo Título:");
             usuarios.get(id - 1).setTitulo(titulo);
@@ -114,6 +112,7 @@ public class Postagem extends Arquivo
         }
     }
 
+    // Metodo para remover postagem
     public void removerPostagem(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem)
     {
         usuarios.get(id - 1).setTitulo(null);

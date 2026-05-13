@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Arquivo
+public class Arquivo extends Avaliacao
 {
     // Atributos
     private int idArquivo;
@@ -16,15 +16,6 @@ public class Arquivo
 
     // Construtores
     public Arquivo(){
-    }
-
-    public Arquivo(int idArquivo, String nomeArquivo, String tipo, float tamanho, String url, LocalDate dataUpload) {
-        this.idArquivo = idArquivo;
-        this.nomeArquivo = nomeArquivo;
-        this.tipo = tipo;
-        this.tamanho = tamanho;
-        this.url = url;
-        this.dataUpload = dataUpload;
     }
 
     // Getter e Setter
@@ -77,11 +68,14 @@ public class Arquivo
     }
 
     // Metodos da classe
+    // Simulação de importação com listas
     public void importarArquivo(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem, List <Arquivo> arquivos, int idArquivo)
     {
         LocalDate dataAtual = LocalDate.now();
         String nome, tipo, url, auxiliar;
+        // Tratamento de erros
         try {
+            // Preenchimento de atributos das listas arquivos, usuarios e postagens
             nome = JOptionPane.showInputDialog("Informe o nome do arquivo:");
             usuarios.get(id - 1).setNomeArquivo(nome);
             postagems.get(idPostagem - 1).setNomeArquivo(nome);
@@ -107,8 +101,10 @@ public class Arquivo
         }
     }
 
+    // Simulação de acesso com listas
     public void acessarCamera(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem, List <Arquivo> arquivos, int idArquivo)
     {
+        // Preenchimento de atributos das listas arquivos, usuarios e postagens
         LocalDate dataAtual = LocalDate.now();
         usuarios.get(id - 1).setNomeArquivo("Câmera");
         postagems.get(idPostagem - 1).setNomeArquivo("Câmera");
