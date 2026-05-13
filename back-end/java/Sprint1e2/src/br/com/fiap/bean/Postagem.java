@@ -2,9 +2,10 @@ package br.com.fiap.bean;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.jar.JarEntry;
 
-public class Postagem extends Usuario
+public class Postagem extends Arquivo
 {
     // Atributos
     private int idPostagem;
@@ -15,15 +16,6 @@ public class Postagem extends Usuario
 
     // Construtores
     public Postagem() {
-    }
-
-    public Postagem(int idUsuario, String nome, String email, String senha, LocalDate dataCadastro, int idPostagem, String titulo, String descricao, LocalDate dataPostagem, Boolean status) {
-        super(idUsuario, nome, email, senha, dataCadastro);
-        this.idPostagem = idPostagem;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.dataPostagem = dataPostagem;
-        this.status = status;
     }
 
     // Getter e Setter
@@ -68,46 +60,69 @@ public class Postagem extends Usuario
     }
 
     // Metodos da classe
-    public void criarPostagem()
+    // Criar uma ou mais postagems dentro de um usuário
+    public void criarPostagem(List <Usuario> usuarios, int id, List <Postagem> postagems, int contador)
     {
-        LocalDate dataAtual = LocalDate.now();
-        String titulo, descricao;
-        Boolean status = true;
-        try {
-            titulo = JOptionPane.showInputDialog("Título:");
-            setTitulo(titulo);
-            descricao = JOptionPane.showInputDialog("Descrição:");
-            setDescricao(descricao);
-            setDataPostagem(dataAtual);
-            setStatus(status);
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        // verificação se o usuário informado é existente
+        if (usuarios.get(id - 1) != null) {
+            LocalDate dataAtual = LocalDate.now();
+            String titulo, descricao;
+            Boolean status = true;
+            // tratamento de erros
+            try {
+                // Preenchimento de indice nas listas usuarios e postagens
+                titulo = JOptionPane.showInputDialog("Título:");
+                usuarios.get(id - 1).setTitulo(titulo);
+                postagems.get(contador - 1).setTitulo(titulo);
+                descricao = JOptionPane.showInputDialog("Descrição:");
+                usuarios.get(id - 1).setDescricao(descricao);
+                postagems.get(contador - 1).setDescricao(descricao);
+                usuarios.get(id - 1).setDataPostagem(dataAtual);
+                postagems.get(contador - 1).setDataPostagem(dataAtual);
+                usuarios.get(id - 1).setStatus(status);
+                postagems.get(contador - 1).setStatus(status);
+            } catch (Exception e){
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "É necessário criar um usuário antes de fazer qualquer postagem");
         }
     }
 
-    public void editarPostagem(int idPostagem)
+    // Metodo semelhante ao criarPostagem()
+    public void editarPostagem(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem)
     {
         LocalDate dataAtual = LocalDate.now();
         String titulo, descricao;
         Boolean status = true;
+        // Tratamento de erros
         try {
             titulo = JOptionPane.showInputDialog("Novo Título:");
-            setTitulo(titulo);
+            usuarios.get(id - 1).setTitulo(titulo);
+            postagems.get(idPostagem - 1).setTitulo(titulo);
             descricao = JOptionPane.showInputDialog("Nova Descrição:");
-            setDescricao(descricao);
-            setDataPostagem(dataAtual);
-            setStatus(status);
+            usuarios.get(id - 1).setDescricao(descricao);
+            postagems.get(idPostagem - 1).setDescricao(descricao);
+            usuarios.get(id - 1).setDataPostagem(dataAtual);
+            postagems.get(idPostagem - 1).setDataPostagem(dataAtual);
+            usuarios.get(id - 1).setStatus(status);
+            postagems.get(idPostagem - 1).setStatus(status);
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
-    public void removerPostagem(int idPostagem)
+    // Metodo para remover postagem
+    public void removerPostagem(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem)
     {
-        setTitulo(null);
-        setDescricao(null);
-        setDataPostagem(null);
-        setStatus(false);
+        usuarios.get(id - 1).setTitulo(null);
+        postagems.get(idPostagem - 1).setTitulo(null);
+        usuarios.get(id - 1).setDescricao(null);
+        postagems.get(idPostagem - 1).setDescricao(null);
+        usuarios.get(id - 1).setDataPostagem(null);
+        postagems.get(idPostagem - 1).setDataPostagem(null);
+        usuarios.get(id - 1).setStatus(false);
+        postagems.get(idPostagem - 1).setStatus(false);
         JOptionPane.showMessageDialog(null, "Postagem removida");
     }
 }

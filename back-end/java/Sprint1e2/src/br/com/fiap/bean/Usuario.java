@@ -2,8 +2,10 @@ package br.com.fiap.bean;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-public class Usuario
+public class Usuario extends Postagem
 {
     // Atributos
     private int idUsuario;
@@ -14,14 +16,6 @@ public class Usuario
 
     // Construtores
     public Usuario() {
-    }
-
-    public Usuario(int idUsuario, String nome, String email, String senha, LocalDate dataCadastro) {
-        this.idUsuario = idUsuario;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.dataCadastro = dataCadastro;
     }
 
     // Getter e Setter
@@ -68,9 +62,13 @@ public class Usuario
     // Metodos Exclusivos
     public void cadastrarUsuario()
     {
+        // Armazenando data com LocalDate
         LocalDate dataAtual = LocalDate.now();
+        // variáveis de apoio
         String nome, email, senha;
+        // Tratamento de erros
         try {
+            // Preenchimento de atributos
             nome = JOptionPane.showInputDialog("Informe o nome:");
             setNome(nome);
             email = JOptionPane.showInputDialog("Informe o email:");
@@ -83,13 +81,19 @@ public class Usuario
         }
     }
 
-    public void alterarEmail(String email)
+    // Alterar o email de um usuário da lista
+    public void alterarEmail(List <Usuario> usuarios, int id)
     {
-        setEmail(email);
+        String email = JOptionPane.showInputDialog("Informe o novo email:");
+        // Selecionando o indice da lista usuarios
+        usuarios.get(id - 1).setEmail(email);
     }
 
-    public void alterarSenha(String senha)
+    // Alterar o email de um usuário da lista
+    public void alterarSenha(List <Usuario> usuarios, int id)
     {
-        setSenha(senha);
+        String senha = JOptionPane.showInputDialog("Informe a nova senha:");
+        // Selecionando o indice da lista usuarios
+        usuarios.get(id - 1).setSenha(senha);
     }
 }

@@ -2,12 +2,13 @@ package br.com.fiap.bean;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.util.List;
 
-public class Arquivo extends Postagem
+public class Arquivo extends Avaliacao
 {
     // Atributos
     private int idArquivo;
-    private String nome;
+    private String nomeArquivo;
     private String tipo;
     private float tamanho;
     private String url;
@@ -15,16 +16,6 @@ public class Arquivo extends Postagem
 
     // Construtores
     public Arquivo(){
-    }
-
-    public Arquivo(int idUsuario, String nome, String email, String senha, LocalDate dataCadastro, int idPostagem, String titulo, String descricao, LocalDate dataPostagem, Boolean status, int idArquivo, String nome1, String tipo, float tamanho, String url, LocalDate dataUpload) {
-        super(idUsuario, nome, email, senha, dataCadastro, idPostagem, titulo, descricao, dataPostagem, status);
-        this.idArquivo = idArquivo;
-        this.nome = nome1;
-        this.tipo = tipo;
-        this.tamanho = tamanho;
-        this.url = url;
-        this.dataUpload = dataUpload;
     }
 
     // Getter e Setter
@@ -36,12 +27,12 @@ public class Arquivo extends Postagem
         this.idArquivo = idArquivo;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeArquivo() {
+        return nomeArquivo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeArquivo(String nomeArquivo) {
+        this.nomeArquivo = nomeArquivo;
     }
 
     public String getTipo() {
@@ -77,28 +68,59 @@ public class Arquivo extends Postagem
     }
 
     // Metodos da classe
-    public void importarArquivo(int idPostagem)
+    // Simulação de importação com listas
+    public void importarArquivo(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem, List <Arquivo> arquivos, int idArquivo)
     {
         LocalDate dataAtual = LocalDate.now();
         String nome, tipo, url, auxiliar;
+        // Tratamento de erros
         try {
+            // Preenchimento de atributos das listas arquivos, usuarios e postagens
             nome = JOptionPane.showInputDialog("Informe o nome do arquivo:");
-            setNome(nome);
+            usuarios.get(id - 1).setNomeArquivo(nome);
+            postagems.get(idPostagem - 1).setNomeArquivo(nome);
+            arquivos.get(idArquivo - 1).setNomeArquivo(nome);
             tipo = JOptionPane.showInputDialog("Informe o tipo do arquivo:");
-            setTipo(tipo);
+            usuarios.get(id - 1).setTipo(tipo);
+            postagems.get(idPostagem - 1).setTipo(tipo);
+            arquivos.get(idArquivo - 1).setTipo(tipo);
             auxiliar = JOptionPane.showInputDialog("Informe o tamanho do arquivo:");
             float tamanho = Float.parseFloat(auxiliar);
-            setTamanho(tamanho);
+            usuarios.get(id - 1).setTamanho(tamanho);
+            postagems.get(idPostagem - 1).setTamanho(tamanho);
+            arquivos.get(idArquivo - 1).setTamanho(tamanho);
             url = JOptionPane.showInputDialog("Informe a URL");
-            setUrl(url);
-            setDataUpload(dataAtual);
+            usuarios.get(id - 1).setUrl(url);
+            postagems.get(idPostagem - 1).setUrl(url);
+            arquivos.get(idArquivo - 1).setUrl(url);
+            usuarios.get(id - 1).setDataUpload(dataAtual);
+            postagems.get(idPostagem - 1).setDataUpload(dataAtual);
+            arquivos.get(idArquivo - 1).setDataUpload(dataAtual);
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
-    public void acessarCamera()
+    // Simulação de acesso com listas
+    public void acessarCamera(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem, List <Arquivo> arquivos, int idArquivo)
     {
+        // Preenchimento de atributos das listas arquivos, usuarios e postagens
+        LocalDate dataAtual = LocalDate.now();
+        usuarios.get(id - 1).setNomeArquivo("Câmera");
+        postagems.get(idPostagem - 1).setNomeArquivo("Câmera");
+        arquivos.get(idArquivo - 1).setNomeArquivo("Câmera");
+        usuarios.get(id - 1).setTipo("img");
+        postagems.get(idPostagem - 1).setTipo("img");
+        arquivos.get(idArquivo - 1).setTipo("img");
+        usuarios.get(id - 1).setTamanho(0);
+        postagems.get(idPostagem - 1).setTamanho(0);
+        arquivos.get(idArquivo - 1).setTamanho(0);
+        usuarios.get(id - 1).setUrl("xxxxxxxxxxxxxxx.img");
+        postagems.get(idPostagem - 1).setUrl("xxxxxxxxxxxxxxx.img");
+        arquivos.get(idArquivo - 1).setUrl("xxxxxxxxxxxxxxx.img");
+        usuarios.get(id - 1).setDataUpload(dataAtual);
+        postagems.get(idPostagem - 1).setDataUpload(dataAtual);
+        arquivos.get(idArquivo - 1).setDataUpload(dataAtual);
         JOptionPane.showMessageDialog(null, "Câmera acessada com sucesso!");
     }
 }
