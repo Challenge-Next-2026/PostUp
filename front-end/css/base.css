@@ -1,0 +1,58 @@
+/* Reset básico */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 100%;
+    font-weight: normal;
+}
+/* Reset básico */
+
+:root{
+  
+    --primary-dark : #12959e; /* Cor primaria escura */
+    --bg-primary: #fff; /* Cor fundo principal */
+    --bg-dark: #e5e7eb; /* Cor fundo principal escuro */
+    --primary:#44c0c5;/* Cor primária */
+    --secondary-dark:#799b00; /* Cor secundaria escura */
+    --secondary:#a9be18; /* Cor secundaria */
+    --text-main:#000; /*Cor para os textos principais ou gerais */
+    --text-title:#fefdfd; /*Cor para títulos */
+    --titulo-hero: 6rem;
+    --slogan: 2.7rem;
+
+    --titulo-main: 4rem; /* Base de tamanho para títulos principais */
+    --sub-titulo: 2.5rem; /* Base de tamanho para sub-títulos principais */
+    --fonte-texto:  "BIZ UDGothic", sans-serif; /* Fonte para texto */
+    --fonte-principal: "BIZ UDPGothic", sans-serif;
+}
+
+
+html{
+    font-size: 62.5%; /* 10px */
+    scroll-behavior: smooth;
+}
+
+body{
+    font-size: 2rem;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+ul{
+    list-style: none;
+}
+
+main{
+    width: 100%;
+}
