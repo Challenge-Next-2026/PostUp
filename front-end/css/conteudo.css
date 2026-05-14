@@ -27,12 +27,15 @@
     font-weight: 1.5rem;
     margin-top: 6rem;
     margin-bottom: 6rem;
+    padding: 1rem;
     text-decoration: underline;
     text-decoration-color: var(--secondary) ;
 }
 .conteudo__info__texto{
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 1rem;
+    margin: 0 2.5rem;
+    padding: 1rem;
 }
 .conteudo__diferenciais__container{
     width: 100%;
@@ -175,4 +178,22 @@
     background-color: var(--bg-primary);
     color: var(--secondary-dark);
 
+}
+
+.conteudo__botao{
+    text-decoration: none;
+    background-color: transparent;
+    color: var(--bg-dark);
+    border: 2px solid var(--secondary);
+    padding: 0.8rem;
+    margin: auto;
+    margin-bottom: 3rem;
+    border-radius: 4rem;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.conteudo__botao:hover{
+    transition: 1s;
+    background-color: var(--bg-primary);
+    color: var(--secondary-dark);
 }
