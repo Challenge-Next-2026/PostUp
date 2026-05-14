@@ -56,8 +56,8 @@
 }
 
 .hero__botao:hover{
-    transition: 0.5s;
-    background-color: var(--secondary);
-    color: var(--text-main);
+    transition: 1s;
+    background-color: var(--bg-primary);
+    color: var(--secondary-dark);
 
 }
