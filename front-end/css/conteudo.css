@@ -125,6 +125,7 @@
     align-items: center ;
     border-top: 5px solid var(--secondary);
     line-height: 3.3rem;
+    border-bottom: 5px solid var(--secondary);
 }
 
 .conteudo__faq{
@@ -134,7 +135,7 @@
     text-align: center;
     padding: 2rem;
     border-radius: 1.5rem;
-    margin: 7rem;
+    margin: 9rem;
     box-shadow:  7px 7px 7px rgb(82, 160, 18);
     
 }
