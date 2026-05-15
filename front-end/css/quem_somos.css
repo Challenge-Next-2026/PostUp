@@ -1,0 +1,171 @@
+.quem__somos__container{
+    width: 100vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+.quem__somos{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 5px solid var(--secondary);
+    
+}
+.quem__somos__aviso{
+    width: 100%;
+    background-color: var(--secondary-dark);
+    color: var(--bg-dark);
+    margin: 8rem;
+    padding: 2rem;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.quem__somos__titulo{
+    font-size: var(--titulo-main);
+    font-family: var(--fonte-texto);
+    font-weight: 2rem;
+    margin: 3rem;
+    text-decoration: underline;
+    text-decoration-color: var(--primary);
+
+}
+.quem__somos__paragrafo{
+    font-size: 2.3rem;
+    font-family: var(--fonte-texto);
+    font-weight: 1rem;
+    color: var(--bg-dark);
+    margin-bottom: 4rem;
+    line-height: 3rem;
+}
+
+.quem__somos__profissional__1{
+    width: 100%;
+    display: flex;
+    padding: 5rem;
+    
+    background: linear-gradient(
+    135deg,
+    #031b1d,
+    #0b5b60,
+    #44c0c5,
+    #7ff5fa,
+    #ecffff
+    );
+
+    box-shadow:
+    0 10px 45px rgba(68,192,197,0.45);
+    
+}
+.quem__somos__profissional__2{
+    width: 100%;
+    display: flex;
+    padding: 5rem;
+    border-top: 6px solid var(--bg-dark);
+    box-shadow: 0 10px 40px rgba(121,155,0,0.4);
+    background: linear-gradient(
+145deg,
+#1f2900,
+#4d6500,
+#799b00,
+#b8e600,
+#f0ff9a
+);
+    
+    
+}
+.quem__somos__profissional__3{
+    width: 100%;
+    display: flex;
+    padding: 5rem;
+    border-top: 6px solid var(--bg-dark);
+    border-bottom: 6px solid var(--bg-dark);
+    background: linear-gradient(
+    135deg,
+    #031b1d,
+    #0b5b60,
+    #44c0c5,
+    #7ff5fa,
+    #ecffff
+    );
+
+    box-shadow:
+    0 10px 45px rgba(68,192,197,0.45);
+    
+    
+}
+
+.quem__somos__img{
+    width: 27vw;
+    height: 100%;
+    border: 5px solid var(--secondary);
+    border-radius: 1.5rem;
+    box-shadow:  7px 7px 7px rgb(255, 255, 255);
+    margin: 10rem;
+    
+
+}
+
+.quem__somos__texto{
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+    justify-content: center;
+    margin-left: 15rem;
+    
+}
+
+.quem__somos__nome{
+    font-size: var(--titulo-hero);
+    font-family: var(--fonte-texto);
+    font-weight: 3rem;
+    text-decoration: underline;
+    text-decoration-color: var(--primary-dark);
+    margin-top: 2rem;
+    color: var(--bg-dark);
+    
+}
+
+.quem__somos__lista{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+}
+
+.quem__somos__item{
+    font-size: var(--titulo-main);
+    font-family: var(--fonte-texto);
+    font-weight: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    line-height: 7rem;
+    padding: 2rem;
+    border: 3px solid var(--primary);
+    border-radius: 1rem;
+    background-color: var(--bg-dark);
+    text-decoration: underline;
+    
+
+}
+
+.quem__somos__item img{
+    width: 3.5vw;
+    height: auto;
+    margin-top: 1.5rem;
+
+}
+
+.quem__somos__item a{
+    
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 2rem;
+}
