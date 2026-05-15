@@ -20,7 +20,7 @@ public class Main
         List <Avaliacao> avaliacoes = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         // laço de controle de execução
-        while (opcao.equalsIgnoreCase("sim")){
+        do{
             // Tratamento de errps
             try {
                 // menu principal
@@ -203,19 +203,12 @@ public class Main
                     default:
                         throw new Exception("Escolha inválida");
                 }
-                // Condição para finalização do código
-                opcao = JOptionPane.showInputDialog("Deseja continuar?");
-                if (opcao.equalsIgnoreCase("sim")) {
-                    continue;
-                } else {
-                    break;
-                }
             } catch (Exception e) {
                 // Mensagem de erro
                 JOptionPane.showMessageDialog(null, e.getMessage());
                 break;
             }
-        }
+        } while (JOptionPane.showConfirmDialog(null, "Deseja continuar?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0);
         // Fim do programa
         JOptionPane.showMessageDialog(null, "Programa encerrado.");
     }
