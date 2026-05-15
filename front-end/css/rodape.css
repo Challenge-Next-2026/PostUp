@@ -1,0 +1,36 @@
+.rodape{
+    background-color: var(--secondary-dark);
+    color: var(--bg-dark);
+    text-align: center;
+    padding: 4rem 2rem;
+    line-height: 1.8;
+    
+}
+
+.rodape__nome{
+    font-size: 3rem;
+    font-size: 5rem;
+    font-family: "BIZ UDPGothic", sans-serif;
+    font-weight: 700px; 
+    line-height: 1.6;
+    margin: 4rem;
+}
+
+.rodpe__texto{
+    margin: 10px auto;
+    font-family:  "BIZ UDGothic", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 1rem;
+    margin: 2rem;
+}
+
+.rodape__topo{
+    color: var(--bg-dark);
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 4rem;
+}
+
+.rodape__topo:hover{
+    text-decoration: underline;
+}
