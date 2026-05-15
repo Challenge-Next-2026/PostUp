@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="DER_modelo-relacional_PostUp" id="BF5EA9E2-B92B-AE66-5DA7-548490522100" version="3.5">
+<createdBy>Humberto Oliveira</createdBy>
+<createdTime>2026-05-13 20:23:21 UTC</createdTime>
+<ownerDesignName>DER_modelo-relacional_PostUp</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>BF5EA9E2-B92B-AE66-5DA7-548490522100</designId>
+</OSDM_Design>
