@@ -85,7 +85,7 @@
     width: 100%;
     display: flex;
     padding: 5rem;
-    border-top: 20px solid var(--bg-dark);
+    border-top: 10px solid var(--bg-dark);
     border-bottom: 6px solid var(--bg-dark);
     background: linear-gradient(
     135deg,
@@ -103,7 +103,7 @@
 }
 
 .quem__somos__img{
-    width: 27vw;
+    width: 25%;
     height: 100%;
     border: 5px solid var(--secondary);
     border-radius: 1.5rem;
