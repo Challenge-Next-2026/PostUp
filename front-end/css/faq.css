@@ -14,8 +14,7 @@
     border-radius: 3rem;
     color: var(--bg-primary);
     margin: 4.5rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 2rem;
 
 }
 .perguntas{
@@ -23,13 +22,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5rem;
-    margin: 3rem;
-    padding: 1.5rem;
+    gap: 4rem;
+    margin: 7rem;
+    padding: 1rem;
     background-color: var(--primary-dark);
     border-radius: 3rem;
     box-shadow:  7px 7px 7px rgb(82, 160, 18);
     border: 3px solid var(--secondary);
+    
 }
 
 .perguntas h3{
@@ -38,6 +38,7 @@
     font-weight: 2rem;
     text-align: center;
     color: var(--bg-primary);
+    margin-top: 2rem;
 }
 
 .dropdown{
