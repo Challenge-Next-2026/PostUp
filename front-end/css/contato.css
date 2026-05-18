@@ -54,7 +54,7 @@
     color: var(--text-main);
     margin: 3rem;
     padding: 0.5rem;
-    width: 50%;
+    width: 100%;
     background-color: var(--bg-primary);
     border: 3px solid var(--secondary);
     border-radius: 4rem;
