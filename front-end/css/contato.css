@@ -1,0 +1,132 @@
+.contato__container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    gap: 5rem;
+    padding: 4rem;
+}
+.contato__titulo{
+    font-family: var(--fonte-texto);
+    font-size: var(--titulo-main);
+    color: var(--bg-primary);
+    text-align: center;
+    padding: 1.5rem;
+    background-color: var(--primary);
+    border: 3px solid var(--secondary-dark);
+    border-radius: 4rem;
+}
+
+.contato__texto{
+    font-family: var(--fonte-texto);
+    font-size: var(--sub-titulo);
+    color: var(--bg-primary);
+    background-color: var(--secondary-dark);
+    border: 3px solid var(--primary);
+    text-align: center;
+    padding: 3rem;
+    margin: 2rem;
+    border-radius: 4rem;
+    line-height: 3.5rem;
+}
+
+.contatos__meios{
+    font-family: Arial, sans-serif;
+    background-color:var(--primary);
+    display: flex;
+    justify-content: center;
+    gap: 7rem;
+    flex-direction: column-reverse;
+    align-items: center;
+    height: auto;
+    width: auto;
+    margin: 3rem;
+    border-radius: 3rem;
+    padding: 6rem;
+}
+
+.contato__email{
+    font-family: var(--fonte-texto);
+    font-size: var(--sub-titulo);
+    font-weight: 2rem;
+    color: var(--text-main);
+    margin: 3rem;
+    padding: 0.5rem;
+    width: 100%;
+    background-color: var(--bg-primary);
+    border: 3px solid var(--secondary);
+    border-radius: 4rem;
+    text-align: center;
+    justify-content: center;
+
+
+}
+
+.contato__email img{
+    width: 3vw;
+    height: auto;
+    margin-right: 1.5rem;
+    
+}
+
+
+.formulario{
+    width: 400px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow:
+    0 15px 40px rgba(0,0,0,0.25);
+    color: white;
+}
+
+.formulario h1{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.formulario p{
+    text-align: center;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.formulario__caixa{
+    margin-bottom: 20px;
+}
+
+.formulario__caixa input,
+.formulario__caixa textarea{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    outline: none;
+    font-size: 16px;
+}
+
+.formulario__caixa textarea{
+    resize: none;
+    height: 120px;
+}
+
+.btn__formulario{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: white;
+    color: #12959e;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn__formulario:hover{
+    transform: translateY(-3px);
+    box-shadow:
+    0 10px 25px rgba(255,255,255,0.25);
+}

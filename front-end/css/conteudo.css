@@ -62,20 +62,21 @@
     transition: box-shadow 0.5s ease-in;
 }
 .conteudo__diferenciais__titulo{
-    font-size: var(--sub-titulo);
+    font-size: 2.2rem;
     text-align: center;
     font-family: var(--fonte-texto);
-    line-height: 2.4rem;
+    line-height: 3rem;
     margin-bottom: 3rem;
     color: var(--bg-dark);
     margin-top: 1rem;
 }
 .conteudo__diferenciais__texto{
-    font-size: 2rem;
+    font-size: 1.7rem;
     text-align: center;
     margin-top: 2rem ;
     font-family: var(--fonte-texto);
     font-weight: 1rem;
+    line-height: 2.5rem;
 }
 
 
