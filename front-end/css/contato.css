@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: column;
     align-content: space-between;
-    
     gap: 5rem;
     padding: 4rem;
 }
@@ -65,7 +64,7 @@
 }
 
 .contato__email img{
-    width: 4%;
+    width: 3vw;
     height: auto;
     margin-right: 1.5rem;
     
