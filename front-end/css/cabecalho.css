@@ -67,3 +67,17 @@
     color:var(--bg-dark);
 }
 
+@media (min-width: 320px) and (max-width: 425px){
+    
+    .cabecalho__item{
+        font-size: 1.6rem;
+
+    }
+    .cabecalho__item__logo{
+        width: 30%;
+}
+.cabecalho__item__contato{
+    font-size: 1.4rem;
+}
+
+}
