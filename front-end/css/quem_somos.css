@@ -152,3 +152,56 @@
     margin-top: 1.5rem;
 
 }
+
+@media (min-width: 320px) and (max-width: 768px){
+    .quem__somos__aviso{
+        margin: 2rem;
+    }
+    .quem__somos__titulo{
+        font-size: 2.7rem;
+    }
+    .quem__somos__paragrafo{
+        font-size: 1.5rem;
+    }
+    .quem__somos__profissional__1{
+        flex-direction: column;
+        padding: 1rem;
+    }
+     .quem__somos__profissional__2{
+        flex-direction: column;
+        padding: 1rem;
+    }
+     .quem__somos__profissional__3{
+        flex-direction: column;
+        padding: 1rem;
+    }
+    .quem__somos__img{
+        width: 60%;
+        margin: 0;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    .quem__somos__texto{
+        margin-left: 1rem;
+        margin-bottom: 2rem;
+    }
+    .quem__somos__nome{
+        font-size: 4rem;
+        text-align: center;
+        margin-top: 2rem;
+    }
+    .quem__somos__experiencia{
+        font-size: 1.7rem;
+        line-height: 2.7rem;
+        width: 100%;
+    }
+    .quem__somos__item{
+        font-size: 2rem;
+    }
+    .quem__somos__item img{
+        width: 10vw;
+        height: auto;
+    }
+
+
+}

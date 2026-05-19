@@ -35,3 +35,15 @@
 .rodape__topo:hover{
     text-decoration: underline;
 }
+
+@media (min-width: 320px) and (max-width: 425px){
+    
+.rodape__nome{
+    font-size: 3rem;
+}
+.rodpe__texto{
+    font-size: 0.5rem;
+    margin: 2rem;
+    gap: 2rem;
+}
+}
