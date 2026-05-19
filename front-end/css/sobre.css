@@ -76,3 +76,25 @@
     color: var(--bg-primary);
 
 }
+
+@media (min-width: 320px) and (max-width: 425px){
+    .conteudo__introducao{
+        padding: 2rem;
+        
+    }
+    .conteudo__objetivos{
+        padding: 2rem;
+        
+    }
+    .conteudo__justificativa{
+        padding: 2rem;
+        
+    }
+  .conteudo__sobre__titulo{
+    font-size: 2.5rem;
+  }
+  .conteudo__sobre__texto{
+    font-size: 1.5rem;
+    line-height: 2.4rem;
+  }
+}
