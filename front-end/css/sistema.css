@@ -34,3 +34,9 @@
     text-align: center;
     line-height: 4rem;
 }
+
+.conteudo__ranking img{
+    border-radius: 3rem;
+    padding: 0;
+    
+}
