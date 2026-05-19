@@ -39,9 +39,7 @@
     gap: 7rem;
     flex-direction: column-reverse;
     align-items: center;
-    height: auto;
-    width: auto;
-    margin: 3rem;
+    width: 100%;
     border-radius: 3rem;
     padding: 6rem;
 }
@@ -72,10 +70,10 @@
 
 
 .formulario{
-    width: 400px;
+    width: 60%;
     background: rgba(255,255,255,0.12);
     backdrop-filter: blur(12px);
-    padding: 35px;
+    padding: 3rem;
     border-radius: 20px;
     box-shadow:
     0 15px 40px rgba(0,0,0,0.25);
@@ -129,4 +127,35 @@
     transform: translateY(-3px);
     box-shadow:
     0 10px 25px rgba(255,255,255,0.25);
+}
+
+@media (min-width: 320px) and (max-width: 425px){
+    .contato__container{
+        padding: 0rem;
+    }
+    .contatos__meios{
+        margin-bottom: 1rem;
+    }
+    .contato__titulo{
+        font-size: 2rem;
+        line-height: 3rem;
+        margin-top: 3rem;
+        
+    }
+    .contato__texto{
+        font-size: 1.5rem;
+        margin: 1rem;
+        padding: 2rem;
+        line-height: 2.7rem;
+    }
+    .contato__email{
+        font-size: 1.2rem;
+        padding: 1rem;
+    }
+    .formulario{
+        width: 100%;
+    }
+    .formulario p{
+        font-size: 1.3rem;
+    }
 }
