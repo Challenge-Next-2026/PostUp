@@ -69,6 +69,32 @@
     border-radius: 4rem;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+.conteudo__roadmap{
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    margin-top: 4rem;
+    background-color: var(--secondary-dark);
+    color: var(--bg-dark);
+    border: 4px solid var(--primary);
+    padding: 5rem;
+    border-radius: 4rem;
+}
+
+.conteudo__roadmap__titulo{
+    font-size: var(--titulo-main);
+    font-family: var(--fonte-texto);
+    font-weight: 1.5rem;
+    text-decoration: underline;
+    text-decoration-color: var(--secondary);
+    text-align: center;
+}
+
+.conteudo__roadmap__imagem{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
 
 .conteudo__sobre__botao:hover{
     transition: 1s;
