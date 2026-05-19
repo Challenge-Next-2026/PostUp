@@ -113,10 +113,17 @@
 }
 
 .conteudo__video__container{
-    margin-top: 2rem;
-    border: 4px solid var(--secondary);
-    box-shadow:  5px 5px 5px rgba(7, 7, 7, 3);
-    
+  width: 100%;            /* O container vai ocupar toda a largura disponível */
+  max-width: 800px;       /* Opcional: define um limite máximo para o vídeo não ficar gigante */
+  margin: 0 auto;         /* Centraliza o vídeo na tela */
+  aspect-ratio: 16 / 9;   /* Mantém a proporção perfeita de cinema/TV */
+}
+
+.conteudo__video__container iframe, 
+.conteudo__video__container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* Garante que o vídeo preencha o espaço sem distorcer */
 }
 
 
