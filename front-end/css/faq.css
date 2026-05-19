@@ -91,3 +91,19 @@
 .dropdown:hover .respostas{
     display: block;
 }
+
+@media (min-width: 320px) and (max-width: 425px){
+    .perguntas__resposta__titulo{
+        font-size: 2.3rem;
+        margin: 2rem;
+    }
+    .perguntas{
+        margin: 1.6rem;
+        padding: 1rem;
+        gap: 3rem;
+    }
+    .perguntas h3{
+        font-size: 1.5rem;
+        line-height: 2.5rem;
+    }
+}

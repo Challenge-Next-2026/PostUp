@@ -43,5 +43,7 @@
 }
 .rodpe__texto{
     font-size: 0.5rem;
+    margin: 2rem;
+    gap: 2rem;
 }
 }
