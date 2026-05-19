@@ -61,3 +61,18 @@
     color: var(--secondary-dark);
 
 }
+
+@media (min-width: 320px) and (max-width: 425px){
+    
+.hero__title{
+    font-size: 4rem;
+}
+.hero__slogan{
+    text-align: center;
+    font-size: 2rem;
+}
+.hero__desc{
+    font-size: 1.5rem;
+
+}
+}
