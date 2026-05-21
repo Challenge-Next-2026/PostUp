@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class Pontuacao extends Postagem
+public class Pontuacao extends Postagem implements ExibicaoObjetos
 {
     // Atributos
     private int idPontuacao;
@@ -60,9 +60,9 @@ public class Pontuacao extends Postagem
         }
     }
 
-    public void exibirPontuacao(Pontuacao pontuacao, List<Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem)
+    public void exibir(List<Usuario> usuarios, int contador, int id, List<Postagem> postagens, int contador2, int idPostagem, List<Arquivo> arquivos, int contador3, List<Avaliacao> avaliacoes, Pontuacao pontuacao)
     {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        JOptionPane.showMessageDialog(null, String.format("ID User: %d\nNome User: %s\n------------------\nID Post: %d\nTítulo Post: %s\n------------------\nPontuação: %.2f\nData: %s", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagems.get(idPostagem - 1).getIdPostagem(), postagems.get(idPostagem - 1).getTitulo(), pontuacao.getValor(), pontuacao.getDataPontuacao().format(dtf)));
+        JOptionPane.showMessageDialog(null, String.format("ID User: %d\nNome User: %s\n------------------\nID Post: %d\nTítulo Post: %s\n------------------\nPontuação: %.2f\nData: %s", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagens.get(idPostagem - 1).getIdPostagem(), postagens.get(idPostagem - 1).getTitulo(), pontuacao.getValor(), pontuacao.getDataPontuacao().format(dtf)));
     }
 }

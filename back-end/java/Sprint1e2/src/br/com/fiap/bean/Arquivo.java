@@ -2,9 +2,10 @@ package br.com.fiap.bean;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class Arquivo extends Avaliacao
+public class Arquivo extends Avaliacao implements ExibicaoObjetos
 {
     // Atributos
     private int idArquivo;
@@ -122,5 +123,10 @@ public class Arquivo extends Avaliacao
         postagems.get(idPostagem - 1).setDataUpload(dataAtual);
         arquivos.get(idArquivo - 1).setDataUpload(dataAtual);
         JOptionPane.showMessageDialog(null, "Câmera acessada com sucesso!");
+    }
+
+    public void exibir(List<Usuario> usuarios, int contador, int id, List<Postagem> postagens, int contador2, int idPostagem, List<Arquivo> arquivos, int contador3, List<Avaliacao> avaliacoes, Pontuacao pontuacao) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        JOptionPane.showMessageDialog(null, String.format("ID User: %d\nNome User: %s\n----------------\nID Post: %d\nTítulo Post: %s\n-----------------\nID Arquivo: %d\nNome: %s\nTipo: %s\nTamanho: %f\nURL: %s\nData Upload: %s", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagens.get(idPostagem - 1).getIdPostagem(), postagens.get(idPostagem - 1).getTitulo(), arquivos.get(contador3 - 1).getIdArquivo(), arquivos.get(contador3 - 1).getNomeArquivo(), arquivos.get(contador3 - 1).getTipo(), arquivos.get(contador3 - 1).getTamanho(), arquivos.get(contador3 - 1).getUrl(), arquivos.get(contador3 - 1).getDataUpload().format(dtf)));
     }
 }

@@ -44,7 +44,7 @@ public class Main
                                 // Chamado de metodo cadastrarusuario()
                                 usuarios.get(contador - 1).cadastrarUsuario();
                                 // Exibição de Usuário
-                                usuarios.get(contador - 1).exibir(usuarios, contador);
+                                usuarios.get(contador - 1).exibir(usuarios, contador, 0, null, 0, 0, null, 0, null, null);
                                 contador++;
                                 break;
                             // EDITAR EMAIL
@@ -60,8 +60,7 @@ public class Main
                                     // Chamada de metodo alterarEmail no objeto usuario de id informado
                                     usuarios.get(id - 1).alterarEmail(usuarios, id);
                                     // Exibição de Usuário
-                                    JOptionPane.showMessageDialog(null, String.format("Usuário\nID: %d\nNome: %s\nEmail: %s\nSenha: %s\nData de cadastro: %s",
-                                            usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), usuarios.get(id - 1).getEmail(), usuarios.get(id - 1).getSenha(), usuarios.get(id - 1).getDataCadastro().format(dtf)));
+                                    usuarios.get(contador - 1).exibir(usuarios, contador, 0, null, 0, 0, null, 0, null, null);
                                     break;
                                 }
 
@@ -78,8 +77,7 @@ public class Main
                                     // Chamada de metodo alterarSenha no objeto usuario de id informado
                                     usuarios.get(id - 1).alterarSenha(usuarios, id);
                                     // Exibição de Usuário
-                                    JOptionPane.showMessageDialog(null, String.format("Usuário\nID: %d\nNome: %s\nEmail: %s\nSenha: %s\nData de cadastro: %s",
-                                            usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), usuarios.get(id - 1).getEmail(), usuarios.get(id - 1).getSenha(), usuarios.get(id - 1).getDataCadastro().format(dtf)));
+                                    usuarios.get(contador - 1).exibir(usuarios, contador, 0, null, 0, 0, null, 0, null, null);
                                     break;
                                 }
                             default:
@@ -110,7 +108,7 @@ public class Main
                                     // Chamada de metodo criarPostagem no objeto postagens de id informado(Só roda se o id do usuario for existente e válido)
                                     postagens.get(contador2 - 1).criarPostagem(usuarios, id, postagens, contador2);
                                     // Exibição de Postagem
-                                    JOptionPane.showMessageDialog(null, String.format("ID Usuário: %d\nNome User: %s\n-------------------\nID Post: %d\nTítulo: %s\nDescrição: %s\nData: %s\nStatus: %b", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagens.get(contador2 - 1).getIdPostagem(), postagens.get(contador2 - 1).getTitulo(), postagens.get(contador2 - 1).getDescricao(), postagens.get(contador2 - 1).getDataPostagem().format(dtf), postagens.get(contador2 - 1).getStatus()));
+                                    postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
                                     contador2++;
                                     break;
                                 }
@@ -133,7 +131,7 @@ public class Main
                                     // Chamada de metodo editarPostagem no objeto postagens de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
                                     postagens.get(idPostagem - 1).editarPostagem(usuarios, id, postagens, idPostagem);
                                     // Exibição de Postagem
-                                    JOptionPane.showMessageDialog(null, String.format("ID Usuário: %d\nNome User: %s\n-------------------\nID Post: %d\nTítulo: %s\nDescrição: %s\nData: %s\nStatus: %b", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagens.get(idPostagem - 1).getIdPostagem(), postagens.get(idPostagem - 1).getTitulo(), postagens.get(idPostagem - 1).getDescricao(), postagens.get(idPostagem - 1).getDataPostagem().format(dtf), postagens.get(idPostagem - 1).getStatus()));
+                                    postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
                                     break;
                                 }
                             // REMOVER POSTAGEM
@@ -155,7 +153,7 @@ public class Main
                                     // Chamada de metodo removerPostagem no objeto postagens de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
                                     postagens.get(idPostagem - 1).removerPostagem(usuarios, id, postagens, idPostagem);
                                     // Exibição de Postagem
-                                    JOptionPane.showMessageDialog(null, String.format("ID Usuário: %d\nNome User: %s\n-------------------\nID Post: %d\nTítulo: %s\nDescrição: %s\nData: %s\nStatus: %b", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagens.get(idPostagem - 1).getIdPostagem(), postagens.get(idPostagem - 1).getTitulo(), postagens.get(idPostagem - 1).getDescricao(), postagens.get(idPostagem - 1).getDataPostagem().format(dtf), postagens.get(idPostagem - 1).getStatus()));
+                                    postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
                                     break;
                                 }
                             default:
@@ -192,7 +190,7 @@ public class Main
                                     // Chamada de metodo importarArquivo no objeto arquivos de id informado(Só roda se o id do usuario, o id postagem e o id arquivo forem existentes e válidos)
                                     arquivos.get(contador3 - 1).importarArquivo(usuarios, id, postagens, idPostagem, arquivos, contador3);
                                     // Exibição de Arquivo
-                                    JOptionPane.showMessageDialog(null, String.format("ID User: %d\nNome User: %s\n----------------\nID Post: %d\nTítulo Post: %s\n-----------------\nID Arquivo: %d\nNome: %s\nTipo: %s\nTamanho: %f\nURL: %s\nData Upload: %s", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagens.get(idPostagem - 1).getIdPostagem(), postagens.get(idPostagem - 1).getTitulo(), arquivos.get(contador3 - 1).getIdArquivo(), arquivos.get(contador3 - 1).getNomeArquivo(), arquivos.get(contador3 - 1).getTipo(), arquivos.get(contador3 - 1).getTamanho(), arquivos.get(contador3 - 1).getUrl(), arquivos.get(contador3 - 1).getDataUpload().format(dtf)));
+                                    arquivos.get(contador3 - 1).exibir(usuarios, 0, id, postagens, 0, idPostagem, arquivos, contador3, null, null);
                                     contador3++;
                                     break;
                                 }
@@ -219,7 +217,7 @@ public class Main
                                     // Chamada de metodo acessarCamera() no objeto arquivos de id informado(Só roda se o id do usuario, o id postagem e o id arquivo forem existentes e válidos)
                                     arquivos.get(contador3 - 1).acessarCamera(usuarios, id, postagens, idPostagem, arquivos, contador3);
                                     // Exibição de Arquivo
-                                    JOptionPane.showMessageDialog(null, String.format("ID User: %d\nNome User: %s\n----------------\nID Post: %d\nTítulo Post: %s\n-----------------\nID Arquivo: %d\nNome: %s\nTipo: %s\nTamanho: %f\nURL: %s\nData Upload: %s", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagens.get(idPostagem - 1).getIdPostagem(), postagens.get(idPostagem - 1).getTitulo(), arquivos.get(contador3 - 1).getIdArquivo(), arquivos.get(contador3 - 1).getNomeArquivo(), arquivos.get(contador3 - 1).getTipo(), arquivos.get(contador3 - 1).getTamanho(), arquivos.get(contador3 - 1).getUrl(), arquivos.get(contador3 - 1).getDataUpload().format(dtf)));
+                                    arquivos.get(contador3 - 1).exibir(usuarios, 0, id, postagens, 0, idPostagem, arquivos, contador3, null, null);
                                     contador3++;
                                     break;
                                 }
@@ -251,7 +249,7 @@ public class Main
                             // Chamada de metodo avaliarPostagem() no objeto avaliacoes de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
                             avaliacoes.getFirst().avaliarPostagem(avaliacoes, usuarios, id, postagens, idPostagem);
                             // Chamada de metodo mostrarPostagem() no objeto avaliacoes de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                            avaliacoes.getFirst().mostarAvaliacao(avaliacoes, usuarios, id, postagens, idPostagem);
+                            avaliacoes.getFirst().exibir(usuarios, 0, id, postagens, 0, idPostagem, arquivos, contador3, avaliacoes, null);
                             break;
                         }
                     case 5:
@@ -276,7 +274,7 @@ public class Main
                             // Chamada de metodo calcularPontuacao() no objeto pontuacao de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
                             pontuacao.calcularPontuacao(pontuacao, avaliacoes, usuarios, id, postagens, idPostagem);
                             // Chamada de metodo exibirPontuacao() no objeto pontuacao de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                            pontuacao.exibirPontuacao(pontuacao, usuarios, id, postagens, idPostagem);
+                            pontuacao.exibir(usuarios, 0, id, postagens, 0, idPostagem, null, 0, avaliacoes, pontuacao);
                             break;
                         }
                     default:

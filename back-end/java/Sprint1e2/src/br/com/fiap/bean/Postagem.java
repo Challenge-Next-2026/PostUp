@@ -2,10 +2,11 @@ package br.com.fiap.bean;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.jar.JarEntry;
 
-public class Postagem extends Arquivo
+public class Postagem extends Arquivo implements ExibicaoObjetos
 {
     // Atributos
     private int idPostagem;
@@ -124,5 +125,10 @@ public class Postagem extends Arquivo
         usuarios.get(id - 1).setStatus(false);
         postagems.get(idPostagem - 1).setStatus(false);
         JOptionPane.showMessageDialog(null, "Postagem removida");
+    }
+
+    public void exibir(List<Usuario> usuarios, int contador, int id, List<Postagem> postagens, int contador2, int idPostagem, List<Arquivo> arquivos, int contador3, List<Avaliacao> avaliacoes, Pontuacao pontuacao) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        JOptionPane.showMessageDialog(null, String.format("ID Usuário: %d\nNome User: %s\n-------------------\nID Post: %d\nTítulo: %s\nDescrição: %s\nData: %s\nStatus: %b", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagens.get(contador2 - 1).getIdPostagem(), postagens.get(contador2 - 1).getTitulo(), postagens.get(contador2 - 1).getDescricao(), postagens.get(contador2 - 1).getDataPostagem().format(dtf), postagens.get(contador2 - 1).getStatus()));
     }
 }
