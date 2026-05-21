@@ -199,6 +199,6 @@ public class Avaliacao
     {
         // Exibição de avaliação com listas e DateTimeFormatter
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        JOptionPane.showMessageDialog(null, String.format("ID User: %d\nNome User: %s\n------------------\nID Post: %d\nTítulo Post: %s\n------------------\nCritério avaliado: %s\nNota Impacto: %d\nNota Dificuldade: %d\nNota Confiabifidade: %d\nNota Frequência: %d\nData: %s", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagems.get(idPostagem - 1).getIdPostagem(), postagems.get(idPostagem - 1).getTitulo(), avaliacoes.getFirst().getCriterio(), avaliacoes.getFirst().getNotaImpacto(), avaliacoes.getFirst().getNotaDificuldade(), avaliacoes.getFirst().getNotaConfiabilidade(), avaliacoes.getFirst().getNotaFrequencia(), avaliacoes.getFirst().getDataAvaliacao().format(dtf)));
+        JOptionPane.showMessageDialog(null, String.format("ID User: %d\nNome User: %s\n------------------\nID Post: %d\nTítulo Post: %s\n------------------\nCritério avaliado: %s\nNota Impacto: %d\nNota Dificuldade: %d\nNota Confiabifidade: %d\nNota Frequência: %d\nData: %s", usuarios.get(id - 1).getIdUsuario(), usuarios.get(id - 1).getNome(), postagems.get(idPostagem - 1).getIdPostagem(), postagems.get(idPostagem - 1).getTitulo(), avaliacoes.getFirst().getCriterio(), avaliacoes.getFirst().getNotaImpacto(), avaliacoes.getFirst().getNotaDificuldade(), avaliacoes.getFirst().getNotaConfiabilidade(), avaliacoes.getFirst().getNotaFrequencia(), avaliacoes.getFirst().getDataAvaliacao()));
     }
 }

@@ -71,7 +71,7 @@ public class Postagem extends Arquivo
             // tratamento de erros
             try {
                 // Preenchimento de indice nas listas usuarios e postagens
-                titulo = JOptionPane.showInputDialog("Título:");
+                titulo = JOptionPane.showInputDialog("Títulos possíveis...\nPlantar - Transporte público - Bicicleta - Veículo Elétrico - Reciclagem\nDigite algum");
                 usuarios.get(id - 1).setTitulo(titulo);
                 postagems.get(contador - 1).setTitulo(titulo);
                 descricao = JOptionPane.showInputDialog("Descrição:");
