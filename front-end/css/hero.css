@@ -4,6 +4,9 @@
     background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('../img/fundo_cabecalho.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
     color: var(--text-main);
     border-bottom: 5px solid var(--secondary-dark)  ;
 }
@@ -61,6 +64,7 @@
     color: var(--secondary-dark);
 
 }
+
 
 @media (min-width: 320px) and (max-width: 425px){
     

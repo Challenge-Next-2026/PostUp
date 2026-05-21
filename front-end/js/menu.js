@@ -1,4 +1,7 @@
 
+
+//JS ==> Menu
+
 const cabecalho = document.querySelector('.cabecalho');
 
 
@@ -37,7 +40,7 @@ menuItems.forEach(item => {
 
 const menuContato = document.querySelector('.cabecalho__item__contato')
 
-cabecalho.addEventListener('mouseenter',() =>{
+menuContato.addEventListener('mouseenter',() =>{
         menuContato.style.borderBottom = '3px solid var(--secondary)';
         menuContato.style.paddingBottom = '5px';
         menuContato.style.transition = '0.3s'; 
@@ -51,3 +54,6 @@ menuContato.addEventListener('mouseleave', () => {
         menuContato.style.color = 'var(--text-main)'
     });
 
+    
+
+//JS ==> hero
