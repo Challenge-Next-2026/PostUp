@@ -147,3 +147,58 @@ conteudosIdeia.forEach((elemento) => {
 })
 
 //JS ==> Quem somos
+
+const profissionais = document.querySelectorAll(
+    '[class^="quem__somos__profissional__"]'
+);
+
+profissionais.forEach((profissional) => {
+
+    const nome = profissional.querySelector('.quem__somos__nome');
+
+    profissional.addEventListener('mouseenter', () => {
+        nome.classList.add('ativo');
+    });
+
+    profissional.addEventListener('mouseleave', () => {
+        nome.classList.remove('ativo');
+    });
+
+});
+
+const profissionalImg = document.querySelectorAll('.quem__somos__img');
+
+
+profissionalImg.forEach((img) => {
+    
+    img.addEventListener('mouseenter', () => {
+        img.style.boxShadow = '7px 7px 7px rgb(255, 255, 255)';
+        img.style.transform = 'translateY(-15px)';
+        img.style.transition = '0.3s'; 
+    });
+
+    img.addEventListener('mouseleave', () => {
+        img.style.boxShadow = 'none'
+        img.style.transform = 'translateY(0)';
+    });
+
+})
+
+const profissionalInfo = document.querySelectorAll('.quem__somos__info');
+
+
+profissionalInfo.forEach((info) => {
+    
+    info.addEventListener('mouseenter', () => {
+        info.style.boxShadow = '7px 7px 7px rgb(255, 255, 255)';
+        info.style.transform = 'translateY(-15px)';
+        info.style.transition = '0.3s'; 
+    });
+
+    info.addEventListener('mouseleave', () => {
+        info.style.boxShadow = 'none'
+        info.style.transform = 'translateY(0)';
+    });
+
+})
+

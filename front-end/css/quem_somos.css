@@ -83,7 +83,6 @@
     height: 100%;
     border: 5px solid var(--secondary);
     border-radius: 1.5rem;
-    box-shadow:  7px 7px 7px rgb(255, 255, 255);
     margin: 10rem;
     
 
@@ -96,18 +95,28 @@
     justify-content: center;
     margin-left: 15rem;
     
+    
 }
 
 .quem__somos__nome{
     font-size: var(--titulo-hero);
     font-family: var(--fonte-texto);
     font-weight: 3rem;
-    text-decoration: underline;
-    text-decoration-color: var(--primary-dark);
     margin-top: 2rem;
     color: var(--bg-dark);
+    position: relative;
+    transition: 1s;
     
 }
+
+.quem__somos__nome.ativo {
+    text-decoration: underline;
+    text-decoration-color: var(--secondary);
+}
+
+
+
+
 .quem__somos__info{
     width: 100%;
     height: auto;
