@@ -55,10 +55,12 @@
     margin-top: 6rem;
     line-height: 2.5rem;
     border-radius: 2rem;
+    transition: transform 0.3s ease;
 }
 .conteudo__diferenciais:hover{
     box-shadow: 8px 8px 10px rgb(255, 255, 255);
     transition: box-shadow 0.5s ease-in;
+    transform: translateY(-6px);
 }
 .conteudo__diferenciais__titulo{
     font-size: 2.2rem;
@@ -113,10 +115,17 @@
 }
 
 .conteudo__video__container{
-    margin-top: 2rem;
-    border: 4px solid var(--secondary);
-    box-shadow:  5px 5px 5px rgba(7, 7, 7, 3);
-    
+  width: 100%;            /* O container vai ocupar toda a largura disponível */
+  max-width: 800px;       /* Opcional: define um limite máximo para o vídeo não ficar gigante */
+  margin: 0 auto;         /* Centraliza o vídeo na tela */
+  aspect-ratio: 16 / 9;   /* Mantém a proporção perfeita de cinema/TV */
+}
+
+.conteudo__video__container iframe, 
+.conteudo__video__container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* Garante que o vídeo preencha o espaço sem distorcer */
 }
 
 

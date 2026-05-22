@@ -36,20 +36,9 @@
     color: var(--bg-dark);
     font-weight: 2.5rem;
     justify-content: space-between;
-    text-decoration: underline;
-    text-decoration-color: var(--secondary);
-    line-height: 3rem;
 
 }
-
-.cabecalho__item:hover{
-    transition: 0.5s;
-    text-decoration: none;
-    border: 3px solid var(--bg-dark);
-    border-radius: 7px;
-    background-color: var(--secondary);
-    color:var(--text-main);
-}
+    
 
 .cabecalho__item__contato{
     justify-content: flex-end;
@@ -57,15 +46,6 @@
     font-size: 2rem;
 }
 
-.cabecalho__item__contato:hover{
-    transition: 0.5s;
-    text-decoration: underline;
-    text-decoration-color: var(--primary-dark);
-    border: 3px solid var(--bg-dark);
-    border-radius: 7px;
-    background-color: var(--secondary-dark);
-    color:var(--bg-dark);
-}
 
 @media (min-width: 320px) and (max-width: 425px){
     

@@ -17,6 +17,20 @@
     margin: 4rem;
 }
 
+.letra-pula {
+    display: inline-block; 
+    transition: transform 0.3s ease;
+}
+
+@keyframes pulaLetra {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); } 
+}
+
+.animar-pulo {
+    animation: pulaLetra 0.6s ease;
+}
+
 .rodpe__texto{
     margin: 10px auto;
     font-family:  "BIZ UDGothic", sans-serif;

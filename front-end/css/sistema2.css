@@ -1,4 +1,4 @@
-.conteudo__container__ranking{
+.conteudo__container__score__dinamico{
     width: 100%;
     height: auto;
     display: flex;
@@ -6,7 +6,7 @@
     gap: 6rem;
 }
 
-.conteudo__ranking{
+.conteudo__score__dinamico{
     display: flex;
     flex-direction: column;
     gap: 5rem;
@@ -18,7 +18,7 @@
     border-radius: 4rem;
 }
 
-.conteudo__ranking__titulo{
+.conteudo__score__dinamico__titulo{
     font-size: var(--titulo-main);
     font-family: var(--fonte-texto);
     font-weight: 1.5rem;
@@ -27,16 +27,16 @@
     text-align: center;
 }
 
-.conteudo__ranking__texto{
-    font-size: 2.1rem;
+.conteudo__score__dinamico__texto{
+    font-size: 2.6rem;
     font-family: var(--fonte-texto);
     font-weight: 5rem;
     text-align: center;
     line-height: 4rem;
 }
 
-.conteudo__ranking__imagem{
-    border-radius: 3rem;
+.conteudo__score__dinamico__imagem{
+    border-radius: 2.4rem;
     padding: 0;
     
 }
