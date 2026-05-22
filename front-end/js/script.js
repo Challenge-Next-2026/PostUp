@@ -72,3 +72,26 @@ menuLogo.addEventListener('mouseleave', () => {
 
 //JS ==> hero
 
+
+const hero = document.querySelector('.hero');
+
+const imagens = [
+    'url("./img/fundo_cabecalho.jpg")',
+    'url("./img/fundo2.jpg")',
+    'url("./img/fundo3.jpg")'
+];
+
+let index = 0;
+
+setInterval(() => {
+    index = (index + 1) % imagens.length;
+
+    hero.style.backgroundImage =
+        `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), ${imagens[index]}`;
+
+}, 4000);
+
+//JS ==> conteudo
+
+
+
