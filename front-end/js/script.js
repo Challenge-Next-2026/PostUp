@@ -54,6 +54,21 @@ menuContato.addEventListener('mouseleave', () => {
         menuContato.style.color = 'var(--text-main)'
     });
 
+
+const menuLogo = document.querySelector('.cabecalho__item__logo')
+
+    
+menuLogo.addEventListener('mouseenter', () => {
+    menuLogo.style.transform = 'translateY(-6px)';
+});
+
+menuLogo.addEventListener('mouseleave', () => {
+    menuLogo.style.transform = 'translateY(0)';
+});
+    
+
+
     
 
 //JS ==> hero
+
