@@ -75,23 +75,55 @@ menuLogo.addEventListener('mouseleave', () => {
 
 const hero = document.querySelector('.hero');
 
+// Verifica se a URL da página contém a palavra "paginas"
+const estaNaPastaPaginas = window.location.pathname.includes("/paginas/");
+
+// Define o prefixo: se estiver na pasta paginas, usa ../ senão usa ./
+const prefixo = estaNaPastaPaginas ? "../img/" : "./img/";
+
 const imagens = [
-    'url("./img/fundo_cabecalho.jpg")',
-    'url("./img/fundo2.jpg")',
-    'url("./img/fundo3.jpg")'
+    `url("${prefixo}fundo_cabecalho.jpg")`,
+    `url("${prefixo}fundo2.jpg")`,
+    `url("${prefixo}fundo3.jpg")`
 ];
 
 let index = 0;
-
+hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), ${imagens[index]}`;
 setInterval(() => {
     index = (index + 1) % imagens.length;
-
-    hero.style.backgroundImage =
-        `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), ${imagens[index]}`;
-
+    hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), ${imagens[index]}`;
 }, 4000);
 
 //JS ==> conteudo
+
+const conteudoTituloBloco = document.querySelector('.conteudo__diferenciais__titulo')
+
+conteudoTituloBloco.forEach(titulo => {
+
+
+    titulo.addEventListener('mouseenter', () => {
+        titulo.style.textDecoration = 'underline';
+        titulo.style.textDecorationColor = 'var (--primary)'; 
+        titulo.style.paddingBottom = '5px';
+        titulo.style.transition = '0.3s'; 
+    });
+
+    titulo.addEventListener('mouseleave', () => {
+        titulo.style.borderBottom = '3px solid var(--primary)';
+        titulo.style.paddingBottom = '0px';
+        titulo.style.borderBottom = '2px solid transparent';
+    });
+});
+
+const conteudoIdeia = document.querySelector('.conteudo__diferenciais')
+
+conteudoIdeia.addEventListener('mouseenter', () => {
+    conteudoIdeia.style.transform = 'translateY(-6px)';
+});
+
+conteudoIdeia.addEventListener('mouseleave', () => {
+    conteudoIdeia.style.transform = 'translateY(0)';
+});
 
 
 
