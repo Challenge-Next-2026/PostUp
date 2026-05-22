@@ -75,10 +75,8 @@ menuLogo.addEventListener('mouseleave', () => {
 
 const hero = document.querySelector('.hero');
 
-// Verifica se a URL da página contém a palavra "paginas"
 const estaNaPastaPaginas = window.location.pathname.includes("/paginas/");
 
-// Define o prefixo: se estiver na pasta paginas, usa ../ senão usa ./
 const prefixo = estaNaPastaPaginas ? "../img/" : "./img/";
 
 const imagens = [
@@ -94,36 +92,58 @@ setInterval(() => {
     hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), ${imagens[index]}`;
 }, 4000);
 
-//JS ==> conteudo
-
-const conteudoTituloBloco = document.querySelector('.conteudo__diferenciais__titulo')
-
-conteudoTituloBloco.forEach(titulo => {
 
 
-    titulo.addEventListener('mouseenter', () => {
-        titulo.style.textDecoration = 'underline';
-        titulo.style.textDecorationColor = 'var (--primary)'; 
-        titulo.style.paddingBottom = '5px';
-        titulo.style.transition = '0.3s'; 
+
+//JS ==> Rodapé
+
+const tituloRodape = document.querySelector('.rodape__nome');
+
+
+const textoOriginal = "Post UP";
+const logoImg = tituloRodape.querySelector('img').outerHTML; 
+
+tituloRodape.innerHTML = textoOriginal
+    .split("")
+    .map(letra => letra === " " ? "&nbsp;" : `<span class="letra-pula">${letra}</span>`)
+    .join("") + " " + logoImg;
+
+const spans = tituloRodape.querySelectorAll('.letra-pula');
+
+const observerRodape = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            
+            spans.forEach((span, i) => {
+                setTimeout(() => {
+                    span.classList.add('animar-pulo');
+                }, i * 100); 
+            });
+        } else {
+            spans.forEach(span => span.classList.remove('animar-pulo'));
+        }
+    });
+}, { threshold: 0.8 }); 
+
+observerRodape.observe(tituloRodape);
+
+
+//JS ==> conteudo (index)
+
+const conteudosIdeia = document.querySelectorAll('.conteudo__diferenciais');
+
+
+conteudosIdeia.forEach((elemento) => {
+    
+    elemento.addEventListener('mouseenter', () => {
+        elemento.style.transform = 'translateY(-6px)';
+        elemento.style.transition = '0.3s'; 
     });
 
-    titulo.addEventListener('mouseleave', () => {
-        titulo.style.borderBottom = '3px solid var(--primary)';
-        titulo.style.paddingBottom = '0px';
-        titulo.style.borderBottom = '2px solid transparent';
+    elemento.addEventListener('mouseleave', () => {
+        elemento.style.transform = 'translateY(0)';
     });
-});
 
-const conteudoIdeia = document.querySelector('.conteudo__diferenciais')
+})
 
-conteudoIdeia.addEventListener('mouseenter', () => {
-    conteudoIdeia.style.transform = 'translateY(-6px)';
-});
-
-conteudoIdeia.addEventListener('mouseleave', () => {
-    conteudoIdeia.style.transform = 'translateY(0)';
-});
-
-
-
+//JS ==> Quem somos
