@@ -63,6 +63,13 @@
 > 5. <raphael.rgb07@gmail.com>
 > ---
 > ### 5. Representação do Projeto
+> - #### Protótipo
+> <img src="./front-end/img/Protótipo Ranking.png" width="200"></img>
+> <img src="./front-end/img/Protótipo de página de upload.png" width="350"></img>
+> - #### RoadMap
+> <img src="./front-end/img/Demonstração de funcionamento da Plataforma.png" width="1000"></img>
+> - #### Cálculo Detalhado
+> <img src="./front-end/img/Fluxo-ScoreDinâmico.png" width="1000"></img>
 > ---
 > ### 6. Link do Repositório
 > - <https://github.com/Challenge-Next-2026/PostUp>
