@@ -33,6 +33,16 @@
     font-weight: 5rem;
     text-align: center;
     line-height: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* Centraliza o bloco da lista na página */
+    padding-left: 0;           /* Remove o recuo padrão do navegador */
+    list-style-position: inside;
+}
+
+.conteudo__score__dinamico__texto li{
+    text-align: center;        /* Alinha o texto ao centro */
+    margin-bottom: 8px;
 }
 
 .conteudo__score__dinamico__imagem{
