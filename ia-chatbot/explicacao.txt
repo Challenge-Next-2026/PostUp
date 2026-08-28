@@ -1,0 +1,99 @@
+Equipe PostUp
+Integrantes:
+- Felipe Lima de Oliveira -> rm569947
+- Giovanni Zorzetto Oliveira -> rm569464
+- Raphael Gomes Brito -> rm572637
+
+Origem e Significado
+- Nossa base de dados é separada em 4 planilhas excel. Na primeira planilha "Ações" lá foram 
+definidas atitudes sustentáveis e em que categorias elas se encaixam. Um total de 113 ações 
+associadas à 18 categorias. Tanto as ações quanto as categorias obtivemos através de pesquisas
+e Programas de Sustentabilidade fornecidos pelo gov.br. Na segunda planilha "Postagem" há dados
+referentes a uma postagem por categoria, dados especulativos apenas para ilustar como ficaria o
+cálculo do score que será mencionado a seguir. Na terceira "Validação" foi desenvolvido um cálculo 
+baseado em testes lógicos que verificam a autenticidade das postagens realizadas na planilha "Postagem",
+esse cálculo é apenas uma condição simples avaliando cada campo de dados na tabela. Na última "Score"
+tem os dados mais importantes, ela estabelece notas de 0 a 100 para todas as características atribuídas
+à uma postagem [Impacto Real, Frequência(vezes por semana), Dificuldade e Confiabilidade]. Essas notas 
+são atribuidas de acordo com circunstâncias externas. Por exemplo, o campo Frequência se baseia na
+quantidade de vezes que aquela ação foi feita durante a semana, tabela "Postagem", o campo
+confiabilidade puxa as avaliações feitas na tabela "Validação", e os campos Impacto e Dificuldade
+foram estabelecidos a partir de fontes externas como a US EPA, UNEP, IEA e UNESCO.
+
+Quantidade e Qualidade
+- Temos um total de 167 exemplos. 113 Ações, 18 Postagens, 18 Validações e 18 Scores.
+Todos os dados são embasados e genuínos, estabelecidos por cálculos, condicionáis ou fontes confiáveis.
+
+Características Importantes
+- Postagens
+    Na planilha de Postagens, os principais atributos são:
+    - Texto: representa o conteúdo informado pelo usuário e descreve a ação sustentável realizada.
+    Permite analisar o contexto e identificar informações relacionadas à ação.
+    - Categoria: identifica o tipo de ação sustentável realizada, como Reciclagem, Economia de Água,
+    Mobilidade Sustentável, Reflorestamento, entre outras. É importante para relacionar a postagem às
+    categorias existentes na base de ações e aos respectivos níveis de impacto.
+    - Quantidade: representa a dimensão da ação realizada, como quantidade de materiais reciclados,
+    número de árvores plantadas ou distância percorrida. Esse atributo permite diferenciar ações de
+    diferentes proporções.
+    - Unidade: complementa a quantidade, indicando sua unidade de medida, como kg, km, unidades, árvores
+    ou litros.
+    - Frequência: indica a recorrência da ação sustentável. Esse atributo é relevante porque uma ação
+    realizada repetidamente pode representar um impacto acumulado maior do que uma ação realizada apenas
+    uma vez.
+    - Imagem e Vídeo: indicam a existência de evidências visuais relacionadas à postagem. Esses
+    atributos podem auxiliar na análise da autenticidade e na verificação da compatibilidade entre a
+    ação declarada e a evidência apresentada.
+    - Data e Local: fornecem informações de contexto sobre quando e onde a ação foi realizada, podendo
+    auxiliar posteriormente em processos de análise e validação.
+
+- Validação
+    Na planilha de Validação, os principais atributos utilizados para analisar a confiabilidade das
+    postagens são:
+    - Duplicidade: Mostra se a postagem ou conteúdo apresentado já foi postado anteriormente. É
+    importante para detectar possíveis tentativas de repetição da mesma ação.
+    - Plágio: Mostra a existência de possível reprodução de conteúdo de outra postagem. Esse atributo
+    contribui para a identificação de conteúdos que não representam originalidade na postagem.
+    - Indicador IA: representa a identificação de características que podem indicar que o conteúdo
+    textual foi gerado por IA.
+    - Evidência Compatível: indica se a evidência apresentada é compatível com a postagem. Esse é um
+    atributo importante para relacionar a informação declarada pelo usuário às evidências disponíveis.
+    - Veracidade: representa o resultado da análise da veracidade da informação apresentada na postagem.
+    - Classificação: representa a classificação final atribuída à postagem, podendo indicar situações
+    como Legítima, Pouca Informação, Duplicada, Plágio, Suspeita ou Falsa.
+
+- Ações
+    Na planilha de Ações, o principal objetivo é organizar as ações sustentáveis que podem ser
+    realizadas pelos usuários e relacionar com categorias.
+
+    Entre os atributos de maior relevância estão:
+    - Ação: identifica a ação sustentável realizada pelo usuário.
+    - Categoria: classifica a ação dentro de uma das categorias sustentáveis definidas.
+    - Descrição: apresenta informações complementares sobre como a ação é realizada.
+
+- Score
+    Na planilha de Score, os principais atributos utilizados para determinar a pontuação de uma ação são:
+    - Impacto: representa o potencial de impacto positivo real da categoria da ação sustentável.
+    - Frequência: representa a recorrência com que a ação é realizada.
+    - Dificuldade: representa o nível de facilidade ou dificuldade para realizar a ação, considerando
+    aspectos como implementação, custo e popularidade.
+    - Confiabilidade: representa o nível de confiança nas informações e evidências relacionadas à ação
+    realizada.
+    - Score: representa o resultado final da pontuação atribuída à ação.
+
+Rótulos (labels)
+- Os principais rótulos (labels) definidos na nossa base de dados são Classificação e Score.
+
+    O label Classificação está relacionado ao modelo de validação das postagens e representa o resultado
+    final da análise realizada sobre cada publicação. Esse rótulo possui as categorias Legítima, Pouca
+    Informação, Duplicada, Plágio, Suspeita e Falsa. A partir dos dados disponíveis e uma estrutura 
+    condicional, o modelo deverá aprender a identificar qual dessas classificações é mais adequada para
+    cada postagem.
+
+    O label Score está relacionado ao modelo de pontuação das ações sustentáveis e representa a pontuação
+    final atribuída a uma determinada ação. Esse valor será utilizado para determinar a recompensa do 
+    usuário de acordo com o impacto e as demais características consideradas pelo sistema.
+
+Objetivos
+- Nossos objetivos são contribuir para o treinamento de um modelo de IA robusto e orientar esse modelo a 
+manipular adequadamente a atribuição de score às postagens e fazer a autenticação e validação da
+autenticidade de uma postagem. Queremos que a IA use esses exemplos e replique-os em situações reais.
