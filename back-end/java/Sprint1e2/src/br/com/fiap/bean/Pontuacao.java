@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class Pontuacao extends Postagem implements ExibicaoObjetos
+public class Pontuacao implements ExibicaoObjetos
 {
     // Atributos
     private int idPontuacao;

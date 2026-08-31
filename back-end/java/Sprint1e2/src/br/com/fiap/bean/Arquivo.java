@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class Arquivo extends Avaliacao implements ExibicaoObjetos
+public class Arquivo implements ExibicaoObjetos
 {
     // Atributos
     private int idArquivo;
@@ -70,7 +70,7 @@ public class Arquivo extends Avaliacao implements ExibicaoObjetos
 
     // Metodos da classe
     // Simulação de importação com listas
-    public void importarArquivo(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem, List <Arquivo> arquivos, int idArquivo)
+    public void importarArquivo(List <Arquivo> arquivos, int idArquivo)
     {
         LocalDate dataAtual = LocalDate.now();
         String nome, tipo, url, auxiliar;
@@ -78,24 +78,14 @@ public class Arquivo extends Avaliacao implements ExibicaoObjetos
         try {
             // Preenchimento de atributos das listas arquivos, usuarios e postagens
             nome = JOptionPane.showInputDialog("Informe o nome do arquivo:");
-            usuarios.get(id - 1).setNomeArquivo(nome);
-            postagems.get(idPostagem - 1).setNomeArquivo(nome);
             arquivos.get(idArquivo - 1).setNomeArquivo(nome);
             tipo = JOptionPane.showInputDialog("Informe o tipo do arquivo:");
-            usuarios.get(id - 1).setTipo(tipo);
-            postagems.get(idPostagem - 1).setTipo(tipo);
             arquivos.get(idArquivo - 1).setTipo(tipo);
             auxiliar = JOptionPane.showInputDialog("Informe o tamanho do arquivo:");
             float tamanho = Float.parseFloat(auxiliar);
-            usuarios.get(id - 1).setTamanho(tamanho);
-            postagems.get(idPostagem - 1).setTamanho(tamanho);
             arquivos.get(idArquivo - 1).setTamanho(tamanho);
             url = JOptionPane.showInputDialog("Informe a URL");
-            usuarios.get(id - 1).setUrl(url);
-            postagems.get(idPostagem - 1).setUrl(url);
             arquivos.get(idArquivo - 1).setUrl(url);
-            usuarios.get(id - 1).setDataUpload(dataAtual);
-            postagems.get(idPostagem - 1).setDataUpload(dataAtual);
             arquivos.get(idArquivo - 1).setDataUpload(dataAtual);
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -107,20 +97,10 @@ public class Arquivo extends Avaliacao implements ExibicaoObjetos
     {
         // Preenchimento de atributos das listas arquivos, usuarios e postagens
         LocalDate dataAtual = LocalDate.now();
-        usuarios.get(id - 1).setNomeArquivo("Câmera");
-        postagems.get(idPostagem - 1).setNomeArquivo("Câmera");
         arquivos.get(idArquivo - 1).setNomeArquivo("Câmera");
-        usuarios.get(id - 1).setTipo("img");
-        postagems.get(idPostagem - 1).setTipo("img");
         arquivos.get(idArquivo - 1).setTipo("img");
-        usuarios.get(id - 1).setTamanho(0);
-        postagems.get(idPostagem - 1).setTamanho(0);
         arquivos.get(idArquivo - 1).setTamanho(0);
-        usuarios.get(id - 1).setUrl("xxxxxxxxxxxxxxx.img");
-        postagems.get(idPostagem - 1).setUrl("xxxxxxxxxxxxxxx.img");
         arquivos.get(idArquivo - 1).setUrl("xxxxxxxxxxxxxxx.img");
-        usuarios.get(id - 1).setDataUpload(dataAtual);
-        postagems.get(idPostagem - 1).setDataUpload(dataAtual);
         arquivos.get(idArquivo - 1).setDataUpload(dataAtual);
         JOptionPane.showMessageDialog(null, "Câmera acessada com sucesso!");
     }

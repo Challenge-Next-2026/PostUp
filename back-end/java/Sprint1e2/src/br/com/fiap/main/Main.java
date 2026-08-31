@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Main
 {
-    public static void main(String[] args)
+    static void main()
     {
         // Variáveis, Listas e objetos de apoio
         int escolha, id, idPostagem, contador = 1, contador2 = 1, contador3 = 1;
@@ -58,7 +58,7 @@ public class Main
                                     auxiliar = JOptionPane.showInputDialog("Informe o ID:");
                                     id = Integer.parseInt(auxiliar);
                                     // Chamada de metodo alterarEmail no objeto usuario de id informado
-                                    usuarios.get(id - 1).alterarEmail(usuarios, id);
+                                    usuarios.get(id - 1).alterarEmail();
                                     // Exibição de Usuário
                                     usuarios.get(contador - 1).exibir(usuarios, contador, 0, null, 0, 0, null, 0, null, null);
                                     break;
@@ -75,7 +75,7 @@ public class Main
                                     auxiliar = JOptionPane.showInputDialog("Informe o ID:");
                                     id = Integer.parseInt(auxiliar);
                                     // Chamada de metodo alterarSenha no objeto usuario de id informado
-                                    usuarios.get(id - 1).alterarSenha(usuarios, id);
+                                    usuarios.get(id - 1).alterarSenha();
                                     // Exibição de Usuário
                                     usuarios.get(contador - 1).exibir(usuarios, contador, 0, null, 0, 0, null, 0, null, null);
                                     break;
@@ -129,7 +129,7 @@ public class Main
                                     auxiliar = JOptionPane.showInputDialog("informe o ID da postagem a ser alterada:");
                                     idPostagem = Integer.parseInt(auxiliar);
                                     // Chamada de metodo editarPostagem no objeto postagens de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                                    postagens.get(idPostagem - 1).editarPostagem(usuarios, id, postagens, idPostagem);
+                                    postagens.get(idPostagem - 1).editarPostagem(postagens, idPostagem);
                                     // Exibição de Postagem
                                     postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
                                     break;
@@ -151,7 +151,7 @@ public class Main
                                     auxiliar = JOptionPane.showInputDialog("informe o ID da postagem a ser removida:");
                                     idPostagem = Integer.parseInt(auxiliar);
                                     // Chamada de metodo removerPostagem no objeto postagens de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                                    postagens.get(idPostagem - 1).removerPostagem(usuarios, id, postagens, idPostagem);
+                                    postagens.get(idPostagem - 1).removerPostagem(postagens, idPostagem);
                                     // Exibição de Postagem
                                     postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
                                     break;
@@ -188,7 +188,7 @@ public class Main
                                     auxiliar = JOptionPane.showInputDialog("Informe o ID da postagem que deseja importar o arquivo:");
                                     idPostagem = Integer.parseInt(auxiliar);
                                     // Chamada de metodo importarArquivo no objeto arquivos de id informado(Só roda se o id do usuario, o id postagem e o id arquivo forem existentes e válidos)
-                                    arquivos.get(contador3 - 1).importarArquivo(usuarios, id, postagens, idPostagem, arquivos, contador3);
+                                    arquivos.get(contador3 - 1).importarArquivo(arquivos, contador3);
                                     // Exibição de Arquivo
                                     arquivos.get(contador3 - 1).exibir(usuarios, 0, id, postagens, 0, idPostagem, arquivos, contador3, null, null);
                                     contador3++;
@@ -240,16 +240,13 @@ public class Main
                         } else {
                             // Novo elemento na lista avaliacoes
                             avaliacoes.add(new Avaliacao());
-                            // Solicitação de id usuário
-                            auxiliar = JOptionPane.showInputDialog("ID do usuário: ");
-                            id = Integer.parseInt(auxiliar);
                             // Solicitação de id postagem
                             auxiliar = JOptionPane.showInputDialog("ID da postagem a ser avaliada: ");
                             idPostagem = Integer.parseInt(auxiliar);
                             // Chamada de metodo avaliarPostagem() no objeto avaliacoes de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                            avaliacoes.getFirst().avaliarPostagem(avaliacoes, usuarios, id, postagens, idPostagem);
+                            avaliacoes.getFirst().avaliarPostagem(avaliacoes, arquivos, postagens, idPostagem);
                             // Chamada de metodo mostrarPostagem() no objeto avaliacoes de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                            avaliacoes.getFirst().exibir(usuarios, 0, id, postagens, 0, idPostagem, arquivos, contador3, avaliacoes, null);
+                            avaliacoes.getFirst().exibir(usuarios, 0,0, postagens, 0, idPostagem, arquivos, contador3, avaliacoes, null);
                             break;
                         }
                     case 5:

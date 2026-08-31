@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class Usuario extends Postagem implements ExibicaoObjetos
+public class Usuario implements ExibicaoObjetos
 {
     // Atributos
     private int idUsuario;
@@ -82,19 +82,15 @@ public class Usuario extends Postagem implements ExibicaoObjetos
     }
 
     // Alterar o email de um usuário da lista
-    public void alterarEmail(List <Usuario> usuarios, int id)
+    public void alterarEmail()
     {
-        String email = JOptionPane.showInputDialog("Informe o novo email:");
-        // Selecionando o indice da lista usuarios
-        usuarios.get(id - 1).setEmail(email);
+        setEmail(String.format(JOptionPane.showInputDialog("Informe o novo email: {%s}", getEmail())));
     }
 
     // Alterar o email de um usuário da lista
-    public void alterarSenha(List <Usuario> usuarios, int id)
+    public void alterarSenha()
     {
-        String senha = JOptionPane.showInputDialog("Informe a nova senha:");
-        // Selecionando o indice da lista usuarios
-        usuarios.get(id - 1).setSenha(senha);
+        setSenha(String.format(JOptionPane.showInputDialog("Informe a nova senha: {%s}", getSenha())));
     }
 
     public void exibir(List<Usuario> usuarios, int contador, int id, List<Postagem> postagens, int contador2, int idPostagem, List<Arquivo> arquivos, int contador3, List<Avaliacao> avaliacoes, Pontuacao pontuacao) {

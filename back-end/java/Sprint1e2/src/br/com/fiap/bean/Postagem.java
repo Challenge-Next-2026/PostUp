@@ -4,9 +4,8 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.jar.JarEntry;
 
-public class Postagem extends Arquivo implements ExibicaoObjetos
+public class Postagem implements ExibicaoObjetos
 {
     // Atributos
     private int idPostagem;
@@ -73,14 +72,10 @@ public class Postagem extends Arquivo implements ExibicaoObjetos
             try {
                 // Preenchimento de indice nas listas usuarios e postagens
                 titulo = JOptionPane.showInputDialog("Títulos possíveis...\nPlantar - Transporte público - Bicicleta - Veículo Elétrico - Reciclagem\nDigite algum");
-                usuarios.get(id - 1).setTitulo(titulo);
                 postagems.get(contador - 1).setTitulo(titulo);
                 descricao = JOptionPane.showInputDialog("Descrição:");
-                usuarios.get(id - 1).setDescricao(descricao);
                 postagems.get(contador - 1).setDescricao(descricao);
-                usuarios.get(id - 1).setDataPostagem(dataAtual);
                 postagems.get(contador - 1).setDataPostagem(dataAtual);
-                usuarios.get(id - 1).setStatus(status);
                 postagems.get(contador - 1).setStatus(status);
             } catch (Exception e){
                 JOptionPane.showMessageDialog(null, e.getMessage());
@@ -91,7 +86,7 @@ public class Postagem extends Arquivo implements ExibicaoObjetos
     }
 
     // Metodo semelhante ao criarPostagem()
-    public void editarPostagem(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem)
+    public void editarPostagem(List <Postagem> postagems, int idPostagem)
     {
         LocalDate dataAtual = LocalDate.now();
         String titulo, descricao;
@@ -99,14 +94,10 @@ public class Postagem extends Arquivo implements ExibicaoObjetos
         // Tratamento de erros
         try {
             titulo = JOptionPane.showInputDialog("Novo Título:");
-            usuarios.get(id - 1).setTitulo(titulo);
             postagems.get(idPostagem - 1).setTitulo(titulo);
             descricao = JOptionPane.showInputDialog("Nova Descrição:");
-            usuarios.get(id - 1).setDescricao(descricao);
             postagems.get(idPostagem - 1).setDescricao(descricao);
-            usuarios.get(id - 1).setDataPostagem(dataAtual);
             postagems.get(idPostagem - 1).setDataPostagem(dataAtual);
-            usuarios.get(id - 1).setStatus(status);
             postagems.get(idPostagem - 1).setStatus(status);
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -114,15 +105,11 @@ public class Postagem extends Arquivo implements ExibicaoObjetos
     }
 
     // Metodo para remover postagem
-    public void removerPostagem(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem)
+    public void removerPostagem(List <Postagem> postagems, int idPostagem)
     {
-        usuarios.get(id - 1).setTitulo(null);
         postagems.get(idPostagem - 1).setTitulo(null);
-        usuarios.get(id - 1).setDescricao(null);
         postagems.get(idPostagem - 1).setDescricao(null);
-        usuarios.get(id - 1).setDataPostagem(null);
         postagems.get(idPostagem - 1).setDataPostagem(null);
-        usuarios.get(id - 1).setStatus(false);
         postagems.get(idPostagem - 1).setStatus(false);
         JOptionPane.showMessageDialog(null, "Postagem removida");
     }
