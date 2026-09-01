@@ -60,37 +60,49 @@ public class Usuario implements ExibicaoObjetos
     }
 
     // Metodos Exclusivos
-    public void cadastrarUsuario()
+    public void cadastrarUsuario(int idUsuario)
     {
         // Armazenando data com LocalDate
         LocalDate dataAtual = LocalDate.now();
-        // variáveis de apoio
-        String nome, email, senha;
-        // Tratamento de erros
-        try {
-            // Preenchimento de atributos
-            nome = JOptionPane.showInputDialog("Informe o nome:");
-            setNome(nome);
-            email = JOptionPane.showInputDialog("Informe o email:");
-            setEmail(email);
-            senha = JOptionPane.showInputDialog("Informe a senha:");
-            setSenha(senha);
-            setDataCadastro(dataAtual);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        // Preenchimento de atributos
+        setIdUsuario(idUsuario);
+        setNome(JOptionPane.showInputDialog("Informe o Nome:"));
+        setEmail(JOptionPane.showInputDialog("Informe o Email:"));
+        setSenha(JOptionPane.showInputDialog("Informe a Senha:"));
+        setDataCadastro(dataAtual);
+        JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+    }
+
+    // Realizar login
+    public void realizarLogin() throws Exception {
+        // Armazenamento de valor nas variaveis
+        String email = JOptionPane.showInputDialog("Informe o email:");
+        String senha = JOptionPane.showInputDialog("informe a senha:");
+
+        // Verificação
+        if (!getEmail().equals(email)) {
+            throw new Exception("Email incorreto!");
+        } else if (!getSenha().equals(senha)) {
+            throw new Exception("Senha Incorreta");
+        } else {
+            JOptionPane.showMessageDialog(null, String.format("Seja Bem Vindo a PostUp!\n%s", getNome()));
         }
     }
 
     // Alterar o email de um usuário da lista
     public void alterarEmail()
     {
-        setEmail(String.format(JOptionPane.showInputDialog("Informe o novo email: {%s}", getEmail())));
+        // setEmail com entrada de dados
+        setEmail(JOptionPane.showInputDialog(String.format("Informe o novo Email: {%s}", getEmail())));
+        JOptionPane.showMessageDialog(null, "Email alterado!");
     }
 
     // Alterar o email de um usuário da lista
     public void alterarSenha()
     {
-        setSenha(String.format(JOptionPane.showInputDialog("Informe a nova senha: {%s}", getSenha())));
+        // setSenha com entrada de dados
+        setSenha(JOptionPane.showInputDialog(String.format("Informe a nova Senha: {%s}", getSenha())));
+        JOptionPane.showMessageDialog(null, "Senha alterada!");
     }
 
     public void exibir(List<Usuario> usuarios, int contador, int id, List<Postagem> postagens, int contador2, int idPostagem, List<Arquivo> arquivos, int contador3, List<Avaliacao> avaliacoes, Pontuacao pontuacao) {
