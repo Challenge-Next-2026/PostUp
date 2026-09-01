@@ -1,8 +1,11 @@
 package br.com.fiap.main;
 
 import br.com.fiap.bean.*;
+import br.com.fiap.dao.ConnectionFactory;
+import br.com.fiap.dao.UsuarioDAO;
 
 import javax.swing.*;
+import java.sql.Connection;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,8 @@ public class Main
         List <Arquivo> arquivos = new ArrayList<>();
         List <Avaliacao> avaliacoes = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        Connection con = ConnectionFactory.abrirConexao();
+        List <UsuarioDAO> usuariosDAO = new ArrayList<>();
         // laço de controle de execução
         do{
             // Tratamento de errps
@@ -30,8 +35,12 @@ public class Main
                         idUsuario++;
                         // Novo elemento na lista usuarios
                         usuarios.add(new Usuario());
+                        // Novo elemento na lista usuariosDAO
+                        usuariosDAO.add(new UsuarioDAO(con));
                         // Chamado de metodo cadastrarusuario()
                         usuarios.get(idUsuario - 1).cadastrarUsuario(idUsuario);
+                        // Inserção no banco de dados
+                        JOptionPane.showMessageDialog(null, usuariosDAO.get(idUsuario - 1).inserir(usuarios, idUsuario));
                         // Exibição de Usuário
                         usuarios.get(idUsuario - 1).exibir(usuarios, idUsuario, 0, null, 0, 0, null, 0, null, null);
                         continue;
@@ -296,6 +305,7 @@ public class Main
                         } while (escolha != 6);
                     // SAIR
                     case 3:
+                        ConnectionFactory.fecharConexao(con);
                         JOptionPane.showMessageDialog(null, "Encerrando...", "Atenção", JOptionPane.WARNING_MESSAGE);
                         System.exit(0);
                         break;
