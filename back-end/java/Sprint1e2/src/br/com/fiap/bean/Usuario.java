@@ -73,22 +73,6 @@ public class Usuario implements ExibicaoObjetos
         JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
     }
 
-    // Realizar login
-    public void realizarLogin() throws Exception {
-        // Armazenamento de valor nas variaveis
-        String email = JOptionPane.showInputDialog("Informe o email:");
-        String senha = JOptionPane.showInputDialog("informe a senha:");
-
-        // Verificação
-        if (!getEmail().equals(email)) {
-            throw new Exception("Email incorreto!");
-        } else if (!getSenha().equals(senha)) {
-            throw new Exception("Senha Incorreta");
-        } else {
-            JOptionPane.showMessageDialog(null, String.format("Seja Bem Vindo a PostUp!\n%s", getNome()));
-        }
-    }
-
     // Alterar o email de um usuário da lista
     public void alterarEmail()
     {

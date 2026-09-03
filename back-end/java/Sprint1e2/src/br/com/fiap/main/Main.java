@@ -34,27 +34,34 @@ public class Main
                 switch (escolha){
                     // Cadastro
                     case 1:
-                        idUsuario++;
-                        // Novo elemento na lista usuarios
-                        usuarios.add(new Usuario());
-                        // Novo elemento na lista usuariosDAO
-                        usuariosDAO.add(new UsuarioDAO(con));
-                        // Chamado de metodo cadastrarusuario()
-                        usuarios.get(idUsuario - 1).cadastrarUsuario(idUsuario);
-                        // Inserção no banco de dados
-                        JOptionPane.showMessageDialog(null, usuariosDAO.get(idUsuario - 1).inserir(usuarios, idUsuario), "Alerta", JOptionPane.WARNING_MESSAGE);
-                        // Exibição de Usuário
-                        usuarios.get(idUsuario - 1).exibir(usuarios, idUsuario, 0, null, 0, 0, null, 0, null, null);
+                        // Objeto para realizar as operações
+                        UsuarioDAO usuarioDAO = new UsuarioDAO(con);
+                        // Armazenamento de próximo id dentro do idUsuario
+                        idUsuario = usuarioDAO.obterProximoId();
+                        // Objeto para realizar operações
+                        Usuario usuario = new Usuario();
+                        // Cadastro de usuário
+                        usuario.cadastrarUsuario(idUsuario);
+                        // Inserção no banco
+                        JOptionPane.showMessageDialog(null, usuarioDAO.inserir(usuario), "Alerta",JOptionPane.WARNING_MESSAGE);
+                        // Atribuição de objetos de teste às listas
+                        usuarios.add(usuario);
+                        usuariosDAO.add(usuarioDAO);
+                        // Exibição de objeto
+                        usuario.exibir(usuarios, usuarios.size(), 0, null, 0, 0, null, 0, null, null);
                         continue;
                     // LOGIN
                     case 2:
-                        // Validação
-                        if (usuarios.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Não há usuários cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        idUsuario2 = Integer.parseInt(JOptionPane.showInputDialog("Informe o ID do usuário que deseja efetuar o LOGIN:"));
+                        String email = JOptionPane.showInputDialog("Informe o email cadastrado: ");
+                        String senha = JOptionPane.showInputDialog("Informe a senha cadastrado: ");
+                        UsuarioDAO usuarioDAO1 = new UsuarioDAO(con);
+                        Usuario usuarioLogado = usuarioDAO1.buscarUsuario(idUsuario2, email, senha);
+                        if (usuarioLogado == null) {
+                            JOptionPane.showMessageDialog(null, "Email ou Senha Inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
                             continue;
                         } else {
-                            idUsuario2 = Integer.parseInt(JOptionPane.showInputDialog("Informe o ID do usuário que deseja efetuar o LOGIN:"));
-                            usuarios.get(idUsuario2 - 1).realizarLogin();
+                            JOptionPane.showMessageDialog(null, "Seja Bem Vindo à PostUp\n" + usuarioLogado.getNome());
                         }
                         do {
                             // menu principal
