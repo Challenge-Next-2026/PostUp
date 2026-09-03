@@ -2,6 +2,7 @@ package br.com.fiap.main;
 
 import br.com.fiap.bean.*;
 import br.com.fiap.dao.ConnectionFactory;
+import br.com.fiap.dao.PostagemDAO;
 import br.com.fiap.dao.UsuarioDAO;
 
 import javax.swing.*;
@@ -24,6 +25,7 @@ public class Main
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         Connection con = ConnectionFactory.abrirConexao();
         List <UsuarioDAO> usuariosDAO = new ArrayList<>();
+        List <PostagemDAO> postagensDAO = new ArrayList<>();
         // laço de controle de execução
         do{
             // Tratamento de errps
@@ -40,7 +42,7 @@ public class Main
                         // Chamado de metodo cadastrarusuario()
                         usuarios.get(idUsuario - 1).cadastrarUsuario(idUsuario);
                         // Inserção no banco de dados
-                        JOptionPane.showMessageDialog(null, usuariosDAO.get(idUsuario - 1).inserir(usuarios, idUsuario));
+                        JOptionPane.showMessageDialog(null, usuariosDAO.get(idUsuario - 1).inserir(usuarios, idUsuario), "Alerta", JOptionPane.WARNING_MESSAGE);
                         // Exibição de Usuário
                         usuarios.get(idUsuario - 1).exibir(usuarios, idUsuario, 0, null, 0, 0, null, 0, null, null);
                         continue;
@@ -120,6 +122,8 @@ public class Main
                                             } else {
                                                 // Novo elemento na lista postagens
                                                 postagens.add(new Postagem());
+                                                // Novo elemento na lista postagensDAO
+                                                postagensDAO.add(new PostagemDAO(con));
                                                 // Definição de id com base no número de repetições
                                                 postagens.get(contador2 - 1).setIdPostagem(contador2);
                                                 // Solicitação de id usuário
@@ -127,6 +131,8 @@ public class Main
                                                 id = Integer.parseInt(auxiliar);
                                                 // Chamada de metodo criarPostagem no objeto postagens de id informado(Só roda se o id do usuario for existente e válido)
                                                 postagens.get(contador2 - 1).criarPostagem(usuarios, id, postagens, contador2);
+                                                // Exibição e chamada de metodo para conexão com banco
+                                                JOptionPane.showMessageDialog(null, postagensDAO.get(contador2 - 1).inserir(postagens, contador2), "Alerta", JOptionPane.WARNING_MESSAGE);
                                                 // Exibição de Postagem
                                                 postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
                                                 contador2++;
@@ -318,6 +324,8 @@ public class Main
                 break;
             }
         } while (JOptionPane.showConfirmDialog(null, "Deseja continuar?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0);
+        // Fechar conexão
+        ConnectionFactory.fecharConexao(con);
         // Fim do programa
         JOptionPane.showMessageDialog(null, "Programa encerrado.");
     }
