@@ -1,18 +1,19 @@
 package br.com.fiap.dao;
 
-import br.com.fiap.bean.Postagem;
+import br.com.fiap.bean.Avaliacao;
+import br.com.fiap.bean.Pontuacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class PostagemDAO {
+public class PontuacaoDAO {
     // Atributo
     private Connection con;
 
     // Construtor com passagem de parâmetro
-    public PostagemDAO(Connection con) {
+    public PontuacaoDAO(Connection con) {
         this.con = con;
     }
 
@@ -22,18 +23,17 @@ public class PostagemDAO {
     }
 
     // Metodo Exclusivo
-    public String inserir(List<Postagem> postagems, int idPostagem){
-        // Comando sql para inserir dentro da tabela Postagem
-        String sql = "INSERT INTO POSTAGEM(id_postagem, ds_titulopost, ds_postagem, dt_postagem, st_postagem) VALUES (?, ?, ?, ?, ?)";
+    public String inserir(Pontuacao pontuacao){
+        // Comando sql para inserir dentro da tabela Arquivo
+        String sql = "INSERT INTO PONTUACAO(id_pontuacao, vl_pontuacao, ds_origempontuacao, dt_pontuacao) VALUES (?, ?, ?, ?)";
         // Try with resourses
         // Objeto criado e instanciado dentro do try para fechar automaticamente
         try (PreparedStatement ps = getCon().prepareStatement(sql)){
             // Atribuindo valores ao comando INSERT
-            ps.setInt(1, postagems.get(idPostagem - 1).getIdPostagem());
-            ps.setString(2, postagems.get(idPostagem - 1).getTitulo());
-            ps.setString(3, postagems.get(idPostagem - 1).getDescricao());
-            ps.setDate(4, java.sql.Date.valueOf(postagems.get(idPostagem - 1).getDataPostagem()));
-            ps.setString(5, "S");
+            ps.setInt(1, pontuacao.getIdPontuacao());
+            ps.setFloat(2, pontuacao.getValor());
+            ps.setString(3, "Avaliação");
+            ps.setDate(4, java.sql.Date.valueOf(pontuacao.getDataPontuacao()));
             // Verificação
             if (ps.executeUpdate() > 0) {
                 return "Inserido com Sucesso!";
