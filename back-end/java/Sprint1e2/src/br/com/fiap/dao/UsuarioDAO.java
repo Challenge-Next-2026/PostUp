@@ -4,6 +4,7 @@ import br.com.fiap.bean.Usuario;
 
 import javax.swing.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioDAO {
@@ -92,6 +93,78 @@ public class UsuarioDAO {
             }
         } catch (SQLException e) {
             return "Erro de SQL: " + e.getMessage();
+        }
+    }
+
+    // Metodo para exibir usuários cadastrados
+    public ArrayList<Usuario> listarCadastrados(){
+        // Comando sql
+        String sql = "SELECT id_usuario, nm_usuario FROM USUARIO";
+        // lista para armazenar todos os usuários
+        ArrayList<Usuario> usuariosCadastrados = new ArrayList<>();
+        // try-with-resourses passando o comando sql para o objeto ps e armazenando a execução em um objeto rs
+        try (PreparedStatement ps = getCon().prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()){
+            // Confere se há usuários na tabela
+            if (ps != null) {
+                // laço que pega usuário por usuário
+                while (rs.next()){
+                    // Novo objeto
+                    Usuario usuario = new Usuario();
+                    // Pegando valor das colunas
+                    usuario.setIdUsuario(rs.getInt(1));
+                    usuario.setNome(rs.getString(2));
+                    // Adição de objeto à lista
+                    usuariosCadastrados.add(usuario);
+                }
+                // Retorno de lista
+                return usuariosCadastrados;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL!: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+
+    public void alterarEmail(Usuario usuario){
+        // Comando sql para alterar dentro da tabela Usuario
+        String sql = "UPDATE USUARIO SET ds_email = ? WHERE id_usuario = ?";
+        // Try with resourses
+        // Objeto criado e instanciado dentro do try para fechar automaticamente
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            // Atribuindo valores ao comando INSERT
+            ps.setString(1, usuario.getEmail());
+            ps.setInt(2, usuario.getIdUsuario());
+            // Verificação
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Alterado com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao Alterar!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void alterarSenha(Usuario usuario){
+        // Comando sql para alterar dentro da tabela Usuario
+        String sql = "UPDATE USUARIO SET ds_senha = ? WHERE id_usuario = ?";
+        // Try with resourses
+        // Objeto criado e instanciado dentro do try para fechar automaticamente
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            // Atribuindo valores ao comando INSERT
+            ps.setString(1, usuario.getSenha());
+            ps.setInt(2, usuario.getIdUsuario());
+            // Verificação
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Alterado com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao Alterar!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -52,15 +52,30 @@ public class Main
                         continue;
                     // LOGIN
                     case 2:
+                        // Visualização de BDD
+                        UsuarioDAO usuarioDAO1 = new UsuarioDAO(con);
+                        ArrayList<Usuario> resultado = usuarioDAO1.listarCadastrados();
+                        if (resultado != null) {
+                            String listagem = "";
+                            for (Usuario usuario1 : resultado) {
+                                listagem += "ID: " + usuario1.getIdUsuario() + " Nome: " + usuario1.getNome() + "\n\n";
+                            }
+                            JOptionPane.showMessageDialog(null, listagem, "Lista", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Não há usuários cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        }
+                        // Pedida e armazenamento de dados cadastrados
                         idUsuario2 = Integer.parseInt(JOptionPane.showInputDialog("Informe o ID do usuário que deseja efetuar o LOGIN:"));
                         String email = JOptionPane.showInputDialog("Informe o email cadastrado: ");
                         String senha = JOptionPane.showInputDialog("Informe a senha cadastrado: ");
-                        UsuarioDAO usuarioDAO1 = new UsuarioDAO(con);
+                        // Novos objetos de consulta e exibição
                         Usuario usuarioLogado = usuarioDAO1.buscarUsuario(idUsuario2, email, senha);
+                        // Verificação de login
                         if (usuarioLogado == null) {
                             JOptionPane.showMessageDialog(null, "Email ou Senha Inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
                             continue;
                         } else {
+                            // Boas vindas
                             JOptionPane.showMessageDialog(null, "Seja Bem Vindo à PostUp\n" + usuarioLogado.getNome());
                         }
                         do {
@@ -78,37 +93,19 @@ public class Main
                                     switch (escolha){
                                         // EDITAR EMAIL
                                         case 1:
-                                            // Validação
-                                            if (usuarios.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há usuários cadastrados", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
-                                            } else {
-                                                // Solicitação de id usuário
-                                                auxiliar = JOptionPane.showInputDialog("Informe o ID:");
-                                                idUsuario2 = Integer.parseInt(auxiliar);
-                                                // Chamada de metodo alterarEmail no objeto usuario de id informado
-                                                usuarios.get(idUsuario2 - 1).alterarEmail();
-                                                // Exibição de Usuário
-                                                usuarios.get(idUsuario2 - 1).exibir(usuarios, idUsuario2, 0, null, 0, 0, null, 0, null, null);
-                                                break;
-                                            }
-
+                                            // Chamada de metodo alterarSenha
+                                            usuarioLogado.alterarEmail();
+                                            usuarioDAO1.alterarEmail(usuarioLogado);
+                                            // Exibição de Usuário
+                                            // usuarioLogado.exibir(usuarios, idUsuario2, 0, null, 0, 0, null, 0, null, null);
+                                            break;
                                         // EDITAR SENHA
                                         case 2:
-                                            // Validação
-                                            if (usuarios.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há usuários cadastrados", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
-                                            } else {
-                                                // Solicitação de id usuário
-                                                auxiliar = JOptionPane.showInputDialog("Informe o ID:");
-                                                idUsuario2 = Integer.parseInt(auxiliar);
-                                                // Chamada de metodo alterarSenha no objeto usuario de id informado
-                                                usuarios.get(idUsuario2 - 1).alterarSenha();
-                                                // Exibição de Usuário
-                                                usuarios.get(idUsuario2 - 1).exibir(usuarios, idUsuario2, 0, null, 0, 0, null, 0, null, null);
-                                                break;
-                                            }
+                                            // Chamada de metodo alterarEmail
+                                            usuarioLogado.alterarSenha();
+                                            usuarioDAO1.alterarSenha(usuarioLogado);
+                                            // Exibição de Usuário
+                                            usuarioLogado.exibir(usuarios, idUsuario2, 0, null, 0, 0, null, 0, null, null);
                                         default:
                                             throw new Exception("Escolha inválida");
                                     }
