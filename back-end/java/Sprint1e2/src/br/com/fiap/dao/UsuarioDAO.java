@@ -99,7 +99,7 @@ public class UsuarioDAO {
     // Metodo para exibir usuários cadastrados
     public ArrayList<Usuario> listarCadastrados(){
         // Comando sql
-        String sql = "SELECT id_usuario, nm_usuario FROM USUARIO";
+        String sql = "SELECT id_usuario, nm_usuario FROM USUARIO ORDER BY id_usuario";
         // lista para armazenar todos os usuários
         ArrayList<Usuario> usuariosCadastrados = new ArrayList<>();
         // try-with-resourses passando o comando sql para o objeto ps e armazenando a execução em um objeto rs
@@ -120,6 +120,34 @@ public class UsuarioDAO {
                 // Retorno de lista
                 return usuariosCadastrados;
             } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL!: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+
+    public Usuario exibir(Usuario usuario, int idUsuario){
+        // Comando SQL
+        String sql = "SELECT id_usuario, nm_usuario, ds_email, ds_senha, dt_cadastro FROM USUARIO WHERE id_usuario = ?";
+        // try-with-resources
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            // Substituição de ?
+            ps.setInt(1, idUsuario);
+            try (ResultSet rs = ps.executeQuery()){
+                // Validação se há usuários
+                if (rs.next()) {
+                    usuario.setIdUsuario(rs.getInt("id_usuario"));
+                    usuario.setNome(rs.getString("nm_usuario"));
+                    usuario.setEmail(rs.getString("ds_email"));
+                    usuario.setSenha(rs.getString("ds_senha"));
+                    usuario.setDataCadastro(rs.getDate("dt_cadastro").toLocalDate());
+                    return usuario;
+                } else {
+                    return null;
+                }
+            } catch (SQLException e) {
                 return null;
             }
         } catch (SQLException e) {

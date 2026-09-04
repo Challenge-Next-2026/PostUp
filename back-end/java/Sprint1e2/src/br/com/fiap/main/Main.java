@@ -48,7 +48,8 @@ public class Main
                         usuarios.add(usuario);
                         usuariosDAO.add(usuarioDAO);
                         // Exibição de objeto
-                        usuario.exibir(usuarios, usuarios.size(), 0, null, 0, 0, null, 0, null, null);
+                        Usuario exibicao = usuarioDAO.exibir(usuario, idUsuario);
+                        JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro()), "Info", JOptionPane.INFORMATION_MESSAGE);
                         continue;
                     // LOGIN
                     case 2:
@@ -97,7 +98,8 @@ public class Main
                                             usuarioLogado.alterarEmail();
                                             usuarioDAO1.alterarEmail(usuarioLogado);
                                             // Exibição de Usuário
-                                            // usuarioLogado.exibir(usuarios, idUsuario2, 0, null, 0, 0, null, 0, null, null);
+                                            exibicao = usuarioDAO1.exibir(usuarioLogado, usuarioLogado.getIdUsuario());
+                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro()), "Info", JOptionPane.INFORMATION_MESSAGE);
                                             break;
                                         // EDITAR SENHA
                                         case 2:
@@ -105,7 +107,8 @@ public class Main
                                             usuarioLogado.alterarSenha();
                                             usuarioDAO1.alterarSenha(usuarioLogado);
                                             // Exibição de Usuário
-                                            usuarioLogado.exibir(usuarios, idUsuario2, 0, null, 0, 0, null, 0, null, null);
+                                            exibicao = usuarioDAO1.exibir(usuarioLogado, usuarioLogado.getIdUsuario());
+                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro()), "Info", JOptionPane.INFORMATION_MESSAGE);
                                         default:
                                             throw new Exception("Escolha inválida");
                                     }
