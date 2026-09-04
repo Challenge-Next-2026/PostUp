@@ -122,29 +122,23 @@ public class Main
                                     switch (escolha){
                                         // CRIAR POSTAGEM
                                         case 1:
-                                            // Validação
-                                            if (usuarios.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há usuários cadastrados", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
-                                            } else {
-                                                // Novo elemento na lista postagens
-                                                postagens.add(new Postagem());
-                                                // Novo elemento na lista postagensDAO
-                                                postagensDAO.add(new PostagemDAO(con));
-                                                // Definição de id com base no número de repetições
-                                                postagens.get(contador2 - 1).setIdPostagem(contador2);
-                                                // Solicitação de id usuário
-                                                auxiliar = JOptionPane.showInputDialog("Informe o ID do usuário que deseja fazer uma postagem:");
-                                                id = Integer.parseInt(auxiliar);
-                                                // Chamada de metodo criarPostagem no objeto postagens de id informado(Só roda se o id do usuario for existente e válido)
-                                                postagens.get(contador2 - 1).criarPostagem(usuarios, id, postagens, contador2);
-                                                // Exibição e chamada de metodo para conexão com banco
-                                                JOptionPane.showMessageDialog(null, postagensDAO.get(contador2 - 1).inserir(postagens, contador2), "Alerta", JOptionPane.WARNING_MESSAGE);
-                                                // Exibição de Postagem
-                                                postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
-                                                contador2++;
-                                                break;
-                                            }
+                                            // Objeto para realizar as operações
+                                            PostagemDAO postagemDAO = new PostagemDAO(con);
+                                            // Armazenamento de próximo id dentro do idUsuario
+                                            idPostagem = postagemDAO.obterProximoId();
+                                            // Objeto para realizar operações
+                                            Postagem postagem = new Postagem();
+                                            // Cadastro de usuário
+                                            postagem.criarPostagem(idPostagem);
+                                            // Inserção no banco
+                                            JOptionPane.showMessageDialog(null, postagemDAO.inserir(postagem), "Alerta",JOptionPane.WARNING_MESSAGE);
+                                            // Atribuição de objetos de teste às listas
+                                            postagens.add(postagem);
+                                            postagensDAO.add(postagemDAO);
+                                            // Exibição de Postagem
+                                            // postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
+                                            // contador2++;
+                                            break;
                                         // EDITAR POSTAGEM
                                         case 2:
                                             // Validação

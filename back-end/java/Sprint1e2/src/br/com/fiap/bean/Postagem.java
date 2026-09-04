@@ -61,28 +61,17 @@ public class Postagem implements ExibicaoObjetos
 
     // Metodos da classe
     // Criar uma ou mais postagems dentro de um usuário
-    public void criarPostagem(List <Usuario> usuarios, int id, List <Postagem> postagems, int contador)
+    public void criarPostagem(int idPostagem)
     {
-        // verificação se o usuário informado é existente
-        if (usuarios.get(id - 1) != null) {
-            LocalDate dataAtual = LocalDate.now();
-            String titulo, descricao;
-            Boolean status = true;
-            // tratamento de erros
-            try {
-                // Preenchimento de indice nas listas usuarios e postagens
-                titulo = JOptionPane.showInputDialog("Títulos possíveis...\nPlantar - Transporte público - Bicicleta - Veículo Elétrico - Reciclagem\nDigite algum");
-                postagems.get(contador - 1).setTitulo(titulo);
-                descricao = JOptionPane.showInputDialog("Descrição:");
-                postagems.get(contador - 1).setDescricao(descricao);
-                postagems.get(contador - 1).setDataPostagem(dataAtual);
-                postagems.get(contador - 1).setStatus(status);
-            } catch (Exception e){
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "É necessário criar um usuário antes de fazer qualquer postagem");
-        }
+        // Armazenando data com LocalDate
+        LocalDate dataAtual = LocalDate.now();
+        // Preenchimento de indice nas listas usuarios e postagens
+        titulo = JOptionPane.showInputDialog("Títulos possíveis...\nPlantar - Transporte público - Bicicleta - Veículo Elétrico - Reciclagem\nDigite algum: ");
+        setTitulo(titulo);
+        descricao = JOptionPane.showInputDialog("Descrição:");
+        setDescricao(descricao);
+        setDataPostagem(dataAtual);
+        setStatus(status);
     }
 
     // Metodo semelhante ao criarPostagem()
