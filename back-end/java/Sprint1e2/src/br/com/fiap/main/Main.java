@@ -18,6 +18,8 @@ public class Main
         // Variáveis, Listas e objetos de apoio
         int escolha, id, idPostagem, idUsuario = 0, idUsuario2 = 1, contador2 = 1, contador3 = 1;
         String auxiliar, opcao = "sim";
+        Postagem postagem = null;
+        PostagemDAO postagemDAO = null;
         List <Usuario> usuarios = new ArrayList<>();
         List <Postagem> postagens = new ArrayList<>();
         List <Arquivo> arquivos = new ArrayList<>();
@@ -123,11 +125,11 @@ public class Main
                                         // CRIAR POSTAGEM
                                         case 1:
                                             // Objeto para realizar as operações
-                                            PostagemDAO postagemDAO = new PostagemDAO(con);
+                                            postagemDAO = new PostagemDAO(con);
                                             // Armazenamento de próximo id dentro do idUsuario
                                             idPostagem = postagemDAO.obterProximoId();
                                             // Objeto para realizar operações
-                                            Postagem postagem = new Postagem();
+                                            postagem = new Postagem();
                                             // Cadastro de usuário
                                             postagem.criarPostagem(idPostagem);
                                             // Inserção no banco
@@ -136,53 +138,64 @@ public class Main
                                             postagens.add(postagem);
                                             postagensDAO.add(postagemDAO);
                                             // Exibição de Postagem
-                                            // postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
-                                            // contador2++;
+                                            Postagem exibicaoPost = postagemDAO.exibir(postagem, idPostagem);
+                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nTítulo: %s\nDescrição: %s\nData: %s", exibicaoPost.getIdPostagem(), exibicaoPost.getTitulo(), exibicaoPost.getDescricao(), exibicaoPost.getDataPostagem()), "Exibição", JOptionPane.INFORMATION_MESSAGE);
                                             break;
                                         // EDITAR POSTAGEM
                                         case 2:
-                                            // Validação
-                                            if (usuarios.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há usuários cadastrados", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
-                                            } else if (postagens.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há postagens criadas", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
+                                            // Exibição de lista de posts Cadastrados
+                                            // Visualização de BDD
+                                            PostagemDAO postagemDAO1 = new PostagemDAO(con);
+                                            ArrayList<Postagem> resultadoPost = postagemDAO1.listarCadastrados();
+                                            if (resultadoPost != null) {
+                                                String listagem = "";
+                                                for (Postagem postagem1 : resultadoPost) {
+                                                    listagem += "ID: " + postagem1.getIdPostagem() + " Título: " + postagem1.getTitulo() + "\n\n";
+                                                }
+                                                JOptionPane.showMessageDialog(null, listagem, "Lista", JOptionPane.INFORMATION_MESSAGE);
                                             } else {
-                                                // Solicitação de id usuário
-                                                auxiliar = JOptionPane.showInputDialog("Informe o ID do usuário que possui a postagem:");
-                                                id = Integer.parseInt(auxiliar);
-                                                // Solicitação de id postagem
-                                                auxiliar = JOptionPane.showInputDialog("informe o ID da postagem a ser alterada:");
-                                                idPostagem = Integer.parseInt(auxiliar);
-                                                // Chamada de metodo editarPostagem no objeto postagens de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                                                postagens.get(idPostagem - 1).editarPostagem(postagens, idPostagem);
-                                                // Exibição de Postagem
-                                                postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
-                                                break;
+                                                JOptionPane.showMessageDialog(null, "Não há postagens cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
                                             }
+                                            // Solicitação de id postagem
+                                            auxiliar = JOptionPane.showInputDialog("informe o ID da postagem a ser alterada:");
+                                            int idPostagem2 = Integer.parseInt(auxiliar);
+                                            // Alteração de Postagem direto no banco
+                                            postagem.editarPostagem();
+                                            postagemDAO.alterar(postagem, idPostagem2);
+                                            // Exibição de Postagem2
+                                            break;
                                         // REMOVER POSTAGEM
                                         case 3:
-                                            // Validação
-                                            if (usuarios.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há usuários cadastrados", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
-                                            } else if (postagens.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há postagens criadas", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
+                                            // Exibição de lista de posts Cadastrados
+                                            // Visualização de BDD
+                                            postagemDAO1 = new PostagemDAO(con);
+                                            resultadoPost = postagemDAO1.listarCadastrados();
+                                            if (resultadoPost != null) {
+                                                String listagem = "";
+                                                for (Postagem postagem1 : resultadoPost) {
+                                                    listagem += "ID: " + postagem1.getIdPostagem() + " Título: " + postagem1.getTitulo() + "\n\n";
+                                                }
+                                                JOptionPane.showMessageDialog(null, listagem, "Lista", JOptionPane.INFORMATION_MESSAGE);
                                             } else {
-                                                // Solicitação de id usuário
-                                                auxiliar = JOptionPane.showInputDialog("Informe o ID do usuário que possui a postagem:");
-                                                id = Integer.parseInt(auxiliar);
-                                                // Solicitação de id postagem
-                                                auxiliar = JOptionPane.showInputDialog("informe o ID da postagem a ser removida:");
-                                                idPostagem = Integer.parseInt(auxiliar);
-                                                // Chamada de metodo removerPostagem no objeto postagens de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                                                postagens.get(idPostagem - 1).removerPostagem(postagens, idPostagem);
-                                                // Exibição de Postagem
-                                                postagens.get(contador2 - 1).exibir(usuarios, 0, id, postagens, contador2, 0, null, 0, null, null);
-                                                break;
+                                                JOptionPane.showMessageDialog(null, "Não há postagens cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
                                             }
+                                            // Solicitação de id postagem
+                                            auxiliar = JOptionPane.showInputDialog("informe o ID da postagem a ser removida:");
+                                            idPostagem2 = Integer.parseInt(auxiliar);
+                                            // Excluindo direto no banco
+                                            postagemDAO1.excluir(postagem, idPostagem2);
+                                            // Lista Atualizada
+                                            resultadoPost = postagemDAO1.listarCadastrados();
+                                            if (resultadoPost != null) {
+                                                String listagem = "";
+                                                for (Postagem postagem1 : resultadoPost) {
+                                                    listagem += "ID: " + postagem1.getIdPostagem() + " Título: " + postagem1.getTitulo() + "\n\n";
+                                                }
+                                                JOptionPane.showMessageDialog(null, listagem, "Lista", JOptionPane.INFORMATION_MESSAGE);
+                                            } else {
+                                                JOptionPane.showMessageDialog(null, "Não há postagens cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+                                            }
+                                            break;
                                         default:
                                             throw new Exception("Escolha inválida");
                                     }
