@@ -119,6 +119,26 @@ public class PostagemDAO {
         }
     }
 
+    public void alterarFKArquivo(int idPostagem, int idArquivo){
+        // Comando sql para alterar dentro da tabela Postagem
+        String sql = "UPDATE POSTAGEM SET arquivo_id_arquivo = ? WHERE id_postagem = ?";
+        // Try with resourses
+        // Objeto criado e instanciado dentro do try para fechar automaticamente
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            // Atribuindo valores ao comando INSERT
+            ps.setInt(1, idArquivo);
+            ps.setInt(2, idPostagem);
+            // Verificação
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "FK Alterada com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao Alterar a FK!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     // Metodo para exibir usuários cadastrados
     public ArrayList<Postagem> listarCadastrados(){
         // Comando sql
@@ -152,7 +172,7 @@ public class PostagemDAO {
         }
     }
 
-    public void excluir(Postagem postagem, int idPostagem){
+    public void excluir(int idPostagem){
         // Comando sql para alterar dentro da tabela Postagem
         String sql = "DELETE FROM POSTAGEM WHERE id_postagem = ?";
         // Try with resourses

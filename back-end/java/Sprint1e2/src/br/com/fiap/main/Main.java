@@ -1,6 +1,7 @@
 package br.com.fiap.main;
 
 import br.com.fiap.bean.*;
+import br.com.fiap.dao.ArquivoDAO;
 import br.com.fiap.dao.ConnectionFactory;
 import br.com.fiap.dao.PostagemDAO;
 import br.com.fiap.dao.UsuarioDAO;
@@ -16,7 +17,7 @@ public class Main
     static void main()
     {
         // Variáveis, Listas e objetos de apoio
-        int escolha, id, idPostagem, idUsuario = 0, idUsuario2 = 1, contador2 = 1, contador3 = 1;
+        int escolha, id, idPostagem = 0, idUsuario = 0, idUsuario2 = 1, contador2 = 1, contador3 = 1;
         String auxiliar, opcao = "sim";
         Postagem postagem = null;
         PostagemDAO postagemDAO = null;
@@ -28,6 +29,7 @@ public class Main
         Connection con = ConnectionFactory.abrirConexao();
         List <UsuarioDAO> usuariosDAO = new ArrayList<>();
         List <PostagemDAO> postagensDAO = new ArrayList<>();
+        List <ArquivoDAO> arquivosDAO = new ArrayList<>();
         // laço de controle de execução
         do{
             // Tratamento de errps
@@ -51,7 +53,7 @@ public class Main
                         usuariosDAO.add(usuarioDAO);
                         // Exibição de objeto
                         Usuario exibicao = usuarioDAO.exibir(usuario, idUsuario);
-                        JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro()), "Info", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro().format(dtf)), "Info", JOptionPane.INFORMATION_MESSAGE);
                         continue;
                     // LOGIN
                     case 2:
@@ -101,7 +103,7 @@ public class Main
                                             usuarioDAO1.alterarEmail(usuarioLogado);
                                             // Exibição de Usuário
                                             exibicao = usuarioDAO1.exibir(usuarioLogado, usuarioLogado.getIdUsuario());
-                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro()), "Info", JOptionPane.INFORMATION_MESSAGE);
+                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro().format(dtf)), "Info", JOptionPane.INFORMATION_MESSAGE);
                                             break;
                                         // EDITAR SENHA
                                         case 2:
@@ -110,7 +112,7 @@ public class Main
                                             usuarioDAO1.alterarSenha(usuarioLogado);
                                             // Exibição de Usuário
                                             exibicao = usuarioDAO1.exibir(usuarioLogado, usuarioLogado.getIdUsuario());
-                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro()), "Info", JOptionPane.INFORMATION_MESSAGE);
+                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro().format(dtf)), "Info", JOptionPane.INFORMATION_MESSAGE);
                                         default:
                                             throw new Exception("Escolha inválida");
                                     }
@@ -139,7 +141,7 @@ public class Main
                                             postagensDAO.add(postagemDAO);
                                             // Exibição de Postagem
                                             Postagem exibicaoPost = postagemDAO.exibir(postagem, idPostagem);
-                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nTítulo: %s\nDescrição: %s\nData: %s", exibicaoPost.getIdPostagem(), exibicaoPost.getTitulo(), exibicaoPost.getDescricao(), exibicaoPost.getDataPostagem()), "Exibição", JOptionPane.INFORMATION_MESSAGE);
+                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nTítulo: %s\nDescrição: %s\nData: %s", exibicaoPost.getIdPostagem(), exibicaoPost.getTitulo(), exibicaoPost.getDescricao(), exibicaoPost.getDataPostagem().format(dtf)), "Exibição", JOptionPane.INFORMATION_MESSAGE);
                                             break;
                                         // EDITAR POSTAGEM
                                         case 2:
@@ -183,7 +185,7 @@ public class Main
                                             auxiliar = JOptionPane.showInputDialog("informe o ID da postagem a ser removida:");
                                             idPostagem2 = Integer.parseInt(auxiliar);
                                             // Excluindo direto no banco
-                                            postagemDAO1.excluir(postagem, idPostagem2);
+                                            postagemDAO1.excluir(idPostagem2);
                                             // Lista Atualizada
                                             resultadoPost = postagemDAO1.listarCadastrados();
                                             if (resultadoPost != null) {
@@ -209,58 +211,72 @@ public class Main
                                     switch (escolha){
                                         // IMPORTAR ARQUIVO
                                         case 1:
-                                            // Validação
-                                            if (usuarios.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há usuários cadastrados", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
-                                            } else if (postagens.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há postagens criadas", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
+                                            PostagemDAO postagemDAO2 = new PostagemDAO(con);
+                                            ArrayList<Postagem> listaPosts = postagemDAO2.listarCadastrados();
+                                            if (listaPosts != null) {
+                                                String listagem = "";
+                                                for (Postagem postagem1 : listaPosts) {
+                                                    listagem += "ID: " + postagem1.getIdPostagem() + " Título: " + postagem1.getTitulo() + "\n\n";
+                                                }
+                                                JOptionPane.showMessageDialog(null, listagem, "Lista", JOptionPane.INFORMATION_MESSAGE);
                                             } else {
-                                                // Novo elemento na lista arquivos
-                                                arquivos.add(new Arquivo());
-                                                // Definição de id com base no número de repetições
-                                                arquivos.get(contador3 - 1).setIdArquivo(contador3);
-                                                // Solicitação de id usuário
-                                                auxiliar = JOptionPane.showInputDialog("Informe o ID do usuário que possui a postagem");
-                                                id = Integer.parseInt(auxiliar);
-                                                // Solicitação de id postagem
-                                                auxiliar = JOptionPane.showInputDialog("Informe o ID da postagem que deseja importar o arquivo:");
-                                                idPostagem = Integer.parseInt(auxiliar);
-                                                // Chamada de metodo importarArquivo no objeto arquivos de id informado(Só roda se o id do usuario, o id postagem e o id arquivo forem existentes e válidos)
-                                                arquivos.get(contador3 - 1).importarArquivo(arquivos, contador3);
-                                                // Exibição de Arquivo
-                                                arquivos.get(contador3 - 1).exibir(usuarios, 0, id, postagens, 0, idPostagem, arquivos, contador3, null, null);
-                                                contador3++;
-                                                break;
+                                                JOptionPane.showMessageDialog(null, "Não há postagens cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
                                             }
+                                            // Pedida de id para adicionar arquivos
+                                            idPostagem = Integer.parseInt(JOptionPane.showInputDialog("Qual o ID da postagem que deseja adicionar um arquivo?"));
+                                            // Objeto para realizar as operações
+                                            ArquivoDAO arquivoDAO = new ArquivoDAO(con);
+                                            // Armazenamento de próximo id dentro do idUsuario
+                                            int idArquivo = arquivoDAO.obterProximoId();
+                                            // Objeto para realizar operações
+                                            Arquivo arquivo = new Arquivo();
+                                            // Cadastro de arquivo
+                                            arquivo.importarArquivo(idArquivo);
+                                            // Inserção no banco
+                                            JOptionPane.showMessageDialog(null, arquivoDAO.inserir(arquivo), "Alerta",JOptionPane.WARNING_MESSAGE);
+                                            // Atribuição de objetos de teste às listas
+                                            arquivos.add(arquivo);
+                                            arquivosDAO.add(arquivoDAO);
+                                            // Alteração de FK no banco
+                                            postagemDAO.alterarFKArquivo(idPostagem, idArquivo);
+                                            // Exibição de Postagem
+                                            Arquivo exibicaoArquivo = arquivoDAO.exibir(arquivo, idArquivo);
+                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nTipo: %s\nTamanho: %s\nURL: %s\nData Upload: %s", exibicaoArquivo.getIdArquivo(), exibicaoArquivo.getNomeArquivo(), exibicaoArquivo.getTipo(), exibicaoArquivo.getTamanho(), exibicaoArquivo.getUrl(), exibicaoArquivo.getDataUpload().format(dtf)), "Exibição", JOptionPane.INFORMATION_MESSAGE);
+                                            break;
                                         // ACESSAR CÂMERA
                                         case 2:
-                                            // Validação
-                                            if (usuarios.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há usuários cadastrados", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
-                                            } else if (postagens.isEmpty()) {
-                                                JOptionPane.showMessageDialog(null, "Não há postagens criadas", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                                continue;
+                                            postagemDAO2 = new PostagemDAO(con);
+                                            listaPosts = postagemDAO2.listarCadastrados();
+                                            if (listaPosts != null) {
+                                                String listagem = "";
+                                                for (Postagem postagem1 : listaPosts) {
+                                                    listagem += "ID: " + postagem1.getIdPostagem() + " Título: " + postagem1.getTitulo() + "\n\n";
+                                                }
+                                                JOptionPane.showMessageDialog(null, listagem, "Lista", JOptionPane.INFORMATION_MESSAGE);
                                             } else {
-                                                // Novo elemento na lista arquivos
-                                                arquivos.add(new Arquivo());
-                                                // Definição de id com base no número de repetições
-                                                arquivos.get(contador3 - 1).setIdArquivo(contador3);
-                                                // Solicitação de id usuário
-                                                auxiliar = JOptionPane.showInputDialog("Informe o ID do usuário que possui a postagem");
-                                                id = Integer.parseInt(auxiliar);
-                                                // Solicitação de id postagem
-                                                auxiliar = JOptionPane.showInputDialog("Informe o ID da postagem que deseja acessar a cãmera:");
-                                                idPostagem = Integer.parseInt(auxiliar);
-                                                // Chamada de metodo acessarCamera() no objeto arquivos de id informado(Só roda se o id do usuario, o id postagem e o id arquivo forem existentes e válidos)
-                                                arquivos.get(contador3 - 1).acessarCamera(usuarios, id, postagens, idPostagem, arquivos, contador3);
-                                                // Exibição de Arquivo
-                                                arquivos.get(contador3 - 1).exibir(usuarios, 0, id, postagens, 0, idPostagem, arquivos, contador3, null, null);
-                                                contador3++;
-                                                break;
+                                                JOptionPane.showMessageDialog(null, "Não há postagens cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
                                             }
+                                            // Pedida de id para adicionar arquivos
+                                            idPostagem = Integer.parseInt(JOptionPane.showInputDialog("Qual o ID da postagem que deseja adicionar um arquivo?"));
+                                            // Objeto para realizar as operações
+                                            arquivoDAO = new ArquivoDAO(con);
+                                            // Armazenamento de próximo id dentro do idUsuario
+                                            idArquivo = arquivoDAO.obterProximoId();
+                                            // Objeto para realizar operações
+                                            arquivo = new Arquivo();
+                                            // Chamada de metodo acessarCamera() no objeto arquivos de id informado(Só roda se o id do usuario, o id postagem e o id arquivo forem existentes e válidos)
+                                            arquivo.acessarCamera(idArquivo);
+                                            // Inserção no banco
+                                            JOptionPane.showMessageDialog(null, arquivoDAO.inserir(arquivo), "Alerta",JOptionPane.WARNING_MESSAGE);
+                                            // Atribuição de objetos de teste às listas
+                                            arquivos.add(arquivo);
+                                            arquivosDAO.add(arquivoDAO);
+                                            // Alteração de FK no banco
+                                            postagemDAO.alterarFKArquivo(idPostagem, idArquivo);
+                                            // Exibição de Postagem
+                                            exibicaoArquivo = arquivoDAO.exibir(arquivo, idArquivo);
+                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nTipo: %s\nTamanho: %s\nURL: %s\nData Upload: %s", exibicaoArquivo.getIdArquivo(), exibicaoArquivo.getNomeArquivo(), exibicaoArquivo.getTipo(), exibicaoArquivo.getTamanho(), exibicaoArquivo.getUrl(), exibicaoArquivo.getDataUpload().format(dtf)), "Exibição", JOptionPane.INFORMATION_MESSAGE);
+                                            break;
                                         default:
                                             throw new Exception("Escolha inválida");
                                     }

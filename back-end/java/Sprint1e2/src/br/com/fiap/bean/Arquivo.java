@@ -70,37 +70,29 @@ public class Arquivo implements ExibicaoObjetos
 
     // Metodos da classe
     // Simulação de importação com listas
-    public void importarArquivo(List <Arquivo> arquivos, int idArquivo)
+    public void importarArquivo(int idArquivo)
     {
         LocalDate dataAtual = LocalDate.now();
-        String nome, tipo, url, auxiliar;
-        // Tratamento de erros
-        try {
-            // Preenchimento de atributos das listas arquivos, usuarios e postagens
-            nome = JOptionPane.showInputDialog("Informe o nome do arquivo:");
-            arquivos.get(idArquivo - 1).setNomeArquivo(nome);
-            tipo = JOptionPane.showInputDialog("Informe o tipo do arquivo:");
-            arquivos.get(idArquivo - 1).setTipo(tipo);
-            String tamanho = JOptionPane.showInputDialog("Informe o tamanho do arquivo:");
-            arquivos.get(idArquivo - 1).setTamanho(tamanho);
-            url = JOptionPane.showInputDialog("Informe a URL");
-            arquivos.get(idArquivo - 1).setUrl(url);
-            arquivos.get(idArquivo - 1).setDataUpload(dataAtual);
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+        // Preenchimento de atributos das listas arquivos, usuarios e postagens
+        setIdArquivo(idArquivo);
+        setNomeArquivo(JOptionPane.showInputDialog("Informe o nome do arquivo:"));
+        setTipo(JOptionPane.showInputDialog("Informe o tipo do arquivo:"));
+        setTamanho(JOptionPane.showInputDialog("Informe o tamanho do arquivo:"));
+        setUrl(JOptionPane.showInputDialog("Informe a URL"));
+        setDataUpload(dataAtual);
     }
 
     // Simulação de acesso com listas
-    public void acessarCamera(List <Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem, List <Arquivo> arquivos, int idArquivo)
+    public void acessarCamera(int idArquivo)
     {
         // Preenchimento de atributos das listas arquivos, usuarios e postagens
         LocalDate dataAtual = LocalDate.now();
-        arquivos.get(idArquivo - 1).setNomeArquivo("Câmera");
-        arquivos.get(idArquivo - 1).setTipo("img");
-        arquivos.get(idArquivo - 1).setTamanho("0");
-        arquivos.get(idArquivo - 1).setUrl("xxxxxxxxxxxxxxx.img");
-        arquivos.get(idArquivo - 1).setDataUpload(dataAtual);
+        setIdArquivo(idArquivo);
+        setNomeArquivo("Câmera");
+        setTipo("img");
+        setTamanho("0");
+        setUrl("xxxxxxxxxxxxxxx.img");
+        setDataUpload(dataAtual);
         JOptionPane.showMessageDialog(null, "Câmera acessada com sucesso!");
     }
 
