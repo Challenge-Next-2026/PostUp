@@ -98,6 +98,47 @@ public class PostagemDAO {
         }
     }
 
+    public int exibirFKArquivo(Postagem postagem, int idPostagem){
+        int idArquivo;
+        // Comando SQL
+        String sql = "SELECT arquivo_id_arquivo FROM POSTAGEM WHERE id_postagem = ?";
+        // try-with-resources
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            // Substituição de ?
+            ps.setInt(1, idPostagem);
+            try (ResultSet rs = ps.executeQuery()){
+                // Validação se há postagens
+                if (rs.next()) {
+                    idArquivo = rs.getInt("arquivo_id_arquivo");
+                    return idArquivo;
+                } else {
+                    return 0;
+                }
+            } catch (SQLException e) {
+                return 0;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL!: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return 0;
+        }
+    }
+
+    public int contarPostagens(){
+        // Comando SQL
+        String sql = "SELECT COUNT(*) FROM POSTAGEM";
+        // try-with-resouces
+        try (PreparedStatement ps = getCon().prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL!\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return 0;
+        }
+        return 0;
+    }
+
     public void alterar(Postagem postagem, int idPostagem){
         // Comando sql para alterar dentro da tabela Postagem
         String sql = "UPDATE POSTAGEM SET ds_titulopost = ?, ds_postagem = ? WHERE id_postagem = ?";

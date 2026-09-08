@@ -79,119 +79,119 @@ public class Avaliacao implements ExibicaoObjetos
 
     // Metodos da classe
     // Avaliação com base em determinada postagem de determinado usuário
-    public void avaliarPostagem(List <Avaliacao> avaliacoes, List<Arquivo> arquivos, List <Postagem> postagems, int idPostagem)
+    public void avaliarPostagem(Postagem postagem, Arquivo arquivo, int qtdPostagens, int idAvaliacao)
     {
         LocalDate dataAtual = LocalDate.now();
         // verificação de Título da lista informada
-        if (postagems.get(idPostagem - 1).getTitulo().equalsIgnoreCase("Plantar")) {
+        if (postagem.getTitulo().equalsIgnoreCase("Plantar")) {
             // definição de parâmetros para atributos
-            avaliacoes.getFirst().setIdAvaliacao(1);
-            avaliacoes.getFirst().setCriterio("Plantação");
-            avaliacoes.getFirst().setNotaImpacto(100);
-            avaliacoes.getFirst().setNotaDificuldade(50);
-            if (arquivos.getFirst().getTipo().equalsIgnoreCase("img") || arquivos.getFirst().getTipo().equalsIgnoreCase("png") || arquivos.getFirst().getTipo().equalsIgnoreCase("mp3") || arquivos.getFirst().getTipo().equalsIgnoreCase("mp4") || arquivos.getFirst().getTipo().equalsIgnoreCase("jpeg")) {
-                avaliacoes.getFirst().setNotaConfiabilidade(100);
+            setIdAvaliacao(idAvaliacao);
+            setCriterio("Plantação");
+            setNotaImpacto(100);
+            setNotaDificuldade(50);
+            if (arquivo.getTipo().equalsIgnoreCase("img") || arquivo.getTipo().equalsIgnoreCase("png") || arquivo.getTipo().equalsIgnoreCase("mp3") || arquivo.getTipo().equalsIgnoreCase("mp4") || arquivo.getTipo().equalsIgnoreCase("jpeg")) {
+                setNotaConfiabilidade(100);
             } else {
-                avaliacoes.getFirst().setNotaConfiabilidade(0);
+                setNotaConfiabilidade(0);
             }
-            if (postagems.size() == 1) {
-                avaliacoes.getFirst().setNotaFrequencia(25);
-            } else if (postagems.size() == 2) {
-                avaliacoes.getFirst().setNotaFrequencia(50);
-            } else if (postagems.size() == 3) {
-                avaliacoes.getFirst().setNotaFrequencia(75);
-            } else if (postagems.size() >= 4) {
-                avaliacoes.getFirst().setNotaFrequencia(100);
+            if (qtdPostagens == 1) {
+                setNotaFrequencia(25);
+            } else if (qtdPostagens == 2) {
+                setNotaFrequencia(50);
+            } else if (qtdPostagens == 3) {
+                setNotaFrequencia(75);
+            } else if (qtdPostagens >= 4) {
+                setNotaFrequencia(100);
             }
-            avaliacoes.getFirst().setDataAvaliacao(dataAtual);
+            setDataAvaliacao(dataAtual);
         // verificação de Título da lista informada
-        } else if (postagems.get(idPostagem - 1).getTitulo().equalsIgnoreCase("Transporte público")){
+        } else if (postagem.getTitulo().equalsIgnoreCase("Transporte público")){
             // definição de parâmetros para atributos
-            avaliacoes.getFirst().setIdAvaliacao(1);
-            avaliacoes.getFirst().setCriterio("Transporte Público");
-            avaliacoes.getFirst().setNotaImpacto(90);
-            avaliacoes.getFirst().setNotaDificuldade(70);
-            if (arquivos.getFirst().getTipo().equalsIgnoreCase("img") || arquivos.getFirst().getTipo().equalsIgnoreCase("png") || arquivos.getFirst().getTipo().equalsIgnoreCase("mp3") || arquivos.getFirst().getTipo().equalsIgnoreCase("mp4") || arquivos.getFirst().getTipo().equalsIgnoreCase("jpeg")) {
-                avaliacoes.getFirst().setNotaConfiabilidade(100);
+            setIdAvaliacao(idAvaliacao);
+            setCriterio("Transporte Público");
+            setNotaImpacto(90);
+            setNotaDificuldade(70);
+            if (arquivo.getTipo().equalsIgnoreCase("img") || arquivo.getTipo().equalsIgnoreCase("png") || arquivo.getTipo().equalsIgnoreCase("mp3") || arquivo.getTipo().equalsIgnoreCase("mp4") || arquivo.getTipo().equalsIgnoreCase("jpeg")) {
+                setNotaConfiabilidade(100);
             } else {
-                avaliacoes.getFirst().setNotaConfiabilidade(0);
+                setNotaConfiabilidade(0);
             }
-            if (postagems.size() == 1) {
-                avaliacoes.getFirst().setNotaFrequencia(25);
-            } else if (postagems.size() == 2) {
-                avaliacoes.getFirst().setNotaFrequencia(50);
-            } else if (postagems.size() == 3) {
-                avaliacoes.getFirst().setNotaFrequencia(75);
-            } else if (postagems.size() >= 4) {
-                avaliacoes.getFirst().setNotaFrequencia(100);
+            if (qtdPostagens == 1) {
+                setNotaFrequencia(25);
+            } else if (qtdPostagens == 2) {
+                setNotaFrequencia(50);
+            } else if (qtdPostagens == 3) {
+                setNotaFrequencia(75);
+            } else if (qtdPostagens >= 4) {
+                setNotaFrequencia(100);
             }
-            avaliacoes.getFirst().setDataAvaliacao(dataAtual);
+            setDataAvaliacao(dataAtual);
         // verificação de Título da lista informada
-        } else if (postagems.get(idPostagem - 1).getTitulo().equalsIgnoreCase("Bicicleta")){
+        } else if (postagem.getTitulo().equalsIgnoreCase("Bicicleta")){
             // definição de parâmetros para atributos
-            avaliacoes.getFirst().setIdAvaliacao(1);
-            avaliacoes.getFirst().setCriterio("Bicicleta");
-            avaliacoes.getFirst().setNotaImpacto(80);
-            avaliacoes.getFirst().setNotaDificuldade(80);
-            if (arquivos.getFirst().getTipo().equalsIgnoreCase("img") || arquivos.getFirst().getTipo().equalsIgnoreCase("png") || arquivos.getFirst().getTipo().equalsIgnoreCase("mp3") || arquivos.getFirst().getTipo().equalsIgnoreCase("mp4") || arquivos.getFirst().getTipo().equalsIgnoreCase("jpeg")) {
-                avaliacoes.getFirst().setNotaConfiabilidade(100);
+            setIdAvaliacao(idAvaliacao);
+            setCriterio("Bicicleta");
+            setNotaImpacto(80);
+            setNotaDificuldade(80);
+            if (arquivo.getTipo().equalsIgnoreCase("img") || arquivo.getTipo().equalsIgnoreCase("png") || arquivo.getTipo().equalsIgnoreCase("mp3") || arquivo.getTipo().equalsIgnoreCase("mp4") || arquivo.getTipo().equalsIgnoreCase("jpeg")) {
+                setNotaConfiabilidade(100);
             } else {
-                avaliacoes.getFirst().setNotaConfiabilidade(0);
+                setNotaConfiabilidade(0);
             }
-            if (postagems.size() == 1) {
-                avaliacoes.getFirst().setNotaFrequencia(25);
-            } else if (postagems.size() == 2) {
-                avaliacoes.getFirst().setNotaFrequencia(50);
-            } else if (postagems.size() == 3) {
-                avaliacoes.getFirst().setNotaFrequencia(75);
-            } else if (postagems.size() >= 4) {
-                avaliacoes.getFirst().setNotaFrequencia(100);
+            if (qtdPostagens == 1) {
+                setNotaFrequencia(25);
+            } else if (qtdPostagens == 2) {
+                setNotaFrequencia(50);
+            } else if (qtdPostagens == 3) {
+                setNotaFrequencia(75);
+            } else if (qtdPostagens >= 4) {
+                setNotaFrequencia(100);
             }
-            avaliacoes.getFirst().setDataAvaliacao(dataAtual);
+            setDataAvaliacao(dataAtual);
         // verificação de Título da lista informada
-        } else if (postagems.get(idPostagem - 1).getTitulo().equalsIgnoreCase("Veículo Elétrico")){
+        } else if (postagem.getTitulo().equalsIgnoreCase("Veículo Elétrico")){
             // definição de parâmetros para atributos
-            avaliacoes.getFirst().setIdAvaliacao(1);
-            avaliacoes.getFirst().setCriterio("Mobilidade elétrica");
-            avaliacoes.getFirst().setNotaImpacto(70);
-            avaliacoes.getFirst().setNotaDificuldade(100);
-            if (arquivos.getFirst().getTipo().equalsIgnoreCase("img") || arquivos.getFirst().getTipo().equalsIgnoreCase("png") || arquivos.getFirst().getTipo().equalsIgnoreCase("mp3") || arquivos.getFirst().getTipo().equalsIgnoreCase("mp4") || arquivos.getFirst().getTipo().equalsIgnoreCase("jpeg")) {
-                avaliacoes.getFirst().setNotaConfiabilidade(100);
+            setIdAvaliacao(idAvaliacao);
+            setCriterio("Mobilidade elétrica");
+            setNotaImpacto(70);
+            setNotaDificuldade(100);
+            if (arquivo.getTipo().equalsIgnoreCase("img") || arquivo.getTipo().equalsIgnoreCase("png") || arquivo.getTipo().equalsIgnoreCase("mp3") || arquivo.getTipo().equalsIgnoreCase("mp4") || arquivo.getTipo().equalsIgnoreCase("jpeg")) {
+                setNotaConfiabilidade(100);
             } else {
-                avaliacoes.getFirst().setNotaConfiabilidade(0);
+                setNotaConfiabilidade(0);
             }
-            if (postagems.size() == 1) {
-                avaliacoes.getFirst().setNotaFrequencia(25);
-            } else if (postagems.size() == 2) {
-                avaliacoes.getFirst().setNotaFrequencia(50);
-            } else if (postagems.size() == 3) {
-                avaliacoes.getFirst().setNotaFrequencia(75);
-            } else if (postagems.size() >= 4) {
-                avaliacoes.getFirst().setNotaFrequencia(100);
+            if (qtdPostagens == 1) {
+                setNotaFrequencia(25);
+            } else if (qtdPostagens == 2) {
+                setNotaFrequencia(50);
+            } else if (qtdPostagens == 3) {
+                setNotaFrequencia(75);
+            } else if (qtdPostagens >= 4) {
+                setNotaFrequencia(100);
             }
-            avaliacoes.getFirst().setDataAvaliacao(dataAtual);
+            setDataAvaliacao(dataAtual);
         // verificação de Título da lista informada
-        } else if (postagems.get(idPostagem - 1).getTitulo().equalsIgnoreCase("Reciclagem")){
+        } else if (postagem.getTitulo().equalsIgnoreCase("Reciclagem")){
             // definição de parâmetros para atributos
-            avaliacoes.getFirst().setIdAvaliacao(1);
-            avaliacoes.getFirst().setCriterio("Reciclagem");
-            avaliacoes.getFirst().setNotaImpacto(100);
-            avaliacoes.getFirst().setNotaDificuldade(100);
-            if (arquivos.getFirst().getTipo().equalsIgnoreCase("img") || arquivos.getFirst().getTipo().equalsIgnoreCase("png") || arquivos.getFirst().getTipo().equalsIgnoreCase("mp3") || arquivos.getFirst().getTipo().equalsIgnoreCase("mp4") || arquivos.getFirst().getTipo().equalsIgnoreCase("jpeg")) {
-                avaliacoes.getFirst().setNotaConfiabilidade(100);
+            setIdAvaliacao(idAvaliacao);
+            setCriterio("Reciclagem");
+            setNotaImpacto(100);
+            setNotaDificuldade(100);
+            if (arquivo.getTipo().equalsIgnoreCase("img") || arquivo.getTipo().equalsIgnoreCase("png") || arquivo.getTipo().equalsIgnoreCase("mp3") || arquivo.getTipo().equalsIgnoreCase("mp4") || arquivo.getTipo().equalsIgnoreCase("jpeg")) {
+                setNotaConfiabilidade(100);
             } else {
-                avaliacoes.getFirst().setNotaConfiabilidade(0);
+                setNotaConfiabilidade(0);
             }
-            if (postagems.size() == 1) {
-                avaliacoes.getFirst().setNotaFrequencia(25);
-            } else if (postagems.size() == 2) {
-                avaliacoes.getFirst().setNotaFrequencia(50);
-            } else if (postagems.size() == 3) {
-                avaliacoes.getFirst().setNotaFrequencia(75);
-            } else if (postagems.size() >= 4) {
-                avaliacoes.getFirst().setNotaFrequencia(100);
+            if (qtdPostagens == 1) {
+                setNotaFrequencia(25);
+            } else if (qtdPostagens == 2) {
+                setNotaFrequencia(50);
+            } else if (qtdPostagens == 3) {
+                setNotaFrequencia(75);
+            } else if (qtdPostagens >= 4) {
+                setNotaFrequencia(100);
             }
-            avaliacoes.getFirst().setDataAvaliacao(dataAtual);
+            setDataAvaliacao(dataAtual);
         }
     }
 

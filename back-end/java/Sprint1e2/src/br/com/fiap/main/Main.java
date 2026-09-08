@@ -1,10 +1,7 @@
 package br.com.fiap.main;
 
 import br.com.fiap.bean.*;
-import br.com.fiap.dao.ArquivoDAO;
-import br.com.fiap.dao.ConnectionFactory;
-import br.com.fiap.dao.PostagemDAO;
-import br.com.fiap.dao.UsuarioDAO;
+import br.com.fiap.dao.*;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -21,6 +18,8 @@ public class Main
         String auxiliar, opcao = "sim";
         Postagem postagem = null;
         PostagemDAO postagemDAO = null;
+        ArquivoDAO arquivoDAO = null;
+        Arquivo arquivo = null;
         List <Usuario> usuarios = new ArrayList<>();
         List <Postagem> postagens = new ArrayList<>();
         List <Arquivo> arquivos = new ArrayList<>();
@@ -225,11 +224,11 @@ public class Main
                                             // Pedida de id para adicionar arquivos
                                             idPostagem = Integer.parseInt(JOptionPane.showInputDialog("Qual o ID da postagem que deseja adicionar um arquivo?"));
                                             // Objeto para realizar as operações
-                                            ArquivoDAO arquivoDAO = new ArquivoDAO(con);
+                                            arquivoDAO = new ArquivoDAO(con);
                                             // Armazenamento de próximo id dentro do idUsuario
                                             int idArquivo = arquivoDAO.obterProximoId();
                                             // Objeto para realizar operações
-                                            Arquivo arquivo = new Arquivo();
+                                            arquivo = new Arquivo();
                                             // Cadastro de arquivo
                                             arquivo.importarArquivo(idArquivo);
                                             // Inserção no banco
@@ -283,28 +282,37 @@ public class Main
                                     break;
                                 // AVALIACAO
                                 case 4:
-                                    // Validação
-                                    if (usuarios.isEmpty()) {
-                                        JOptionPane.showMessageDialog(null, "Não há usuários cadastrados", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                        continue;
-                                    } else if (postagens.isEmpty()) {
-                                        JOptionPane.showMessageDialog(null, "Não há postagens criadas", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                        continue;
-                                    } else if (arquivos.isEmpty()){
-                                        JOptionPane.showMessageDialog(null, "Não há arquivos anexados", "ERRO", JOptionPane.ERROR_MESSAGE);
-                                        continue;
+                                    PostagemDAO postagemDAO2 = new PostagemDAO(con);
+                                    ArrayList<Postagem> listaPosts = postagemDAO2.listarCadastrados();
+                                    if (listaPosts != null) {
+                                        String listagem = "";
+                                        for (Postagem postagem1 : listaPosts) {
+                                            listagem += "ID: " + postagem1.getIdPostagem() + " Título: " + postagem1.getTitulo() + "\n\n";
+                                        }
+                                        JOptionPane.showMessageDialog(null, listagem, "Lista", JOptionPane.INFORMATION_MESSAGE);
                                     } else {
-                                        // Novo elemento na lista avaliacoes
-                                        avaliacoes.add(new Avaliacao());
-                                        // Solicitação de id postagem
-                                        auxiliar = JOptionPane.showInputDialog("ID da postagem a ser avaliada: ");
-                                        idPostagem = Integer.parseInt(auxiliar);
-                                        // Chamada de metodo avaliarPostagem() no objeto avaliacoes de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                                        avaliacoes.getFirst().avaliarPostagem(avaliacoes, arquivos, postagens, idPostagem);
-                                        // Chamada de metodo mostrarPostagem() no objeto avaliacoes de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                                        avaliacoes.getFirst().exibir(usuarios, 0,0, postagens, 0, idPostagem, arquivos, contador3, avaliacoes, null);
-                                        break;
+                                        JOptionPane.showMessageDialog(null, "Não há postagens cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
                                     }
+                                    // Solicitação de id postagem
+                                    auxiliar = JOptionPane.showInputDialog("ID da postagem a ser avaliada: ");
+                                    idPostagem = Integer.parseInt(auxiliar);
+                                    // Criação de objetos a serem avaliados
+                                    Postagem postagemAvaliada = postagemDAO2.exibir(new Postagem(), idPostagem);
+                                    int idArquivo = (postagemDAO2.exibirFKArquivo(new Postagem(), idPostagem));
+                                    Arquivo arquivoAvaliado = arquivoDAO.exibir(arquivo, idArquivo);
+                                    int qtdPostagens = postagemDAO.contarPostagens();
+                                    // Objeto avaliação
+                                    Avaliacao avaliacao = new Avaliacao();
+                                    AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(con);
+                                    avaliacao.setIdAvaliacao(avaliacaoDAO.obterProximoId());
+                                    // Chamada de metodo avaliarPostagem() no objeto avaliacoes de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
+                                    avaliacao.avaliarPostagem(postagemAvaliada, arquivoAvaliado, qtdPostagens, avaliacao.getIdAvaliacao());
+                                    // Inserção no banco
+                                    JOptionPane.showMessageDialog(null, avaliacaoDAO.inserir(avaliacao), "Alerta",JOptionPane.WARNING_MESSAGE);
+                                    // Exibição de avaliacao
+                                    Avaliacao exibirAvaliacao = avaliacaoDAO.exibir(avaliacao, avaliacao.getIdAvaliacao());
+                                    JOptionPane.showMessageDialog(null, String.format("ID: %d\nCritério: %s\nNota Impacto: %d\nNota Dificuldade: %d\nNota Confiabilidade: %d\nNota Frequência: %d\nData: %s", exibirAvaliacao.getIdAvaliacao(), exibirAvaliacao.getCriterio(), exibirAvaliacao.getNotaImpacto(), exibirAvaliacao.getNotaDificuldade(), exibirAvaliacao.getNotaConfiabilidade(), exibirAvaliacao.getNotaFrequencia(), exibirAvaliacao.getDataAvaliacao().format(dtf)), "Info", JOptionPane.INFORMATION_MESSAGE);
+                                    break;
                                 // PONTUAÇÂO
                                 case 5:
                                     if (usuarios.isEmpty()) {
