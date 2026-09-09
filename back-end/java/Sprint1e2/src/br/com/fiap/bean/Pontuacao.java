@@ -44,20 +44,13 @@ public class Pontuacao implements ExibicaoObjetos
 
     // Metodos da classe
     // Cálculo com base a lista avaliacoes
-    public void calcularPontuacao(Pontuacao pontuacao, List <Avaliacao> avaliacoes, List<Usuario> usuarios, int id, List <Postagem> postagems, int idPostagem){
-        // Verificação de postagens e avaliacoes
-        if (postagems.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Não há postagens realizadas");
-        } else if (avaliacoes.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "A postagem ainda não foi avaliada");
-        } else {
-            // Cálculo simples de média aritmética
-            LocalDate dataAtual = LocalDate.now();
-            float calculo = (avaliacoes.getFirst().getNotaImpacto() + avaliacoes.getFirst().getNotaDificuldade() + avaliacoes.getFirst().getNotaConfiabilidade() + avaliacoes.getFirst().getNotaFrequencia()) / 5;
-            pontuacao.setIdPontuacao(1);
-            pontuacao.setValor(calculo);
-            pontuacao.setDataPontuacao(dataAtual);
-        }
+    public void calcularPontuacao(Avaliacao avaliacao, int idPontuacao){
+        // Cálculo simples de média aritmética
+        LocalDate dataAtual = LocalDate.now();
+        float calculo = (avaliacao.getNotaImpacto() + avaliacao.getNotaDificuldade() + avaliacao.getNotaConfiabilidade() + avaliacao.getNotaFrequencia()) / 5;
+        setIdPontuacao(idPontuacao);
+        setValor(calculo);
+        setDataPontuacao(dataAtual);
     }
 
     public void exibir(List<Usuario> usuarios, int contador, int id, List<Postagem> postagens, int contador2, int idPostagem, List<Arquivo> arquivos, int contador3, List<Avaliacao> avaliacoes, Pontuacao pontuacao)
