@@ -39,6 +39,7 @@ public class ArquivoDAO {
         throw new SQLException("Não foi possível obter o próximo ID.");
     }
 
+    // INSERT
     public String inserir(Arquivo arquivo){
         // Comando sql para inserir dentro da tabela Arquivo
         String sql = "INSERT INTO ARQUIVO(id_arquivo, nm_arquivo, in_tipoarquivo, ds_tamanho, cod_url, dt_upload) VALUES (?, ?, ?, ?, ?, ?)";
@@ -63,6 +64,7 @@ public class ArquivoDAO {
         }
     }
 
+    // SELECT
     public Arquivo exibir(Arquivo arquivo, int idArquivo){
         // Comando SQL
         String sql = "SELECT id_arquivo, nm_arquivo, in_tipoarquivo, ds_tamanho, cod_url, dt_upload FROM ARQUIVO WHERE id_arquivo = ?";

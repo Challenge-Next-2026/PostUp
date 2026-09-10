@@ -41,6 +41,7 @@ public class PostagemDAO {
         throw new SQLException("Não foi possível obter o próximo ID.");
     }
 
+    // INSERT
     public String inserir(Postagem postagem){
         // Comando sql para inserir dentro da tabela Postagem
         String sql = "INSERT INTO POSTAGEM(id_postagem, ds_titulopost, ds_postagem, dt_postagem, st_postagem, geolocalizacao_id_geoloc, arquivo_id_arquivo, validacao_id_validacao, avaliacao_id_avaliacao, pontuacao_id_pontuacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -69,6 +70,29 @@ public class PostagemDAO {
         }
     }
 
+    // UPDATE
+    public void alterar(Postagem postagem, int idPostagem){
+        // Comando sql para alterar dentro da tabela Postagem
+        String sql = "UPDATE POSTAGEM SET ds_titulopost = ?, ds_postagem = ? WHERE id_postagem = ?";
+        // Try with resourses
+        // Objeto criado e instanciado dentro do try para fechar automaticamente
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            // Atribuindo valores ao comando INSERT
+            ps.setString(1, postagem.getTitulo());
+            ps.setString(2, postagem.getDescricao());
+            ps.setInt(3, idPostagem);
+            // Verificação
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Alterado com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao Alterar!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // SELECT
     public Postagem exibir(Postagem postagem, int idPostagem){
         // Comando SQL
         String sql = "SELECT id_postagem, ds_titulopost, ds_postagem, dt_postagem FROM POSTAGEM WHERE id_postagem = ?";
@@ -96,6 +120,27 @@ public class PostagemDAO {
         }
     }
 
+    // DELETE
+    public void excluir(int idPostagem){
+        // Comando sql para deletar dentro da tabela Postagem
+        String sql = "DELETE FROM POSTAGEM WHERE id_postagem = ?";
+        // Try with resourses
+        // Objeto criado e instanciado dentro do try para fechar automaticamente
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            // Atribuindo valores ao comando INSERT
+            ps.setInt(1, idPostagem);
+            // Verificação
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Excluido com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Retorna FK
     public int exibirFKArquivo(int idPostagem){
         int idArquivo;
         // Comando SQL
@@ -121,6 +166,7 @@ public class PostagemDAO {
         }
     }
 
+    // Retorna FK
     public int exibirFKAvaliacao(int idPostagem){
         int idAvaliacao;
         // Comando SQL
@@ -146,43 +192,7 @@ public class PostagemDAO {
         }
     }
 
-    public int contarPostagens(){
-        // Comando SQL
-        String sql = "SELECT COUNT(*) FROM POSTAGEM";
-        // try-with-resouces
-        try (PreparedStatement ps = getCon().prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL!\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            return 0;
-        }
-        return 0;
-    }
-
-    public void alterar(Postagem postagem, int idPostagem){
-        // Comando sql para alterar dentro da tabela Postagem
-        String sql = "UPDATE POSTAGEM SET ds_titulopost = ?, ds_postagem = ? WHERE id_postagem = ?";
-        // Try with resourses
-        // Objeto criado e instanciado dentro do try para fechar automaticamente
-        try (PreparedStatement ps = getCon().prepareStatement(sql)){
-            // Atribuindo valores ao comando INSERT
-            ps.setString(1, postagem.getTitulo());
-            ps.setString(2, postagem.getDescricao());
-            ps.setInt(3, idPostagem);
-            // Verificação
-            if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "Alterado com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro ao Alterar!", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
+    // Altera FK
     public void alterarFKArquivo(int idPostagem, int idArquivo){
         // Comando sql para alterar dentro da tabela Postagem
         String sql = "UPDATE POSTAGEM SET arquivo_id_arquivo = ? WHERE id_postagem = ?";
@@ -203,6 +213,7 @@ public class PostagemDAO {
         }
     }
 
+    // Altera FK
     public void alterarFKAvaliacao(int idPostagem, int idAvaliacao){
         // Comando sql para alterar dentro da tabela Postagem
         String sql = "UPDATE POSTAGEM SET avaliacao_id_avaliacao = ? WHERE id_postagem = ?";
@@ -223,6 +234,7 @@ public class PostagemDAO {
         }
     }
 
+    // Altera FK
     public void alterarFKPontuacao(int idPostagem, int idPontuacao){
         // Comando sql para alterar dentro da tabela Postagem
         String sql = "UPDATE POSTAGEM SET pontuacao_id_pontuacao = ? WHERE id_postagem = ?";
@@ -241,6 +253,23 @@ public class PostagemDAO {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    // Conta a quantidade de postagens
+    public int contarPostagens(){
+        // Comando SQL
+        String sql = "SELECT COUNT(*) FROM POSTAGEM";
+        // try-with-resouces
+        try (PreparedStatement ps = getCon().prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL!\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return 0;
+        }
+        return 0;
     }
 
     // Metodo para exibir usuários cadastrados
@@ -273,25 +302,6 @@ public class PostagemDAO {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro de SQL!: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             return null;
-        }
-    }
-
-    public void excluir(int idPostagem){
-        // Comando sql para alterar dentro da tabela Postagem
-        String sql = "DELETE FROM POSTAGEM WHERE id_postagem = ?";
-        // Try with resourses
-        // Objeto criado e instanciado dentro do try para fechar automaticamente
-        try (PreparedStatement ps = getCon().prepareStatement(sql)){
-            // Atribuindo valores ao comando INSERT
-            ps.setInt(1, idPostagem);
-            // Verificação
-            if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "Excluido com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir!", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -39,6 +39,7 @@ public class AvaliacaoDAO {
         throw new SQLException("Não foi possível obter o próximo ID.");
     }
 
+    // INSERT
     public String inserir(Avaliacao avaliacao){
         // Comando sql para inserir dentro da tabela Arquivo
         String sql = "INSERT INTO AVALIACAO(id_avaliacao, ds_criterioavaliacao, vl_notaimpacto, vl_notadificuldade, vl_notaconfiabilidade, vl_notafrequencia, dt_avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -64,6 +65,7 @@ public class AvaliacaoDAO {
         }
     }
 
+    // SELECT
     public Avaliacao exibir(Avaliacao avaliacao, int idAvaliacao){
         // Comando SQL
         String sql = "SELECT id_avaliacao, ds_criterioavaliacao, vl_notaimpacto, vl_notadificuldade, vl_notaconfiabilidade, vl_notafrequencia, dt_avaliacao FROM AVALIACAO WHERE id_avaliacao = ?";

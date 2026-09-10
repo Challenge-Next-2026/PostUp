@@ -334,8 +334,7 @@ public class Main
                                 // LOGOUT
                                 case 6:
                                     JOptionPane.showMessageDialog(null, "Redirecionando...", "Alerta", JOptionPane.WARNING_MESSAGE);
-                                    escolha = 0;
-                                    continue;
+                                    break;
                                 default:
                                     throw new Exception("Escolha inválida");
                             }

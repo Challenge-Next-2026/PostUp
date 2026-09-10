@@ -39,6 +39,7 @@ public class PontuacaoDAO {
         throw new SQLException("Não foi possível obter o próximo ID.");
     }
 
+    // INSERT
     public String inserir(Pontuacao pontuacao){
         // Comando sql para inserir dentro da tabela Arquivo
         String sql = "INSERT INTO PONTUACAO(id_pontuacao, vl_pontuacao, ds_origempontuacao, dt_pontuacao) VALUES (?, ?, ?, ?)";
@@ -61,6 +62,7 @@ public class PontuacaoDAO {
         }
     }
 
+    // SELECT
     public Pontuacao exibir(Pontuacao pontuacao, int idPontuacao){
         // Comando SQL
         String sql = "SELECT id_pontuacao, vl_pontuacao, dt_pontuacao FROM PONTUACAO WHERE id_pontuacao = ?";

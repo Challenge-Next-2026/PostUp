@@ -70,6 +70,7 @@ public class UsuarioDAO {
         return null;
     }
 
+    // INSERT
     public String inserir(Usuario usuario){
         // Comando sql para inserir dentro da tabela Usuario
         String sql = "INSERT INTO USUARIO(id_usuario, nm_usuario, ds_email, ds_senha, dt_cadastro, st_conta, num_posicaoranking) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -92,6 +93,35 @@ public class UsuarioDAO {
             }
         } catch (SQLException e) {
             return "Erro de SQL: " + e.getMessage();
+        }
+    }
+
+    // SELECT
+    public Usuario exibir(Usuario usuario, int idUsuario){
+        // Comando SQL
+        String sql = "SELECT id_usuario, nm_usuario, ds_email, ds_senha, dt_cadastro FROM USUARIO WHERE id_usuario = ?";
+        // try-with-resources
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            // Substituição de ?
+            ps.setInt(1, idUsuario);
+            try (ResultSet rs = ps.executeQuery()){
+                // Validação se há usuários
+                if (rs.next()) {
+                    usuario.setIdUsuario(rs.getInt("id_usuario"));
+                    usuario.setNome(rs.getString("nm_usuario"));
+                    usuario.setEmail(rs.getString("ds_email"));
+                    usuario.setSenha(rs.getString("ds_senha"));
+                    usuario.setDataCadastro(rs.getDate("dt_cadastro").toLocalDate());
+                    return usuario;
+                } else {
+                    return null;
+                }
+            } catch (SQLException e) {
+                return null;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro de SQL!: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return null;
         }
     }
 
@@ -127,34 +157,7 @@ public class UsuarioDAO {
         }
     }
 
-    public Usuario exibir(Usuario usuario, int idUsuario){
-        // Comando SQL
-        String sql = "SELECT id_usuario, nm_usuario, ds_email, ds_senha, dt_cadastro FROM USUARIO WHERE id_usuario = ?";
-        // try-with-resources
-        try (PreparedStatement ps = getCon().prepareStatement(sql)){
-            // Substituição de ?
-            ps.setInt(1, idUsuario);
-            try (ResultSet rs = ps.executeQuery()){
-                // Validação se há usuários
-                if (rs.next()) {
-                    usuario.setIdUsuario(rs.getInt("id_usuario"));
-                    usuario.setNome(rs.getString("nm_usuario"));
-                    usuario.setEmail(rs.getString("ds_email"));
-                    usuario.setSenha(rs.getString("ds_senha"));
-                    usuario.setDataCadastro(rs.getDate("dt_cadastro").toLocalDate());
-                    return usuario;
-                } else {
-                    return null;
-                }
-            } catch (SQLException e) {
-                return null;
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL!: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-    }
-
+    // Alterar email no banco
     public void alterarEmail(Usuario usuario){
         // Comando sql para alterar dentro da tabela Usuario
         String sql = "UPDATE USUARIO SET ds_email = ? WHERE id_usuario = ?";
@@ -175,6 +178,7 @@ public class UsuarioDAO {
         }
     }
 
+    // Alterar senha dentro do banco
     public void alterarSenha(Usuario usuario){
         // Comando sql para alterar dentro da tabela Usuario
         String sql = "UPDATE USUARIO SET ds_senha = ? WHERE id_usuario = ?";
