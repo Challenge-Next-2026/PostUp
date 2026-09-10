@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e90e59b7-a741-4a4a-896f-de9b907f24a6" name="Changes" comment="feat: Revisão final de códigos da camada DAO e finalização de Sprint3.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sprint3.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ojdbc17.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dao/ArquivoDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dao/AvaliacaoDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dao/ConnectionFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dao/PontuacaoDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dao/PostagemDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dao/UsuarioDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dto/Arquivo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dto/Avaliacao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dto/Pontuacao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dto/Postagem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/dto/Usuario.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/br/com/fiap/main/Main.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="3DanSxdZprvNKFpZKIEoJdYJ5x1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Gizetto91&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/FIAP/PostUp/back-end/java/Sprint1e2/lib&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.idesettings.emmet&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\FIAP\PostUp\back-end\java\Sprint1e2\lib" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Sprint3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Sprint3" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e90e59b7-a741-4a4a-896f-de9b907f24a6" name="Changes" comment="" />
+      <created>1778529056721</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778529056721</updated>
+    </task>
+    <task id="LOCAL-00001" summary="fix: Atualizando projeto para jdk 25, corrigindo erros de herança e revisando entrega.">
+      <option name="closed" value="true" />
+      <created>1788212746408</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1788212746408</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: Adicionando arquivos e classes essenciáis faltantes.">
+      <option name="closed" value="true" />
+      <created>1788299170823</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1788299170824</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: Arquivos DAO">
+      <option name="closed" value="true" />
+      <created>1788433759825</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1788433759825</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: Finalizando arquivos DAO.">
+      <option name="closed" value="true" />
+      <created>1788438554072</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1788438554072</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: Inicio de implementação main.">
+      <option name="closed" value="true" />
+      <created>1788441293616</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1788441293616</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: Mudança de login e verificação direto no banco.">
+      <option name="closed" value="true" />
+      <created>1788462268579</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1788462268579</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat: Mudança de login e verificação direto no banco.">
+      <option name="closed" value="true" />
+      <created>1788467749309</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1788467749309</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: Refazendo metodo exibir.">
+      <option name="closed" value="true" />
+      <created>1788556216064</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1788556216064</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat: Iniciando conexão na classe Postagem.">
+      <option name="closed" value="true" />
+      <created>1788557460798</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1788557460798</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat: Aplicação de CRUD na camada Postagem e implementação no banco.">
+      <option name="closed" value="true" />
+      <created>1788724533504</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1788724533504</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat: Aplicação de CRUD na camada Arquivo e implementação no banco.">
+      <option name="closed" value="true" />
+      <created>1788902185741</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1788902185741</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat: Revisão de código, apicação de CRUD na camada pontuação e remoção de dedundâncias.">
+      <option name="closed" value="true" />
+      <created>1788991676553</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1788991676553</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat: Mudança de nome da pasta (bean -&gt; dto), Limpeza de classes dto, remoção de interface desnecessária">
+      <option name="closed" value="true" />
+      <created>1789039270619</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1789039270619</updated>
+    </task>
+    <task id="LOCAL-00014" summary="feat: Revisão final de códigos da camada DAO e finalização de Sprint3.">
+      <option name="closed" value="true" />
+      <created>1789051058611</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1789051058612</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix: Atualizando projeto para jdk 25, corrigindo erros de herança e revisando entrega." />
+    <MESSAGE value="feat: Adicionando arquivos e classes essenciáis faltantes." />
+    <MESSAGE value="feat: Arquivos DAO" />
+    <MESSAGE value="feat: Finalizando arquivos DAO." />
+    <MESSAGE value="feat: Inicio de implementação main." />
+    <MESSAGE value="feat: Mudança de login e verificação direto no banco." />
+    <MESSAGE value="feat: Refazendo metodo exibir." />
+    <MESSAGE value="feat: Iniciando conexão na classe Postagem." />
+    <MESSAGE value="feat: Aplicação de CRUD na camada Postagem e implementação no banco." />
+    <MESSAGE value="feat: Aplicação de CRUD na camada Arquivo e implementação no banco." />
+    <MESSAGE value="feat: Revisão de código, apicação de CRUD na camada pontuação e remoção de dedundâncias." />
+    <MESSAGE value="feat: Mudança de nome da pasta (bean -&gt; dto), Limpeza de classes dto, remoção de interface desnecessária" />
+    <MESSAGE value="feat: Revisão final de códigos da camada DAO e finalização de Sprint3." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Revisão final de códigos da camada DAO e finalização de Sprint3." />
+  </component>
+</project>
