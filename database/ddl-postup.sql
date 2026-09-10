@@ -13,10 +13,11 @@ CREATE TABLE ARQUIVO
     ( 
      id_arquivo     NUMBER  NOT NULL , 
      nm_arquivo     VARCHAR2 (50 CHAR)  NOT NULL , 
-     in_tipoArquivo VARCHAR2 (10 CHAR)  NOT NULL , 
+     in_tipoArquivo VARCHAR2 (10 CHAR)  NOT NULL CHECK (in_tipoArquivo IN('img','png','pdf','mp3','mp4','jpeg')), 
      ds_tamanho     VARCHAR2 (100 CHAR)  NOT NULL , 
      cod_URL        VARCHAR2 (300 CHAR)  NOT NULL , 
-     dt_upload      DATE  NOT NULL 
+     dt_upload      DATE  NOT NULL ,
+     UNIQUE (cod_URL)
     ) 
 ;
 
@@ -27,10 +28,10 @@ CREATE TABLE AVALIACAO
     ( 
      id_avaliacao          NUMBER  NOT NULL , 
      ds_criterioAvaliacao  VARCHAR2 (20 CHAR)  NOT NULL , 
-     vl_notaImpacto        NUMBER (100)  NOT NULL , 
-     vl_notaDificuldade    NUMBER (100)  NOT NULL , 
-     vl_notaConfiabilidade NUMBER (100)  NOT NULL , 
-     vl_notaFrequencia     NUMBER (100)  NOT NULL , 
+     vl_notaImpacto        NUMBER (5, 2)  NOT NULL CHECK (vl_notaImpacto BETWEEN 0 AND 100), 
+     vl_notaDificuldade    NUMBER (5, 2)  NOT NULL CHECK (vl_notaDificuldade BETWEEN 0 AND 100), 
+     vl_notaConfiabilidade NUMBER (5, 2)  NOT NULL CHECK (vl_notaConfiabilidade BETWEEN 0 AND 100), 
+     vl_notaFrequencia     NUMBER (5, 2)  NOT NULL CHECK (vl_notaFrequencia BETWEEN 0 AND 100), 
      dt_avaliacao          DATE  NOT NULL 
     ) 
 ;
@@ -40,7 +41,7 @@ ALTER TABLE AVALIACAO
 
 CREATE TABLE GEOLOCALIZACAO 
     ( 
-     id_geolocalizacao NUMBER  NOT NULL , 
+     id_geoloc NUMBER  NOT NULL , 
      ds_latitude       VARCHAR2 (10 CHAR)  NOT NULL , 
      ds_longitude      VARCHAR2 (10 CHAR)  NOT NULL , 
      dt_registro       DATE  NOT NULL 
@@ -48,12 +49,12 @@ CREATE TABLE GEOLOCALIZACAO
 ;
 
 ALTER TABLE GEOLOCALIZACAO 
-    ADD CONSTRAINT GEOLOCALIZACAO_PK PRIMARY KEY ( id_geolocalizacao ) ;
+    ADD CONSTRAINT GEOLOCALIZACAO_PK PRIMARY KEY ( id_geoloc ) ;
 
 CREATE TABLE PONTUACAO 
     ( 
      id_pontuacao       NUMBER  NOT NULL , 
-     vl_pontuacao       NUMBER (100)  NOT NULL , 
+     vl_pontuacao       NUMBER (5, 2)  NOT NULL CHECK (vl_pontuacao BETWEEN 0 AND 100), 
      ds_origemPontuacao VARCHAR2 (30 CHAR)  NOT NULL , 
      dt_pontuacao       DATE  NOT NULL 
     ) 
@@ -68,9 +69,8 @@ CREATE TABLE POSTAGEM
      ds_tituloPost                    VARCHAR2 (20 CHAR)  NOT NULL , 
      ds_postagem                      VARCHAR2 (200 CHAR)  NOT NULL , 
      dt_postagem                      DATE  NOT NULL , 
-     st_postagem                      CHAR (1)  NOT NULL , 
---  ERROR: Column name length exceeds maximum allowed length(30) 
-     GEOLOCALIZACAO_id_geolocalizacao NUMBER  NOT NULL , 
+     st_postagem                      CHAR (1)  NOT NULL ,  
+     GEOLOCALIZACAO_id_geoloc NUMBER  NOT NULL , 
      ARQUIVO_id_arquivo               NUMBER  NOT NULL , 
      VALIDACAO_id_validacao           NUMBER  NOT NULL , 
      AVALIACAO_id_avaliacao           NUMBER  NOT NULL , 
@@ -103,7 +103,8 @@ CREATE TABLE USUARIO
      ds_senha           VARCHAR2 (50 CHAR)  NOT NULL , 
      dt_cadastro        DATE  NOT NULL , 
      st_conta           CHAR (1)  NOT NULL , 
-     num_posicaoRanking NUMBER  NOT NULL 
+     num_posicaoRanking NUMBER  NOT NULL ,
+     UNIQUE (ds_email, ds_senha)
     ) 
 ;
 
@@ -147,11 +148,11 @@ ALTER TABLE POSTAGEM
 ALTER TABLE POSTAGEM 
     ADD CONSTRAINT POSTAGEM_GEOLOCALIZACAO_FK FOREIGN KEY 
     ( 
-     GEOLOCALIZACAO_id_geolocalizacao
+     GEOLOCALIZACAO_id_geoloc
     ) 
     REFERENCES GEOLOCALIZACAO 
     ( 
-     id_geolocalizacao
+     id_geoloc
     ) 
 ;
 
@@ -243,5 +244,5 @@ ALTER TABLE POSTAGEM
 -- ORDS ENABLE SCHEMA                       0
 -- ORDS ENABLE OBJECT                       0
 -- 
--- ERRORS                                   1
+-- ERRORS                                   0
 -- WARNINGS                                 0
