@@ -1,14 +1,12 @@
 package br.com.fiap.dao;
 
-import br.com.fiap.bean.Arquivo;
-import br.com.fiap.bean.Postagem;
+import br.com.fiap.dto.Arquivo;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class ArquivoDAO {
     // Atributo

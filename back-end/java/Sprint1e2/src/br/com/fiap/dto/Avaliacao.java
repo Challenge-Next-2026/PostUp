@@ -1,11 +1,8 @@
-package br.com.fiap.bean;
+package br.com.fiap.dto;
 
-import javax.swing.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
-public class Avaliacao implements ExibicaoObjetos
+public class Avaliacao
 {
     // Atributos
     private int idAvaliacao;
@@ -78,13 +75,12 @@ public class Avaliacao implements ExibicaoObjetos
     }
 
     // Metodos da classe
-    // Avaliação com base em determinada postagem de determinado usuário
+    // Avaliação de um objeto Postagem e um objeto Arquivo para definição de notas
     public void avaliarPostagem(Postagem postagem, Arquivo arquivo, int qtdPostagens, int idAvaliacao)
     {
         LocalDate dataAtual = LocalDate.now();
         // verificação de Título da lista informada
         if (postagem.getTitulo().equalsIgnoreCase("Plantar")) {
-            // definição de parâmetros para atributos
             setIdAvaliacao(idAvaliacao);
             setCriterio("Plantação");
             setNotaImpacto(100);
@@ -106,7 +102,6 @@ public class Avaliacao implements ExibicaoObjetos
             setDataAvaliacao(dataAtual);
         // verificação de Título da lista informada
         } else if (postagem.getTitulo().equalsIgnoreCase("Transporte público")){
-            // definição de parâmetros para atributos
             setIdAvaliacao(idAvaliacao);
             setCriterio("Transporte Público");
             setNotaImpacto(90);
@@ -128,7 +123,6 @@ public class Avaliacao implements ExibicaoObjetos
             setDataAvaliacao(dataAtual);
         // verificação de Título da lista informada
         } else if (postagem.getTitulo().equalsIgnoreCase("Bicicleta")){
-            // definição de parâmetros para atributos
             setIdAvaliacao(idAvaliacao);
             setCriterio("Bicicleta");
             setNotaImpacto(80);
@@ -150,7 +144,6 @@ public class Avaliacao implements ExibicaoObjetos
             setDataAvaliacao(dataAtual);
         // verificação de Título da lista informada
         } else if (postagem.getTitulo().equalsIgnoreCase("Veículo Elétrico")){
-            // definição de parâmetros para atributos
             setIdAvaliacao(idAvaliacao);
             setCriterio("Mobilidade elétrica");
             setNotaImpacto(70);
@@ -172,7 +165,6 @@ public class Avaliacao implements ExibicaoObjetos
             setDataAvaliacao(dataAtual);
         // verificação de Título da lista informada
         } else if (postagem.getTitulo().equalsIgnoreCase("Reciclagem")){
-            // definição de parâmetros para atributos
             setIdAvaliacao(idAvaliacao);
             setCriterio("Reciclagem");
             setNotaImpacto(100);
@@ -193,12 +185,5 @@ public class Avaliacao implements ExibicaoObjetos
             }
             setDataAvaliacao(dataAtual);
         }
-    }
-
-    public void exibir(List<Usuario> usuarios, int contador, int id, List<Postagem> postagens, int contador2, int idPostagem, List<Arquivo> arquivos, int contador3, List<Avaliacao> avaliacoes, Pontuacao pontuacao)
-    {
-        // Exibição de avaliação com listas e DateTimeFormatter
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        JOptionPane.showMessageDialog(null, String.format("ID User: %d\nNome User: %s\n------------------\nID Post: %d\nTítulo Post: %s\n------------------\nCritério avaliado: %s\nNota Impacto: %d\nNota Dificuldade: %d\nNota Confiabifidade: %d\nNota Frequência: %d\nData: %s", usuarios.get(id).getIdUsuario(), usuarios.get(id).getNome(), postagens.get(idPostagem - 1).getIdPostagem(), postagens.get(idPostagem - 1).getTitulo(), avaliacoes.getFirst().getCriterio(), avaliacoes.getFirst().getNotaImpacto(), avaliacoes.getFirst().getNotaDificuldade(), avaliacoes.getFirst().getNotaConfiabilidade(), avaliacoes.getFirst().getNotaFrequencia(), avaliacoes.getFirst().getDataAvaliacao().format(dtf)));
     }
 }

@@ -1,11 +1,9 @@
-package br.com.fiap.bean;
+package br.com.fiap.dto;
 
 import javax.swing.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
-public class Usuario implements ExibicaoObjetos
+public class Usuario
 {
     // Atributos
     private int idUsuario;
@@ -60,11 +58,11 @@ public class Usuario implements ExibicaoObjetos
     }
 
     // Metodos Exclusivos
+    // Cadastro de um objeto Usuário na memória
     public void cadastrarUsuario(int idUsuario)
     {
-        // Armazenando data com LocalDate
         LocalDate dataAtual = LocalDate.now();
-        // Preenchimento de atributos
+
         setIdUsuario(idUsuario);
         setNome(JOptionPane.showInputDialog("Informe o Nome:"));
         setEmail(JOptionPane.showInputDialog("Informe o Email:"));
@@ -73,26 +71,17 @@ public class Usuario implements ExibicaoObjetos
         JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
     }
 
-    // Alterar o email de um usuário da lista
+    // Alterar o email de um objeto Usuário na memória
     public void alterarEmail()
     {
-        // setEmail com entrada de dados
         setEmail(JOptionPane.showInputDialog(String.format("Informe o novo Email: {%s}", getEmail())));
         JOptionPane.showMessageDialog(null, "Email alterado!");
     }
 
-    // Alterar o email de um usuário da lista
+    // Alterar a senha de um objeto Usuário na memória
     public void alterarSenha()
     {
-        // setSenha com entrada de dados
         setSenha(JOptionPane.showInputDialog(String.format("Informe a nova Senha: {%s}", getSenha())));
         JOptionPane.showMessageDialog(null, "Senha alterada!");
-    }
-
-    public void exibir(List<Usuario> usuarios, int contador, int id, List<Postagem> postagens, int contador2, int idPostagem, List<Arquivo> arquivos, int contador3, List<Avaliacao> avaliacoes, Pontuacao pontuacao) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        // Exibição de Usuário
-        JOptionPane.showMessageDialog(null, String.format("Usuário\nID: %d\nNome: %s\nEmail: %s\nSenha: %s\nData de cadastro: %s",
-                usuarios.get(contador - 1).getIdUsuario(), usuarios.get(contador - 1).getNome(), usuarios.get(contador - 1).getEmail(), usuarios.get(contador - 1).getSenha(), usuarios.get(contador - 1).getDataCadastro().format(dtf)));
     }
 }

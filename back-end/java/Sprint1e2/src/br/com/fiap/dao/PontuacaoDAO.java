@@ -1,14 +1,12 @@
 package br.com.fiap.dao;
 
-import br.com.fiap.bean.Avaliacao;
-import br.com.fiap.bean.Pontuacao;
+import br.com.fiap.dto.Pontuacao;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class PontuacaoDAO {
     // Atributo

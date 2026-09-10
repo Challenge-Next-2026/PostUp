@@ -1,11 +1,10 @@
 package br.com.fiap.dao;
 
-import br.com.fiap.bean.Usuario;
+import br.com.fiap.dto.Usuario;
 
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class UsuarioDAO {
     // Atributo

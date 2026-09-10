@@ -1,13 +1,12 @@
 package br.com.fiap.main;
 
-import br.com.fiap.bean.*;
+import br.com.fiap.dto.*;
 import br.com.fiap.dao.*;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main
 {

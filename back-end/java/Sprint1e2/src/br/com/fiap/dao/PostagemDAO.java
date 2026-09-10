@@ -1,7 +1,6 @@
 package br.com.fiap.dao;
 
-import br.com.fiap.bean.Postagem;
-import br.com.fiap.bean.Usuario;
+import br.com.fiap.dto.Postagem;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -9,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PostagemDAO {
     // Atributo
