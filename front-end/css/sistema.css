@@ -38,5 +38,13 @@
 .conteudo__ranking__imagem{
     border-radius: 3rem;
     padding: 0;
+    max-width: 90%;          /* Evita estourar a largura da tela */
+    max-height: 80vh;        /* Garante que não ultrapasse a altura visível da página */
+    width: auto;             /* Preserva a proporção original */
+    height: auto;            /* Preserva a proporção original */
+    display: block;
+    margin: 0 auto;          /* Centralização alternativa por margem */
+    border-radius: 16px;     /* Mantém as bordas arredondadas já presentes */
+    object-fit: contain;
     
 }
