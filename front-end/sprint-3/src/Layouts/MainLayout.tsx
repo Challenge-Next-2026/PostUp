@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
-import Rodape from '../components/Rodape/Rodape'
-import Cabecalho from '../components/Cabecalho/Cabecalho'
+import Rodape from '../components/Footer/Footer'
+import Cabecalho from '../components/Header/Header'
 
 type MainLayoutProps = {
   children: ReactNode
