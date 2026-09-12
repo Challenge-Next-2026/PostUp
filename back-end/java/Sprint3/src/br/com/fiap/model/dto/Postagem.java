@@ -50,7 +50,7 @@ public class Postagem
 
     // Metodos da classe
     // Criar um objeto Postagem dentro da memória
-    public void criarPostagem()
+    public String criarPostagem()
     {
         // Tratamento de erros
         try {
@@ -59,13 +59,14 @@ public class Postagem
             setTitulo(JOptionPane.showInputDialog("Títulos possíveis...\nPlantar - Transporte público - Bicicleta - Veículo Elétrico - Reciclagem\nDigite algum: "));
             setDescricao(JOptionPane.showInputDialog("Descrição:"));
             setDataPostagem(dataAtual);
+            return "Postagem Criada!";
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return "Erro: " + e.getMessage();
         }
     }
 
     // Editar um objeto Postagem na memória
-    public void editarPostagem()
+    public String editarPostagem()
     {
         LocalDate dataAtual = LocalDate.now();
         // Tratamento de erros
@@ -73,8 +74,9 @@ public class Postagem
             setTitulo(JOptionPane.showInputDialog(String.format("Novo Título: {%s}", getTitulo())));
             setDescricao(JOptionPane.showInputDialog(String.format("Nova Descrição: {%s}", getDescricao())));
             setDataPostagem(dataAtual);
+            return "Postagem editada!";
         } catch (Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return "Erro: " + e.getMessage();
         }
     }
 }

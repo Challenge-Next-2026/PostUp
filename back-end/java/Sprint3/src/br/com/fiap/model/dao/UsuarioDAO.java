@@ -170,7 +170,7 @@ public class UsuarioDAO implements IDAO{
             // Atribuindo valores ao comando INSERT
             ps.setString(1, usuario.getEmail());
             ps.setString(2, usuario.getSenha());
-            ps.setInt(2, usuario.getIdUsuario());
+            ps.setInt(3, usuario.getIdUsuario());
             // Verificação
             if (ps.executeUpdate() > 0) {
                 return "Alterado com sucesso!";

@@ -63,13 +63,13 @@ public class PontuacaoDAO {
     }
 
     // SELECT
-    public Pontuacao exibir(Pontuacao pontuacao, int idPontuacao){
+    public Pontuacao exibir(Pontuacao pontuacao){
         // Comando SQL
         String sql = "SELECT id_pontuacao, vl_pontuacao, dt_pontuacao FROM PONTUACAO WHERE id_pontuacao = ?";
         // try-with-resources
         try (PreparedStatement ps = getCon().prepareStatement(sql)){
             // Substituição de ?
-            ps.setInt(1, idPontuacao);
+            ps.setInt(1, pontuacao.getIdPontuacao());
             try (ResultSet rs = ps.executeQuery()){
                 // Validação se há postagens
                 if (rs.next()) {

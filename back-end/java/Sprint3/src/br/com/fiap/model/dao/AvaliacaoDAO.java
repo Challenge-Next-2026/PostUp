@@ -66,13 +66,13 @@ public class AvaliacaoDAO {
     }
 
     // SELECT
-    public Avaliacao exibir(Avaliacao avaliacao, int idAvaliacao){
+    public Avaliacao exibir(Avaliacao avaliacao){
         // Comando SQL
         String sql = "SELECT id_avaliacao, ds_criterioavaliacao, vl_notaimpacto, vl_notadificuldade, vl_notaconfiabilidade, vl_notafrequencia, dt_avaliacao FROM AVALIACAO WHERE id_avaliacao = ?";
         // try-with-resources
         try (PreparedStatement ps = getCon().prepareStatement(sql)){
             // Substituição de ?
-            ps.setInt(1, idAvaliacao);
+            ps.setInt(1, avaliacao.getIdAvaliacao());
             try (ResultSet rs = ps.executeQuery()){
                 // Validação se há postagens
                 if (rs.next()) {

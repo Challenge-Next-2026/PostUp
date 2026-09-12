@@ -59,7 +59,7 @@ public class Usuario
 
     // Metodos Exclusivos
     // Cadastro de um objeto Usuário na memória
-    public void cadastrarUsuario()
+    public String cadastrarUsuario()
     {
         LocalDate dataAtual = LocalDate.now();
 
@@ -67,15 +67,14 @@ public class Usuario
         setEmail(JOptionPane.showInputDialog("Informe o Email:"));
         setSenha(JOptionPane.showInputDialog("Informe a Senha:"));
         setDataCadastro(dataAtual);
-        JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+        return "Usuário cadastrado com sucesso!";
     }
 
     // Alterar o email de um objeto Usuário na memória
-    public void alterar()
+    public String alterar()
     {
         setEmail(JOptionPane.showInputDialog(String.format("Informe o novo Email: {%s}", getEmail())));
-        JOptionPane.showMessageDialog(null, "Email alterado!");
         setSenha(JOptionPane.showInputDialog(String.format("Informe a nova Senha: {%s}", getSenha())));
-        JOptionPane.showMessageDialog(null, "Senha alterada!");
+        return "Email e/ou Senha alterados!";
     }
 }

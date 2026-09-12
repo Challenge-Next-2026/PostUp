@@ -151,6 +151,36 @@ public class ArquivoDAO implements IDAO{
         }
     }
 
+    public Arquivo exibirObjeto(Object object){
+        // Conversão
+        arquivo = (Arquivo) object;
+        // Comando SQL
+        String sql = "SELECT id_arquivo, nm_arquivo, in_tipoarquivo, ds_tamanho, cod_url, dt_upload FROM ARQUIVO WHERE id_arquivo = ?";
+        // try-with-resources
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            // Substituição de ?
+            ps.setInt(1, arquivo.getIdArquivo());
+            try (ResultSet rs = ps.executeQuery()){
+                // Validação se há postagens
+                if (rs.next()) {
+                    arquivo.setIdArquivo(rs.getInt("id_arquivo"));
+                    arquivo.setNomeArquivo(rs.getString("nm_arquivo"));
+                    arquivo.setTipo(rs.getString("in_tipoarquivo"));
+                    arquivo.setTamanho(rs.getString("ds_tamanho"));
+                    arquivo.setUrl(rs.getString("cod_url"));
+                    arquivo.setDataUpload(rs.getDate("dt_upload").toLocalDate());
+                    return arquivo;
+                } else {
+                    return null;
+                }
+            } catch (SQLException e) {
+                return null;
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
     // Metodo para exibir usuários cadastrados
     public ArrayList<Arquivo> listarCadastrados(){
         // Comando sql
