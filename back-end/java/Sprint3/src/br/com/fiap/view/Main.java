@@ -1,7 +1,7 @@
-package br.com.fiap.main;
+package br.com.fiap.view;
 
-import br.com.fiap.dto.*;
-import br.com.fiap.dao.*;
+import br.com.fiap.model.dto.*;
+import br.com.fiap.model.dao.*;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -29,14 +29,13 @@ public class Main
                         Usuario usuario = new Usuario();
                         Usuario exibicao;
                         // Armazenamento de próximo id dentro do idUsuario
-                        idUsuario = usuarioDAO.obterProximoId();
+                        usuario.setIdUsuario(usuarioDAO.obterProximoId());
                         // Cadastro de usuário
-                        usuario.cadastrarUsuario(idUsuario);
+                        usuario.cadastrarUsuario();
                         // Inserção no banco
                         JOptionPane.showMessageDialog(null, usuarioDAO.inserir(usuario), "Alerta",JOptionPane.WARNING_MESSAGE);
                         // Exibição de objeto
-                        exibicao = usuarioDAO.exibir(usuario, idUsuario);
-                        JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro().format(dtf)), "Info", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, usuarioDAO.exibir(usuario), "Exibição", JOptionPane.INFORMATION_MESSAGE);
                         continue;
                     // LOGIN
                     case 2:
@@ -76,26 +75,36 @@ public class Main
                                 // USUÁRIO
                                 case 1:
                                     // Menu secundário
-                                    escolha = Integer.parseInt(JOptionPane.showInputDialog("USUÀRIO\n1 - Editar email\n2 - Editar senha"));
+                                    escolha = Integer.parseInt(JOptionPane.showInputDialog("USUÀRIO\n1 - Editar\n2 - Exibir\n3 - Excluir"));
                                     // estrutura condicional avaliando a escolha do usuario
                                     switch (escolha){
-                                        // EDITAR EMAIL
+                                        // EDITAR
                                         case 1:
                                             // Chamada de metodo alterarSenha
-                                            usuarioLogado.alterarEmail();
-                                            usuarioDAO1.alterarEmail(usuarioLogado);
-                                            // Exibição de Usuário
-                                            exibicao = usuarioDAO1.exibir(usuarioLogado, usuarioLogado.getIdUsuario());
-                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro().format(dtf)), "Info", JOptionPane.INFORMATION_MESSAGE);
+                                            usuarioLogado.alterar();
+                                            JOptionPane.showMessageDialog(null, usuarioDAO1.alterar(usuarioLogado), "Alteração", JOptionPane.WARNING_MESSAGE);
                                             break;
-                                        // EDITAR SENHA
+                                        // EXIBIR
                                         case 2:
-                                            // Chamada de metodo alterarEmail
-                                            usuarioLogado.alterarSenha();
-                                            usuarioDAO1.alterarSenha(usuarioLogado);
                                             // Exibição de Usuário
-                                            exibicao = usuarioDAO1.exibir(usuarioLogado, usuarioLogado.getIdUsuario());
-                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nEmail: %s\nData de Cadastro: %s", exibicao.getIdUsuario(), exibicao.getNome(), exibicao.getEmail(), exibicao.getDataCadastro().format(dtf)), "Info", JOptionPane.INFORMATION_MESSAGE);
+                                            JOptionPane.showMessageDialog(null, usuarioDAO1.exibir(usuarioLogado), "Exibição", JOptionPane.INFORMATION_MESSAGE);
+                                            break;
+                                        // EXCLUIR
+                                        case 3:
+                                            Usuario usuarioExcluido = new Usuario();
+                                            resultado = usuarioDAO1.listarCadastrados();
+                                            // Visualização de BDD
+                                            if (resultado != null) {
+                                                String listagem = "";
+                                                for (Usuario loop : resultado) {
+                                                    listagem += "ID: " + loop.getIdUsuario() + "\nNome: " + loop.getNome() + "\n\n";
+                                                }
+                                                JOptionPane.showMessageDialog(null, listagem, "Lista", JOptionPane.INFORMATION_MESSAGE);
+                                            } else {
+                                                JOptionPane.showMessageDialog(null, "Não há usuários cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+                                            }
+                                            usuarioExcluido.setIdUsuario(Integer.parseInt(JOptionPane.showInputDialog("Informe o id do Usuário que deseja remover:")));
+                                            JOptionPane.showMessageDialog(null, usuarioDAO1.excluir(usuarioExcluido), "Excluir", JOptionPane.WARNING_MESSAGE);
                                             break;
                                         default:
                                             throw new Exception("Escolha inválida");
@@ -112,16 +121,14 @@ public class Main
                                             // Objeto para realizar as operações
                                             PostagemDAO postagemDAO = new PostagemDAO(con);
                                             Postagem postagem = new Postagem();
-                                            Postagem exibicaoPost;
                                             // Armazenamento de próximo id dentro do idUsuario
-                                            idPostagem = postagemDAO.obterProximoId();
+                                            postagem.setIdPostagem(postagemDAO.obterProximoId());
                                             // Cadastro de usuário
-                                            postagem.criarPostagem(idPostagem);
+                                            postagem.criarPostagem();
                                             // Inserção no banco
                                             JOptionPane.showMessageDialog(null, postagemDAO.inserir(postagem), "Alerta",JOptionPane.WARNING_MESSAGE);
                                             // Exibição de Postagem
-                                            exibicaoPost = postagemDAO.exibir(postagem, idPostagem);
-                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nTítulo: %s\nDescrição: %s\nData: %s", exibicaoPost.getIdPostagem(), exibicaoPost.getTitulo(), exibicaoPost.getDescricao(), exibicaoPost.getDataPostagem().format(dtf)), "Exibição", JOptionPane.INFORMATION_MESSAGE);
+                                            JOptionPane.showMessageDialog(null, postagemDAO.exibir(postagem), "Exibição", JOptionPane.INFORMATION_MESSAGE);
                                             break;
                                         // EDITAR POSTAGEM
                                         case 2:
@@ -141,17 +148,19 @@ public class Main
                                                 JOptionPane.showMessageDialog(null, "Não há postagens cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
                                             }
                                             // Solicitação de id postagem
-                                            int idPostagem2 = Integer.parseInt(JOptionPane.showInputDialog("informe o ID da postagem a ser alterada:"));
+                                            postagem2.setIdPostagem(Integer.parseInt(JOptionPane.showInputDialog("informe o ID da postagem a ser alterada:")));
                                             // Alteração de Postagem direto no banco
                                             postagem2.editarPostagem();
-                                            postagemDAO2.alterar(postagem2, idPostagem2);
+                                            JOptionPane.showMessageDialog(null, postagemDAO2.alterar(postagem2), "Alteração", JOptionPane.WARNING_MESSAGE);
                                             // Exibição de Postagem2
+                                            JOptionPane.showMessageDialog(null, postagemDAO2.exibir(postagem2), "Exibição", JOptionPane.INFORMATION_MESSAGE);
                                             break;
                                         // REMOVER POSTAGEM
                                         case 3:
                                             // Exibição de lista de posts Cadastrados
                                             // Visualização de BDD
                                             PostagemDAO postagemDAO3 = new PostagemDAO(con);
+                                            Postagem postagem3 = new Postagem();
                                             ArrayList<Postagem> resultadoPost2 = postagemDAO3.listarCadastrados();
                                             if (resultadoPost2 != null) {
                                                 String listagem = "";
@@ -163,9 +172,9 @@ public class Main
                                                 JOptionPane.showMessageDialog(null, "Não há postagens cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
                                             }
                                             // Solicitação de id postagem
-                                            int idPostagem3 = Integer.parseInt(JOptionPane.showInputDialog("informe o ID da postagem a ser removida:"));
+                                            postagem3.setIdPostagem(Integer.parseInt(JOptionPane.showInputDialog("informe o ID da postagem a ser removida:")));
                                             // Excluindo direto no banco
-                                            postagemDAO3.excluir(idPostagem3);
+                                            JOptionPane.showMessageDialog(null, postagemDAO3.excluir(postagem3), "Excluir", JOptionPane.WARNING_MESSAGE);
                                             // Lista Atualizada
                                             resultadoPost2 = postagemDAO3.listarCadastrados();
                                             if (resultadoPost2 != null) {
@@ -185,7 +194,7 @@ public class Main
                                 // ARQUIVO
                                 case 3:
                                     // Menu secundário
-                                    escolha = Integer.parseInt(JOptionPane.showInputDialog("ARQUIVO\n1 - Importar Arquivo\n2 - Acessar Câmera"));
+                                    escolha = Integer.parseInt(JOptionPane.showInputDialog("ARQUIVO\n1 - Importar Arquivo\n2 - Acessar Câmera\n3 - Alterar\n4 - Excluir"));
                                     // estrutura condicional avaliando a escolha do usuario
                                     switch (escolha){
                                         // IMPORTAR ARQUIVO
@@ -193,7 +202,6 @@ public class Main
                                             // Objetos de operações
                                             ArquivoDAO arquivoDAO = new ArquivoDAO(con);
                                             Arquivo arquivo = new Arquivo();
-                                            Arquivo exibicaoArquivo;
                                             PostagemDAO postagemDAO4 = new PostagemDAO(con);
                                             ArrayList<Postagem> resultadoPost3 = postagemDAO4.listarCadastrados();
                                             if (resultadoPost3 != null) {
@@ -208,16 +216,15 @@ public class Main
                                             // Pedida de id para adicionar arquivos
                                             int idPostagem4 = Integer.parseInt(JOptionPane.showInputDialog("Qual o ID da postagem que deseja adicionar um arquivo?"));
                                             // Armazenamento de próximo id dentro do idUsuario
-                                            int idArquivo = arquivoDAO.obterProximoId();
+                                            arquivo.setIdArquivo(arquivoDAO.obterProximoId());
                                             // Cadastro de arquivo
-                                            arquivo.importarArquivo(idArquivo);
+                                            arquivo.importarArquivo();
                                             // Inserção no banco
                                             JOptionPane.showMessageDialog(null, arquivoDAO.inserir(arquivo), "Alerta",JOptionPane.WARNING_MESSAGE);
                                             // Alteração de FK no banco
-                                            postagemDAO4.alterarFKArquivo(idPostagem4, idArquivo);
+                                            postagemDAO4.alterarFKArquivo(idPostagem4, arquivo.getIdArquivo());
                                             // Exibição de Postagem
-                                            exibicaoArquivo = arquivoDAO.exibir(arquivo, idArquivo);
-                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nTipo: %s\nTamanho: %s\nURL: %s\nData Upload: %s", exibicaoArquivo.getIdArquivo(), exibicaoArquivo.getNomeArquivo(), exibicaoArquivo.getTipo(), exibicaoArquivo.getTamanho(), exibicaoArquivo.getUrl(), exibicaoArquivo.getDataUpload().format(dtf)), "Exibição", JOptionPane.INFORMATION_MESSAGE);
+                                            JOptionPane.showMessageDialog(null, arquivoDAO.exibir(arquivo), "Exibição", JOptionPane.INFORMATION_MESSAGE);
                                             break;
                                         // ACESSAR CÂMERA
                                         case 2:
@@ -239,16 +246,50 @@ public class Main
                                             // Pedida de id para adicionar arquivos
                                             int idPostagem5 = Integer.parseInt(JOptionPane.showInputDialog("Qual o ID da postagem que deseja adicionar um arquivo?"));
                                             // Armazenamento de próximo id dentro do idUsuario
-                                            int idArquivo2 = arquivoDAO2.obterProximoId();
+                                            arquivo2.setIdArquivo(arquivoDAO2.obterProximoId());
                                             // Chamada de metodo acessarCamera() no objeto arquivos de id informado(Só roda se o id do usuario, o id postagem e o id arquivo forem existentes e válidos)
-                                            arquivo2.acessarCamera(idArquivo2);
+                                            arquivo2.acessarCamera(arquivo2.getIdArquivo());
                                             // Inserção no banco
                                             JOptionPane.showMessageDialog(null, arquivoDAO2.inserir(arquivo2), "Alerta",JOptionPane.WARNING_MESSAGE);
                                             // Alteração de FK no banco
-                                            postagemDAO5.alterarFKArquivo(idPostagem5, idArquivo2);
+                                            postagemDAO5.alterarFKArquivo(idPostagem5, arquivo2.getIdArquivo());
                                             // Exibição de Postagem
-                                            exibicaoArquivo2 = arquivoDAO2.exibir(arquivo2, idArquivo2);
-                                            JOptionPane.showMessageDialog(null, String.format("ID: %d\nNome: %s\nTipo: %s\nTamanho: %s\nURL: %s\nData Upload: %s", exibicaoArquivo2.getIdArquivo(), exibicaoArquivo2.getNomeArquivo(), exibicaoArquivo2.getTipo(), exibicaoArquivo2.getTamanho(), exibicaoArquivo2.getUrl(), exibicaoArquivo2.getDataUpload().format(dtf)), "Exibição", JOptionPane.INFORMATION_MESSAGE);
+                                            JOptionPane.showMessageDialog(null, arquivoDAO2.exibir(arquivo2), "Exibição", JOptionPane.INFORMATION_MESSAGE);
+                                            break;
+                                        // ALTERAR
+                                        case 3:
+                                            Arquivo arquivoAlterado = new Arquivo();
+                                            ArquivoDAO arquivoDAO1 = new ArquivoDAO(con);
+                                            ArrayList<Arquivo> lista = arquivoDAO1.listarCadastrados();
+                                            if (lista != null) {
+                                                String listagem = "";
+                                                for (Arquivo loop : lista) {
+                                                    listagem += "ID: " + loop.getIdArquivo() + "\nNome: " + loop.getNomeArquivo() + "\n\n";
+                                                }
+                                                JOptionPane.showMessageDialog(null, listagem, "Lista", JOptionPane.INFORMATION_MESSAGE);
+                                            } else {
+                                                JOptionPane.showMessageDialog(null, "Não há arquivos cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+                                            }
+                                            arquivoAlterado.setIdArquivo(Integer.parseInt(JOptionPane.showInputDialog("Informe o ID do arquivo que deseja alterar:")));
+                                            arquivoAlterado.alterarArquivo();
+                                            JOptionPane.showMessageDialog(null, arquivoDAO1.alterar(arquivoAlterado), "Alteração", JOptionPane.WARNING_MESSAGE);
+                                            break;
+                                        // EXCLUIR
+                                        case 4:
+                                            Arquivo arquivoExcluido = new Arquivo();
+                                            arquivoDAO1 = new ArquivoDAO(con);
+                                            lista = arquivoDAO1.listarCadastrados();
+                                            if (lista != null) {
+                                                String listagem = "";
+                                                for (Arquivo loop : lista) {
+                                                    listagem += "ID: " + loop.getIdArquivo() + "\nNome: " + loop.getNomeArquivo() + "\n\n";
+                                                }
+                                                JOptionPane.showMessageDialog(null, listagem, "Lista", JOptionPane.INFORMATION_MESSAGE);
+                                            } else {
+                                                JOptionPane.showMessageDialog(null, "Não há arquivos cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+                                            }
+                                            arquivoExcluido.setIdArquivo(Integer.parseInt(JOptionPane.showInputDialog("Informe o ID do arquivo que deseja excluir:")));
+                                            JOptionPane.showMessageDialog(null, arquivoDAO1.excluir(arquivoExcluido), "Excluir", JOptionPane.WARNING_MESSAGE);
                                             break;
                                         default:
                                             throw new Exception("Escolha inválida");
@@ -257,8 +298,7 @@ public class Main
                                 // AVALIACAO
                                 case 4:
                                     // Objetos de teste
-                                    Postagem postagemAvaliada;
-                                    Arquivo arquivoAvaliado;
+                                    Postagem postagemAvaliada = new Postagem();
                                     Arquivo arquivo3 = new Arquivo();
                                     ArquivoDAO arquivoDAO3 = new ArquivoDAO(con);
                                     Avaliacao avaliacao = new Avaliacao();
@@ -277,20 +317,20 @@ public class Main
                                         JOptionPane.showMessageDialog(null, "Não há postagens cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
                                     }
                                     // Solicitação de id postagem
-                                    int idPostagem6 = Integer.parseInt(JOptionPane.showInputDialog("ID da postagem a ser avaliada: "));
+                                    postagemAvaliada.setIdPostagem(Integer.parseInt(JOptionPane.showInputDialog("ID da postagem a ser avaliada: ")));
                                     // Criação de objetos a serem avaliados
-                                    postagemAvaliada = postagemDAO6.exibir(new Postagem(), idPostagem6);
-                                    int idArquivo3 = (postagemDAO6.exibirFKArquivo(idPostagem6));
-                                    arquivoAvaliado = arquivoDAO3.exibir(arquivo3, idArquivo3);
+                                    JOptionPane.showMessageDialog(null, postagemDAO6.exibir(postagemAvaliada), "Exibição", JOptionPane.INFORMATION_MESSAGE);
+                                    arquivo3.setIdArquivo((postagemDAO6.exibirFKArquivo(postagemAvaliada.getIdPostagem())));
+                                    JOptionPane.showMessageDialog(null, arquivoDAO3.exibir(arquivo3), "Exibição", JOptionPane.INFORMATION_MESSAGE);
                                     int qtdPostagens = postagemDAO6.contarPostagens();
                                     // Obter próximo id
                                     int idAvaliacao = avaliacaoDAO.obterProximoId();
                                     // Chamada de metodo avaliarPostagem() no objeto avaliacoes de id informado(Só roda se o id do usuario e o id postagem forem existentes e válidos)
-                                    avaliacao.avaliarPostagem(postagemAvaliada, arquivoAvaliado, qtdPostagens, idAvaliacao);
+                                    avaliacao.avaliarPostagem(postagemAvaliada, arquivo3, qtdPostagens, idAvaliacao);
                                     // Inserção no banco
                                     JOptionPane.showMessageDialog(null, avaliacaoDAO.inserir(avaliacao), "Alerta",JOptionPane.WARNING_MESSAGE);
                                     // Alteração de FK no banco
-                                    postagemDAO6.alterarFKAvaliacao(idPostagem6, idAvaliacao);
+                                    postagemDAO6.alterarFKAvaliacao(postagemAvaliada.getIdPostagem(), idAvaliacao);
                                     // Exibição de avaliacao
                                     exibirAvaliacao = avaliacaoDAO.exibir(avaliacao, idAvaliacao);
                                     JOptionPane.showMessageDialog(null, String.format("ID: %d\nCritério: %s\nNota Impacto: %d\nNota Dificuldade: %d\nNota Confiabilidade: %d\nNota Frequência: %d\nData: %s", exibirAvaliacao.getIdAvaliacao(), exibirAvaliacao.getCriterio(), exibirAvaliacao.getNotaImpacto(), exibirAvaliacao.getNotaDificuldade(), exibirAvaliacao.getNotaConfiabilidade(), exibirAvaliacao.getNotaFrequencia(), exibirAvaliacao.getDataAvaliacao().format(dtf)), "Info", JOptionPane.INFORMATION_MESSAGE);

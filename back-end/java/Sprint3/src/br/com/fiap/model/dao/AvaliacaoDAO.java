@@ -1,6 +1,6 @@
-package br.com.fiap.dao;
+package br.com.fiap.model.dao;
 
-import br.com.fiap.dto.Avaliacao;
+import br.com.fiap.model.dto.Avaliacao;
 
 import javax.swing.*;
 import java.sql.Connection;

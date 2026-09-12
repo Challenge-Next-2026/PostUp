@@ -1,4 +1,4 @@
-package br.com.fiap.dto;
+package br.com.fiap.model.dto;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -50,13 +50,12 @@ public class Postagem
 
     // Metodos da classe
     // Criar um objeto Postagem dentro da memória
-    public void criarPostagem(int idPostagem)
+    public void criarPostagem()
     {
         // Tratamento de erros
         try {
             LocalDate dataAtual = LocalDate.now();
             // Definindo ID a partir do metodo obterProximoId() da classe PostagemDAO
-            setIdPostagem(idPostagem);
             setTitulo(JOptionPane.showInputDialog("Títulos possíveis...\nPlantar - Transporte público - Bicicleta - Veículo Elétrico - Reciclagem\nDigite algum: "));
             setDescricao(JOptionPane.showInputDialog("Descrição:"));
             setDataPostagem(dataAtual);

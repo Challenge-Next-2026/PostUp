@@ -1,4 +1,4 @@
-package br.com.fiap.dto;
+package br.com.fiap.model.dto;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -68,15 +68,25 @@ public class Arquivo
 
     // Metodos da classe
     // Cadastra um objeto Arquivo na memória
-    public void importarArquivo(int idArquivo)
+    public void importarArquivo()
     {
         LocalDate dataAtual = LocalDate.now();
 
-        setIdArquivo(idArquivo);
         setNomeArquivo(JOptionPane.showInputDialog("Informe o nome do arquivo:"));
         setTipo(JOptionPane.showInputDialog("Informe o tipo do arquivo:"));
         setTamanho(JOptionPane.showInputDialog("Informe o tamanho do arquivo:"));
         setUrl(JOptionPane.showInputDialog("Informe a URL"));
+        setDataUpload(dataAtual);
+    }
+
+    public void alterarArquivo()
+    {
+        LocalDate dataAtual = LocalDate.now();
+
+        setNomeArquivo(JOptionPane.showInputDialog("Informe o novo nome do arquivo:"));
+        setTipo(JOptionPane.showInputDialog("Informe o novo tipo do arquivo:"));
+        setTamanho(JOptionPane.showInputDialog("Informe o novo tamanho do arquivo:"));
+        setUrl(JOptionPane.showInputDialog("Informe a nova URL:"));
         setDataUpload(dataAtual);
     }
 
