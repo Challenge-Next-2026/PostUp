@@ -1,0 +1,52 @@
+    /* 1. DIRETIVAS OBRIGATÓRIAS DO TAILWIND */
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    /* 2. VARIÁVEIS E REGRAS BASE DA APLICAÇÃO */
+    @layer base {
+    :root {
+        --primary-dark: #12959e;
+        --bg-primary: #fff;
+        --bg-dark: #e5e7eb;
+        --primary: #44c0c5;
+        --secondary-dark: #799b00;
+        --secondary: #a9be18;
+        --text-main: #000;
+        --text-title: #fefdfd;
+        --titulo-hero: 6rem;
+        --slogan: 2.7rem;
+        --titulo-main: 4rem;
+        --sub-titulo: 2.5rem;
+        --fonte-texto: "BIZ UDGothic", sans-serif;
+        --fonte-principal: "BIZ UDPGothic", sans-serif;
+    }
+
+    html {
+        font-size: 62.5%; /* Define 1rem = 10px */
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-size: 2rem;
+        min-height: 100vh;
+        width: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    main {
+        width: 100%;
+    }
+    }
