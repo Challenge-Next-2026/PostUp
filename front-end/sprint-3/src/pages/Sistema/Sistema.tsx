@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
-import demostracao from "../../img/Demonstração de funcionamento da Plataforma.png";
-import Button from "../../components/Button/Button";
+import uplode from "../../img/UploadPage.png";
+import rankig from "../../img/Protótipo Ranking.png";
 
 export default function Sistema(){
     return (
@@ -18,14 +16,14 @@ export default function Sistema(){
         <section className="conteudo__ranking">
             <h2 className="conteudo__ranking__titulo">Ranking Mensal</h2>
             <p className="conteudo__ranking__texto">Esta seção tem como objetivo apresentar uma prototipação inicial de como a interface do ranking seria implementada no projeto.</p>
-            <img className="conteudo__ranking__imagem" src="../img/Protótipo Ranking.png" alt="Protítipo Ranking" />
+            <img className="conteudo__ranking__imagem" src={rankig} alt="Protítipo Ranking" />
         </section>
         <section className="conteudo__objetivos">
             <h2 className="conteudo__sobre__titulo">Upload</h2>
             <p className="conteudo__sobre__texto">Esta seção tem como objetivo apresentar uma prototipação inicial de como a interface da página de upload seria implementada no projeto.</p>
-            <img className="" src="../img/UploadPage.png" alt="Protótipo Upload" />
+            <img className="" src={uplode} alt="Protótipo Upload" />
         </section>
-        <button className="conteudo__sobre__botao"><a href="./sistema2.html">Conheça mais</a></button>
+        <button className="conteudo__sobre__botao"><Link to="/sistema2">Conheça mais</Link></button>
     </div>
 </main>
 

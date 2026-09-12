@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
+
 import demostracao from "../../img/Demonstração de funcionamento da Plataforma.png";
-import Button from "../../components/Button/Button";
+
 
 export default function Sobre(){
     return (
