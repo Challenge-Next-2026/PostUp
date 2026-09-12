@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import email from "../../img/icone_email.png";
+
 export default function Contato(){
     return (
         <main className="conteudo">
@@ -9,7 +12,7 @@ export default function Contato(){
                         Na Post UP, nós acreditamos que grandes parcerias começam com uma boa conversa. Se você quer tirar uma ideia do papel, <br /> 
                         escalar os seus resultados ou apenas entender como podemos ajudar a sua empresa a crescer, você está no lugar certo.
                     </p>
-                    <button className="hero__botao"><a href="./sistema.html">Conheça mais</a></button>
+                    <button className="hero__botao"><Link to = "/sistema">Conheça mais</Link></button>
                 </div>
             </section>
             <div className="contato__container">
@@ -18,7 +21,7 @@ export default function Contato(){
                     Nesta página, você pode tirar dúvidas, enviar sugestões, compartilhar ideias e falar diretamente com nossa equipe. A Post UP está sempre aberta para ouvir a comunidade e fortalecer conexões em prol da inovação e da sustentabilidade.
                 </p>
                 <section className="contatos__meios">
-                    <p className="contato__email"><img src="../img/icone_email.png" alt="icone de email" />challengecfgr.2026@gmail.com</p>
+                    <p className="contato__email"><img src={email} alt="icone de email" />challengecfgr.2026@gmail.com</p>
                     <form className="formulario" action="challengecfgr.2026@gmail.com" method="POST">
                         <p>
                             Envie sua mensagem para a equipe da Post UP.
