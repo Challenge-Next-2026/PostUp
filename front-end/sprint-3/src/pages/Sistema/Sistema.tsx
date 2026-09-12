@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import uplode from "../../img/UploadPage.png";
 import rankig from "../../img/Protótipo Ranking.png";
+import Button from "../../components/Button/Button";
 
 export default function Sistema(){
     return (
@@ -11,20 +11,38 @@ export default function Sistema(){
             <h2 className="hero__slogan">Funcionamento prático</h2>
             <p className="hero__desc">Demonstração visual e Protótipo</p>
         </div>
+        </section>
+        <div className="w-full h-auto flex flex-col gap-24">
+    <section className="flex flex-col gap-20 mt-16 bg-[var(--primary)] text-[var(--bg-dark)] border-4 border-[var(--secondary)] p-20 rounded-[4rem]">
+        <h2 className="text-[length:var(--titulo-main)] font-[family-name:var(--fonte-texto)] underline decoration-[var(--secondary)] text-center">
+            Ranking Mensal
+        </h2>
+        <p className="text-[2.1rem] font-[family-name:var(--fonte-texto)] text-center leading-[4rem]">
+            Esta seção tem como objetivo apresentar uma prototipação inicial de como a interface do ranking seria implementada no projeto.
+        </p>
+        <img
+            className="rounded-2xl p-0 max-w-[90%] max-h-[80vh] w-auto h-auto block mx-auto object-contain"
+            src={rankig}
+            alt="Protítipo Ranking"
+        />
     </section>
-    <div className="conteudo__container__ranking">
-        <section className="conteudo__ranking">
-            <h2 className="conteudo__ranking__titulo">Ranking Mensal</h2>
-            <p className="conteudo__ranking__texto">Esta seção tem como objetivo apresentar uma prototipação inicial de como a interface do ranking seria implementada no projeto.</p>
-            <img className="conteudo__ranking__imagem" src={rankig} alt="Protítipo Ranking" />
-        </section>
-        <section className="conteudo__objetivos">
-            <h2 className="conteudo__sobre__titulo">Upload</h2>
-            <p className="conteudo__sobre__texto">Esta seção tem como objetivo apresentar uma prototipação inicial de como a interface da página de upload seria implementada no projeto.</p>
-            <img className="" src={uplode} alt="Protótipo Upload" />
-        </section>
-        <button className="conteudo__sobre__botao"><Link to="/sistema2">Conheça mais</Link></button>
-    </div>
+
+    <section className="flex flex-col gap-20 mt-16 bg-[#8BA61D] text-white border-4 border-[var(--secondary)] p-20 rounded-[4rem]">
+        <h2 className="text-[length:var(--titulo-main)] font-[family-name:var(--fonte-texto)] underline decoration-white text-center">
+            Upload
+        </h2>
+        <p className="text-[2.1rem] font-[family-name:var(--fonte-texto)] text-center leading-[4rem]">
+            Esta seção tem como objetivo apresentar uma prototipação inicial de como a interface da página de upload seria implementada no projeto.
+        </p>
+        <img
+            className="rounded-2xl p-0 max-w-[90%] max-h-[80vh] w-auto h-auto block mx-auto object-contain"
+            src={uplode}
+            alt="Protótipo Upload"
+        />
+    </section>
+
+    <Button navegacao="/sistema2" texto="Conheça Mais" />
+</div>
 </main>
 
 )}
