@@ -1,9 +1,7 @@
-    /* 1. DIRETIVAS OBRIGATÓRIAS DO TAILWIND */
     @tailwind base;
     @tailwind components;
     @tailwind utilities;
 
-    /* 2. VARIÁVEIS E REGRAS BASE DA APLICAÇÃO */
     @layer base {
     :root {
         --primary-dark: #12959e;
@@ -23,7 +21,7 @@
     }
 
     html {
-        font-size: 62.5%; /* Define 1rem = 10px */
+        font-size: 62.5%; 
         scroll-behavior: smooth;
     }
 
