@@ -1,4 +1,4 @@
-package br.com.fiap.dto;
+package br.com.fiap.model.dto;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -59,29 +59,22 @@ public class Usuario
 
     // Metodos Exclusivos
     // Cadastro de um objeto Usuário na memória
-    public void cadastrarUsuario(int idUsuario)
+    public String cadastrarUsuario()
     {
         LocalDate dataAtual = LocalDate.now();
 
-        setIdUsuario(idUsuario);
         setNome(JOptionPane.showInputDialog("Informe o Nome:"));
         setEmail(JOptionPane.showInputDialog("Informe o Email:"));
         setSenha(JOptionPane.showInputDialog("Informe a Senha:"));
         setDataCadastro(dataAtual);
-        JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+        return "Usuário cadastrado com sucesso!";
     }
 
     // Alterar o email de um objeto Usuário na memória
-    public void alterarEmail()
+    public String alterar()
     {
         setEmail(JOptionPane.showInputDialog(String.format("Informe o novo Email: {%s}", getEmail())));
-        JOptionPane.showMessageDialog(null, "Email alterado!");
-    }
-
-    // Alterar a senha de um objeto Usuário na memória
-    public void alterarSenha()
-    {
         setSenha(JOptionPane.showInputDialog(String.format("Informe a nova Senha: {%s}", getSenha())));
-        JOptionPane.showMessageDialog(null, "Senha alterada!");
+        return "Email e/ou Senha alterados!";
     }
 }
