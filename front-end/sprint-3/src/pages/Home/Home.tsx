@@ -1,25 +1,32 @@
+import Card from "../../components/Card/Card";
+import imgFundo from "../../img/fundo2.jpg"
 import Button from "../../components/Button/Button";
 
 export default function Home(){
     return (
         <main className="conteudo">
-            <section className="hero">
-                <div className="hero__container">
-                    <h1 className="hero__title">Post UP</h1>
-                    <h2 className="hero__slogan">Eleve suas metas. Plante o futuro.</h2>
-                    <p className="hero__desc">
-                        Muito mais que um software, uma nova mentalidade.<br /> 
+            <section 
+                className="relative w-full h-[calc(100vh-80px)] bg-cover bg-center bg-no-repeat border-b-[5px] border-[var(--secondary-dark)] flex items-center justify-center"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(${imgFundo})`
+                }}
+                >
+                <div className="text-center px-4">
+                    <Card 
+                    titulo="Post UP" 
+                    sub="Eleve suas metas. Plante o futuro." 
+                    descricao="Muito mais que um software, uma nova mentalidade.<br /> 
                         A cada clique um passo em direção a uma <br />
-                        economia mais verde e circular.
-                    </p>
-                    <button className="hero__botao"><a href="./paginas/sistema.html">Conheça mais</a></button>
+                        economia mais verde e circular." 
+                    />
+                    <Button navegacao="/sistema" texto="Conheça mais"/>
                 </div>
             </section>
             <div className="w-full h-auto flex flex-col">
-                {/* Seção do Projeto */}
+                
                 <section className="flex flex-col w-full h-auto gap-[3rem] bg-[var(--primary-dark)]">
                     
-                    {/* Informações Principais */}
+                    
                     <section className="flex flex-col justify-center text-center text-[var(--bg-dark)] font-[var(--fonte-texto)] leading-[4rem]">
                     <h2 className="text-[length:var(--titulo-main)] font-semibold my-[6rem] p-[1rem] underline decoration-[var(--secondary)]">
                         Nossa ideia principal!
@@ -30,7 +37,7 @@ export default function Home(){
                     </p>
                     </section>
 
-                    {/* Grid de Diferenciais */}
+                    
                     <div className="w-full h-1/2 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 max-[425px]:gap-4 border-b-[5px] border-[var(--secondary)]">
                     <section className="justify-center p-[1.5rem] bg-[var(--secondary-dark)] border-[3px] border-[var(--primary)] m-[7rem] mt-[6rem] leading-[2.5rem] rounded-[2rem] transition-all duration-300 ease-in-out hover:-translate-y-[6px] hover:shadow-[8px_8px_10px_rgb(255,255,255)]">
                         <h2 className="text-[2.2rem] text-center font-[var(--fonte-texto)] leading-[3rem] mb-[3rem] mt-[1rem] text-[var(--bg-dark)]">
@@ -70,7 +77,7 @@ export default function Home(){
                     </div>
                 </section>
 
-                {/* Seção de Vídeo */}
+                
                 <section className="p-[3rem] w-full h-auto flex flex-col items-center bg-[var(--bg-dark)]">
                     <div className="text-center font-[var(--fonte-texto)] m-[6rem] gap-[5rem]">
                     <h2 className="text-[length:var(--titulo-main)] mb-[9rem] font-semibold underline leading-none decoration-[var(--primary)] max-[425px]:text-[3.5rem] max-[425px]:leading-[4rem]">
@@ -81,7 +88,7 @@ export default function Home(){
                     </p>
                     </div>
 
-                    {/* Container Responsivo de Vídeo (Proporção 16/9) */}
+                    
                     <div className="w-full max-w-[800px] mx-auto aspect-video">
                     <iframe 
                         className="w-full h-full object-cover"
@@ -95,7 +102,7 @@ export default function Home(){
                     </div>
                 </section>
 
-                {/* Seção FAQ */}
+                
                 <div className="bg-[var(--primary)] w-full h-full flex justify-center items-center border-t-[5px] border-b-[5px] border-[var(--secondary)] leading-[3.3rem]">
                     <section className="w-[60%] max-[425px]:w-full h-1/2 bg-[var(--secondary-dark)] text-center p-[2rem] max-[425px]:p-[1rem] rounded-[1.5rem] m-[9rem] max-[425px]:m-[2rem] shadow-[7px_7px_7px_rgb(82,160,18)]">
                     <h2 className="text-[length:var(--sub-titulo)] font-[var(--fonte-texto)] font-semibold text-[var(--bg-dark)] m-[3rem]">

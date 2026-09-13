@@ -3,23 +3,32 @@ import raphael from "../../img/3x4 Raphael Gomes.jpeg";
 import felipe from "../../img/image.png";
 import linkedin from "../../img/linkedin_logo.png";
 import github from "../../img/github_logo.png";
+import Card from "../../components/Card/Card";
+import imgFundo from "../../img/fundo3.jpg"
+import Button from "../../components/Button/Button";
 
 
 export default function QuemSomos(){
     return (
         <main className="conteudo">
-            <section className="hero">
-                <div className="hero__container">
-                    <h1 className="hero__title">Quem Somos</h1>
-                    <h2 className="hero__slogan">Profissionais Qualificados.</h2>
-                    <p className="hero__desc">
-                        Profissionais apaixonados por inovação, tecnologia e impacto social. <br /> 
+            <section 
+                className="relative w-full h-[calc(100vh-80px)] bg-cover bg-center bg-no-repeat border-b-[5px] border-[var(--secondary-dark)] flex items-center justify-center"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(${imgFundo})`
+                }}
+                >
+                <div className="text-center px-4">
+                    <Card 
+                    titulo="Quem Somos" 
+                    sub="Profissionais Qualificados." 
+                    descricao="Profissionais apaixonados por inovação, tecnologia e impacto social. <br /> 
                         Queremos transformar ideias em soluções sustentáveis,<br /> 
-                        criando experiências que conectam pessoas, propósito e crescimento.
-                    </p>
-                    <button className="hero__botao"><a href="./sistema.html">Conheça mais</a></button>
+                        criando experiências que conectam pessoas, propósito e crescimento." 
+                    />
+                    <Button navegacao="/sistema" texto="Conheça mais"/>
                 </div>
             </section>
+            
             
                 <div className="w-full h-auto flex flex-col gap-50  m-2rem md:gap-24 my-10 md:my-20">
                     <section className="w-full h-full flex flex-col gap-10 justify-center items-center border-b-[5px] border-[var(--secondary)] bg-[var(--bg-dark)] py-12 md:py-20">

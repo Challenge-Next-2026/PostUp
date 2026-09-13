@@ -1,6 +1,26 @@
+import Card from "../../components/Card/Card";
+import imgFundo from "../../img/fundo2.jpg"
+import Button from "../../components/Button/Button";
+
 export default function Faq(){
     return (
         <main className="conteudo">
+            <section 
+                className="relative w-full h-[calc(100vh-80px)] bg-cover bg-center bg-no-repeat border-b-[5px] border-[var(--secondary-dark)] flex items-center justify-center"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(${imgFundo})`
+                }}
+                >
+                <div className="text-center px-4">
+                    <Card 
+                    titulo="FAQ" 
+                    sub="Algumas perguntas e respostas" 
+                    descricao="O FAQ da Post UP reúne perguntas e respostas rápidas para ajudar os usuários a entenderem o funcionamento da <br />
+                        plataforma, suas funcionalidades e o sistema de sustentabilidade e recompensas." 
+                    />
+                    <Button navegacao="/sistema" texto="Conheça mais"/>
+                </div>
+            </section>
             <section className="hero">
                 <div className="hero__container">
                     <h1 className="hero__title">FAQ</h1>

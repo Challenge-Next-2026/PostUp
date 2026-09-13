@@ -1,16 +1,26 @@
-
+import Button from "../../components/Button/Button";
+import Card from "../../components/Card/Card";
+import imgFundo from "../../img/fundo2.jpg"
 
 export default function Sistema2(){
     return (
         <main className="conteudo">
-            <section className="hero">
-                <div className="hero__container">
-                    <h1 className="hero__title">Sistema</h1>
-                    <h2 className="hero__slogan">Mais sobre o nosso sitema</h2>
-                    <p className="hero__desc">Nesta nova página vamos falar mais sobre o nosso sitema.Focando mais na ex do nosso explicação Score Dinâmico</p>
-                </div>
-            </section>
 
+            <section 
+                className="relative w-full h-[calc(100vh-80px)] bg-cover bg-center bg-no-repeat border-b-[5px] border-[var(--secondary-dark)] flex items-center justify-center"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(${imgFundo})`
+                }}
+                >
+                    <div className="text-center px-4">
+                        <Card 
+                        titulo="Sistema" 
+                        sub="Mais sobre o nosso sitema" 
+                        descricao="Nesta nova página vamos falar mais sobre o nosso sitema.Focando mais na ex do nosso explicação Score Dinâmico" 
+                        />
+                        <Button navegacao="/sistema2" texto="Conheça mais"/>
+                    </div>
+            </section>
             <div className="conteudo__container__score__dinamico">
                 <section className="conteudo__score__dinamico">
                     <h2 className="conteudo__score__dinamico__titulo">I) Impacto Ambiental</h2>

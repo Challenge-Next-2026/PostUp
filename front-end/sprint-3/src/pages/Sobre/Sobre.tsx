@@ -2,20 +2,25 @@
 import Button from "../../components/Button/Button";
 import Card from "../../components/Card/Card";
 import demostracao from "../../img/Demonstração de funcionamento da Plataforma.png";
-import imgFundo from "../../img/fundo2.jpg"
+import imgFundo from "../../img/fundo3.jpg"
 
 
 export default function Sobre(){
     return (
         <main className="conteudo">
-            <section className="relative w-full h-[calc(100vh-80px)] bg-[linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),url(${imgFundo})] bg-cover bg-center bg-no-repeat border-b-[5px] border-[var(--secondary-dark)] flex items-center justify-center">
-                    <div className="text-center px-4">
-                        <Card 
-                        titulo="Sobre" 
-                        sub="Detalhes do projeto e demonstração de diferenciáis" 
-                        descricao="Introdução, Objetivos, Justificativa e RoadMap" 
-                        />
-                    </div>
+            <section 
+                className="relative w-full h-[calc(100vh-80px)] bg-cover bg-center bg-no-repeat border-b-[5px] border-[var(--secondary-dark)] flex items-center justify-center"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url(${imgFundo})`
+                }}
+                >
+                <div className="text-center px-4">
+                    <Card 
+                    titulo="Sobre" 
+                    sub="Detalhes do projeto e demonstração de diferenciais" 
+                    descricao="Introdução, Objetivos, Justificativa e RoadMap" 
+                    />
+                </div>
             </section>
             <div className="w-full h-auto flex flex-col gap-[6rem]">
                 
