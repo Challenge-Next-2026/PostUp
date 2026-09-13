@@ -15,7 +15,7 @@ export default function Faq(){
                     <Card 
                     titulo="FAQ" 
                     sub="Algumas perguntas e respostas" 
-                    descricao="O FAQ da Post UP reúne perguntas e respostas rápidas para ajudar os usuários a entenderem o funcionamento da <br />
+                    descricao="O FAQ da Post UP reúne perguntas e respostas rápidas para ajudar os usuários a entenderem o funcionamento da 
                         plataforma, suas funcionalidades e o sistema de sustentabilidade e recompensas." 
                     />
                     <Button navegacao="/sistema" texto="Conheça mais"/>

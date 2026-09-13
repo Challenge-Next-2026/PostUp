@@ -1,9 +1,29 @@
-import email from "../../img/icone_email.png";
 import Card from "../../components/Card/Card";
 import imgFundo from "../../img/fundo2.jpg"
 import Button from "../../components/Button/Button";
+import { useForm } from "react-hook-form";
+
+interface FormularioData {
+    nome: string;
+    email: string;
+    mensagem: string;
+}
 
 export default function Contato(){
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors }
+    } = useForm<FormularioData>();
+
+    const onSubmit = (data: FormularioData) => {
+        console.log(data);
+
+        alert("Mensagem enviada com sucesso!");
+
+        reset();
+    };
     return (
         <main className="conteudo">
             <section 
@@ -16,80 +36,366 @@ export default function Contato(){
                     <Card 
                     titulo="Contato" 
                     sub="Fale conosco!!" 
-                    descricao="Na Post UP, nós acreditamos que grandes parcerias começam com uma boa conversa. Se você quer tirar uma ideia do papel, <br /> 
+                    descricao="Na Post UP, nós acreditamos que grandes parcerias começam com uma boa conversa. Se você quer tirar uma ideia do papel, 
                         escalar os seus resultados ou apenas entender como podemos ajudar a sua empresa a crescer, você está no lugar certo." 
                     />
                     <Button navegacao="/sistema" texto="Conheça mais"/>
                 </div>
             </section>
-            <div className="w-full h-auto flex flex-col content-between gap-20 md:gap-32 p-4 md:p-20 my-8 md:my-16">
-                <h2 className="font-[var(--fonte-texto)] text-2xl md:text-4xl leading-[3rem] md:leading-normal text-[var(--bg-primary)] text-center p-8 md:p-10 bg-[var(--primary)] border-3 border-[var(--secondary-dark)] rounded-[4rem]">
-                    Entre em contato com a equipe da Post UP
-                </h2>
+            <section
+                    className="
+                        w-full
+                        bg-[var(--primary)]
+                        rounded-[3rem]
+                        p-6
+                        md:p-12
+                        lg:p-20
+                        flex
+                        flex-col
+                        items-center
+                        gap-10
+                        md:gap-14
+                    "
+                >
 
-                
-                <p className="font-[var(--fonte-texto)] text-[1.5rem] md:text-[var(--sub-titulo)] text-[var(--bg-primary)] bg-[var(--secondary-dark)] border-3 border-[var(--primary)] text-center p-10 md:p-16 rounded-[4rem] leading-[2.7rem] md:leading-[3.5rem]">
-                    Nesta página, você pode tirar dúvidas, enviar sugestões, compartilhar ideias e falar diretamente com nossa equipe. A Post UP está sempre aberta para ouvir a comunidade e fortalecer conexões em prol da inovação e da sustentabilidade.
-                </p>
 
-                <section className="font-sans bg-[var(--primary)] flex flex-col-reverse items-center justify-center gap-16 md:gap-24 w-full rounded-[3rem] p-8 md:p-20">
-                    
-                    
-                    <p className="font-[var(--fonte-texto)] text-xl md:text-2xl font-bold text-[var(--text-main)] p-6 md:p-8 w-full max-w-2xl bg-[var(--bg-primary)] border-3 border-[var(--secondary)] rounded-[4rem] text-center flex items-center justify-center gap-4">
-                    <img 
-                        style={{ width: "24px", height: "24px", minWidth: "24px", maxWidth: "24px" }} 
-                        className="!w-6 !h-6 object-contain shrink-0 inline-block" 
-                        src={email} 
-                        alt="icone de email" 
-                    />
-                    <span>challengecfgr.2026@gmail.com</span>
-                    </p>
+                    <div
+                        className="
+                            w-full
+                            max-w-2xl
+                            flex
+                            flex-col
+                            md:flex-row
+                            items-center
+                            justify-center
+                            gap-3
+                            md:gap-5
+                            p-6
+                            md:p-8
+                            bg-[var(--bg-primary)]
+                            border-3
+                            border-[var(--secondary)]
+                            rounded-[3rem]
+                        "
+                    >
+                        <span
+                            className="
+                                font-[var(--fonte-texto)]
+                                text-base
+                                md:text-xl
+                                font-bold
+                                text-[var(--text-main)]
+                                text-center
+                                break-all
+                            "
+                        >
+                            challengecfgr.2026@gmail.com
+                        </span>
 
-                    
-                    <form className="w-full md:w-[70%] lg:w-[60%] bg-white/12 backdrop-blur-md p-10 md:p-16 rounded-[24px] shadow-[0_15px_40px_rgba(0,0,0,0.25)] text-white" action="challengecfgr.2026@gmail.com" method="POST">
-                    
-                    <p className="text-lg md:text-xl font-medium text-center mb-10 leading-relaxed">
-                        Envie sua mensagem para a equipe da Post UP. <br className="hidden md:inline" />
-                        Responderemos o mais rápido possível.
-                    </p>
-
-                    
-                    <div className="mb-8">
-                        <input
-                        className="w-full p-5 border-none rounded-[12px] outline-none text-lg md:text-xl text-slate-800 placeholder:text-slate-500 placeholder:text-base md:placeholder:text-lg"
-                        type="text"
-                        name="nome"
-                        placeholder="Seu nome"
-                        required
-                        />
                     </div>
 
-                    <div className="mb-8">
-                        <input
-                        className="w-full p-5 border-none rounded-[12px] outline-none text-lg md:text-xl text-slate-800 placeholder:text-slate-500 placeholder:text-base md:placeholder:text-lg"
-                        type="email"
-                        name="email"
-                        placeholder="Seu email"
-                        required
-                        />
-                    </div>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="
+                            w-full
+                            md:w-[80%]
+                            lg:w-[65%]
+                            flex
+                            flex-col
+                            gap-7
+                            bg-[var(--bg-primary)]
+                            p-8
+                            md:p-12
+                            lg:p-16
+                            rounded-[3rem]
+                            border-3
+                            border-[var(--secondary-dark)]
+                            shadow-[0_15px_40px_rgba(0,0,0,0.15)]
+                        "
+                    >
 
-                    <div className="mb-10">
-                        <textarea
-                        className="w-full p-5 border-none rounded-[12px] outline-none text-lg md:text-xl text-slate-800 placeholder:text-slate-500 placeholder:text-base md:placeholder:text-lg resize-none h-[160px]"
-                        name="mensagem"
-                        placeholder="Digite sua mensagem"
-                        required
-                        ></textarea>
-                    </div>
+                        <div
+                            className="
+                                flex
+                                flex-col
+                                items-center
+                                text-center
+                                gap-3
+                                mb-3
+                            "
+                        >
 
-                    
-                    <button className="w-full p-5 border-none rounded-[12px] bg-white text-[#12959e] text-lg md:text-xl font-bold cursor-pointer transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_10px_25px_rgba(255,255,255,0.25)]" type="submit">
-                        Enviar mensagem
-                    </button>
+                            <h3
+                                className="
+                                    font-[var(--fonte-principal)]
+                                    text-2xl
+                                    md:text-3xl
+                                    font-bold
+                                    text-[var(--text-main)]
+                                "
+                            >
+                                Envie sua mensagem
+                            </h3>
+
+                            <p
+                                className="
+                                    font-[var(--fonte-texto)]
+                                    text-base
+                                    md:text-lg
+                                    text-[var(--text-main)]
+                                "
+                            >
+                                Preencha os campos abaixo e fale com nossa equipe.
+                            </p>
+
+                        </div>
+
+
+
+
+                        <div
+                            className="
+                                flex
+                                flex-col
+                                gap-2
+                            "
+                        >
+
+                            <label
+                                htmlFor="nome"
+                                className="
+                                    font-[var(--fonte-texto)]
+                                    text-lg
+                                    font-bold
+                                    text-[var(--text-main)]
+                                "
+                            >
+                                Nome
+                            </label>
+
+                            <input
+                                id="nome"
+                                type="text"
+                                placeholder="Digite seu nome"
+                                className={`
+                                    w-full
+                                    p-4
+                                    md:p-5
+                                    rounded-[1.2rem]
+                                    border-2
+                                    outline-none
+                                    transition-all
+                                    font-[var(--fonte-texto)]
+                                    text-base
+                                    md:text-lg
+                                    text-[var(--text-main)]
+                                    placeholder:text-gray-500
+                                    ${
+                                        errors.nome
+                                            ? "border-red-500"
+                                            : "border-[var(--primary)] focus:border-[var(--primary-dark)]"
+                                    }
+                                `}
+                                {...register("nome", {
+                                    required: "O nome é obrigatório.",
+
+                                    minLength: {
+                                        value: 3,
+                                        message:
+                                            "O nome deve ter pelo menos 3 caracteres."
+                                    }
+                                })}
+                            />
+
+                            {errors.nome && (
+                                <span
+                                    className="
+                                        text-red-500
+                                        text-sm
+                                        font-semibold
+                                        mt-1
+                                    "
+                                >
+                                    {errors.nome.message}
+                                </span>
+                            )}
+
+                        </div>
+
+
+
+                        <div
+                            className="
+                                flex
+                                flex-col
+                                gap-2
+                            "
+                        >
+
+                            <label
+                                htmlFor="email"
+                                className="
+                                    font-[var(--fonte-texto)]
+                                    text-lg
+                                    font-bold
+                                    text-[var(--text-main)]
+                                "
+                            >
+                                E-mail
+                            </label>
+
+                            <input
+                                id="email"
+                                type="email"
+                                placeholder="Digite seu e-mail"
+                                className={`
+                                    w-full
+                                    p-4
+                                    md:p-5
+                                    rounded-[1.2rem]
+                                    border-2
+                                    outline-none
+                                    transition-all
+                                    font-[var(--fonte-texto)]
+                                    text-base
+                                    md:text-lg
+                                    text-[var(--text-main)]
+                                    placeholder:text-gray-500
+
+                                    ${
+                                        errors.email
+                                            ? "border-red-500"
+                                            : "border-[var(--primary)] focus:border-[var(--primary-dark)]"
+                                    }
+                                `}
+                                {...register("email", {
+                                    required: "O e-mail é obrigatório.",
+
+                                    pattern: {
+                                        value:
+                                            /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                        message:
+                                            "Digite um e-mail válido."
+                                    }
+                                })}
+                            />
+
+                            {errors.email && (
+                                <span
+                                    className="
+                                        text-red-500
+                                        text-sm
+                                        font-semibold
+                                        mt-1
+                                    "
+                                >
+                                    {errors.email.message}
+                                </span>
+                            )}
+
+                        </div>
+
+                        <div
+                            className="
+                                flex
+                                flex-col
+                                gap-2
+                            "
+                        >
+
+                            <label
+                                htmlFor="mensagem"
+                                className="
+                                    font-[var(--fonte-texto)]
+                                    text-lg
+                                    font-bold
+                                    text-[var(--text-main)]
+                                "
+                            >
+                                Mensagem
+                            </label>
+
+                            <textarea
+                                id="mensagem"
+                                placeholder="Digite sua mensagem"
+                                className={`
+                                    w-full
+                                    min-h-[180px]
+                                    p-4
+                                    md:p-5
+                                    rounded-[1.2rem]
+                                    border-2
+                                    outline-none
+                                    resize-none
+                                    transition-all
+                                    font-[var(--fonte-texto)]
+                                    text-base
+                                    md:text-lg
+                                    text-[var(--text-main)]
+                                    placeholder:text-gray-500
+
+                                    ${
+                                        errors.mensagem
+                                            ? "border-red-500"
+                                            : "border-[var(--primary)] focus:border-[var(--primary-dark)]"
+                                    }
+                                `}
+                                {...register("mensagem", {
+                                    required:
+                                        "A mensagem é obrigatória.",
+
+                                    minLength: {
+                                        value: 10,
+                                        message:
+                                            "A mensagem deve ter pelo menos 10 caracteres."
+                                    }
+                                })}
+                            />
+
+                            {errors.mensagem && (
+                                <span
+                                    className="
+                                        text-red-500
+                                        text-sm
+                                        font-semibold
+                                        mt-1
+                                    "
+                                >
+                                    {errors.mensagem.message}
+                                </span>
+                            )}
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="
+                                w-full
+                                p-4
+                                md:p-5
+                                mt-2
+                                rounded-[1.2rem]
+                                border-2
+                                border-[var(--secondary-dark)]
+                                bg-[var(--primary-dark)]
+                                text-[var(--bg-primary)]
+                                font-[var(--fonte-texto)]
+                                text-lg
+                                md:text-xl
+                                font-bold
+                                cursor-pointer
+                                transition-all
+                                duration-300
+                                hover:bg-[var(--secondary-dark)]
+                                hover:-translate-y-1
+                                hover:shadow-lg
+                            "
+                        >
+                            Enviar mensagem
+                        </button>
+
                     </form>
-            </section>
 
-        </div>
+                </section>
     </main>
 )}

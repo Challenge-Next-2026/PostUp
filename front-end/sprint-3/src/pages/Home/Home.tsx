@@ -15,8 +15,8 @@ export default function Home(){
                     <Card 
                     titulo="Post UP" 
                     sub="Eleve suas metas. Plante o futuro." 
-                    descricao="Muito mais que um software, uma nova mentalidade.<br /> 
-                        A cada clique um passo em direção a uma <br />
+                    descricao="Muito mais que um software, uma nova mentalidade.
+                        A cada clique um passo em direção a uma 
                         economia mais verde e circular." 
                     />
                     <Button navegacao="/sistema" texto="Conheça mais"/>

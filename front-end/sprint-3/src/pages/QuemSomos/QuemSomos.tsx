@@ -21,8 +21,8 @@ export default function QuemSomos(){
                     <Card 
                     titulo="Quem Somos" 
                     sub="Profissionais Qualificados." 
-                    descricao="Profissionais apaixonados por inovação, tecnologia e impacto social. <br /> 
-                        Queremos transformar ideias em soluções sustentáveis,<br /> 
+                    descricao="Profissionais apaixonados por inovação, tecnologia e impacto social.  
+                        Queremos transformar ideias em soluções sustentáveis, 
                         criando experiências que conectam pessoas, propósito e crescimento." 
                     />
                     <Button navegacao="/sistema" texto="Conheça mais"/>
