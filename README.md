@@ -141,7 +141,9 @@
 > ---
 > ### 6. Representação do Projeto
 > - #### Protótipo
->   
+>   <img src="./front-end/img/tela_home.png"/>
+>   <img height="700px" src="./front-end/img/impacto-prototipo (1).png"/>
+>   <img src="./front-end/img/ranking-prototipo (1).png"/>
 > - #### RoadMap
 > <img src="./front-end/img/Demonstração de funcionamento da Plataforma.png" width="1000"></img>
 > - #### Cálculo Detalhado
