@@ -1,4 +1,4 @@
-package br.com.fiap.dto;
+package br.com.fiap.model.dto;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -68,29 +68,41 @@ public class Arquivo
 
     // Metodos da classe
     // Cadastra um objeto Arquivo na memória
-    public void importarArquivo(int idArquivo)
+    public String importarArquivo()
     {
         LocalDate dataAtual = LocalDate.now();
 
-        setIdArquivo(idArquivo);
         setNomeArquivo(JOptionPane.showInputDialog("Informe o nome do arquivo:"));
         setTipo(JOptionPane.showInputDialog("Informe o tipo do arquivo:"));
         setTamanho(JOptionPane.showInputDialog("Informe o tamanho do arquivo:"));
         setUrl(JOptionPane.showInputDialog("Informe a URL"));
         setDataUpload(dataAtual);
+        return "Arquivo Importado!";
+    }
+
+    public String alterarArquivo()
+    {
+        LocalDate dataAtual = LocalDate.now();
+
+        setNomeArquivo(JOptionPane.showInputDialog("Informe o novo nome do arquivo:"));
+        setTipo(JOptionPane.showInputDialog("Informe o novo tipo do arquivo:"));
+        setTamanho(JOptionPane.showInputDialog("Informe o novo tamanho do arquivo:"));
+        setUrl(JOptionPane.showInputDialog("Informe a nova URL:"));
+        setDataUpload(dataAtual);
+        return "Arquivo editado!";
     }
 
     // Cadastra um objeto Arquivo com atributos preenchidos na memória
-    public void acessarCamera(int idArquivo)
+    public String acessarCamera()
     {
         // Preenchimento de atributos das listas arquivos, usuarios e postagens
         LocalDate dataAtual = LocalDate.now();
-        setIdArquivo(idArquivo);
         setNomeArquivo("Câmera");
         setTipo("img");
         setTamanho("500mb");
         setUrl("https://acesso-camera.img");
         setDataUpload(dataAtual);
         JOptionPane.showMessageDialog(null, "Câmera acessada com sucesso!");
+        return "Câmera acessada!";
     }
 }

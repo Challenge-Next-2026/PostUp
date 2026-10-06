@@ -1,6 +1,6 @@
-package br.com.fiap.dao;
+package br.com.fiap.model.dao;
 
-import br.com.fiap.dto.Avaliacao;
+import br.com.fiap.model.dto.Pontuacao;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -8,12 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AvaliacaoDAO {
+public class PontuacaoDAO {
     // Atributo
     private Connection con;
 
     // Construtor com passagem de parâmetro
-    public AvaliacaoDAO(Connection con) {
+    public PontuacaoDAO(Connection con) {
         this.con = con;
     }
 
@@ -26,7 +26,7 @@ public class AvaliacaoDAO {
     // Metodo para fazer a leitura e definir sempre um id novo
     public int obterProximoId() throws SQLException {
         // Comando SQL que busca o próximo id disponível
-        String sql = "SELECT NVL(MAX(id_avaliacao), 0) + 1 AS proximo_id FROM AVALIACAO";
+        String sql = "SELECT NVL(MAX(id_pontuacao), 0) + 1 AS proximo_id FROM PONTUACAO";
         // try-with-resourses passando o comando sql para o objeto ps e armazenando a execução em um objeto rs
         try (PreparedStatement ps = getCon().prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -40,20 +40,17 @@ public class AvaliacaoDAO {
     }
 
     // INSERT
-    public String inserir(Avaliacao avaliacao){
+    public String inserir(Pontuacao pontuacao){
         // Comando sql para inserir dentro da tabela Arquivo
-        String sql = "INSERT INTO AVALIACAO(id_avaliacao, ds_criterioavaliacao, vl_notaimpacto, vl_notadificuldade, vl_notaconfiabilidade, vl_notafrequencia, dt_avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PONTUACAO(id_pontuacao, vl_pontuacao, ds_origempontuacao, dt_pontuacao) VALUES (?, ?, ?, ?)";
         // Try with resourses
         // Objeto criado e instanciado dentro do try para fechar automaticamente
         try (PreparedStatement ps = getCon().prepareStatement(sql)){
             // Atribuindo valores ao comando INSERT
-            ps.setInt(1, avaliacao.getIdAvaliacao());
-            ps.setString(2, avaliacao.getCriterio());
-            ps.setInt(3, avaliacao.getNotaImpacto());
-            ps.setInt(4, avaliacao.getNotaDificuldade());
-            ps.setInt(5, avaliacao.getNotaConfiabilidade());
-            ps.setInt(6, avaliacao.getNotaFrequencia());
-            ps.setDate(7, java.sql.Date.valueOf(avaliacao.getDataAvaliacao()));
+            ps.setInt(1, pontuacao.getIdPontuacao());
+            ps.setFloat(2, pontuacao.getValor());
+            ps.setString(3, "Avaliação");
+            ps.setDate(4, java.sql.Date.valueOf(pontuacao.getDataPontuacao()));
             // Verificação
             if (ps.executeUpdate() > 0) {
                 return "Inserido com Sucesso!";
@@ -66,25 +63,22 @@ public class AvaliacaoDAO {
     }
 
     // SELECT
-    public Avaliacao exibir(Avaliacao avaliacao, int idAvaliacao){
+    public Pontuacao exibir(Pontuacao pontuacao){
         // Comando SQL
-        String sql = "SELECT id_avaliacao, ds_criterioavaliacao, vl_notaimpacto, vl_notadificuldade, vl_notaconfiabilidade, vl_notafrequencia, dt_avaliacao FROM AVALIACAO WHERE id_avaliacao = ?";
+        String sql = "SELECT id_pontuacao, vl_pontuacao, dt_pontuacao FROM PONTUACAO WHERE id_pontuacao = ?";
         // try-with-resources
         try (PreparedStatement ps = getCon().prepareStatement(sql)){
             // Substituição de ?
-            ps.setInt(1, idAvaliacao);
+            ps.setInt(1, pontuacao.getIdPontuacao());
             try (ResultSet rs = ps.executeQuery()){
                 // Validação se há postagens
                 if (rs.next()) {
-                    avaliacao.setIdAvaliacao(rs.getInt("id_avaliacao"));
-                    avaliacao.setCriterio(rs.getString("ds_criterioavaliacao"));
-                    avaliacao.setNotaImpacto(rs.getInt("vl_notaimpacto"));
-                    avaliacao.setNotaDificuldade(rs.getInt("vl_notadificuldade"));
-                    avaliacao.setNotaConfiabilidade(rs.getInt("vl_notaconfiabilidade"));
-                    avaliacao.setNotaFrequencia(rs.getInt("vl_notafrequencia"));
-                    avaliacao.setDataAvaliacao(rs.getDate("dt_avaliacao").toLocalDate());
-                    return avaliacao;
+                    pontuacao.setIdPontuacao(rs.getInt("id_pontuacao"));
+                    pontuacao.setValor(rs.getInt("vl_pontuacao"));
+                    pontuacao.setDataPontuacao(rs.getDate("dt_pontuacao").toLocalDate());
+                    return pontuacao;
                 } else {
+                    JOptionPane.showMessageDialog(null, "Não há nenhuma pontuação no banco", "Erro", JOptionPane.ERROR_MESSAGE);
                     return null;
                 }
             } catch (SQLException e) {

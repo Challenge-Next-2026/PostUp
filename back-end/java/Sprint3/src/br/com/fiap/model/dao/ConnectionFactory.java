@@ -1,4 +1,4 @@
-package br.com.fiap.dao;
+package br.com.fiap.model.dao;
 
 import javax.swing.*;
 import java.sql.Connection;

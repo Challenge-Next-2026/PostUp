@@ -1,17 +1,19 @@
-package br.com.fiap.dao;
+package br.com.fiap.model.dao;
 
-import br.com.fiap.dto.Postagem;
+import br.com.fiap.model.dto.Postagem;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class PostagemDAO {
+public class PostagemDAO implements IDAO{
     // Atributo
     private Connection con;
+    private Postagem postagem;
 
     // Construtor com passagem de parâmetro
     public PostagemDAO(Connection con) {
@@ -42,7 +44,9 @@ public class PostagemDAO {
     }
 
     // INSERT
-    public String inserir(Postagem postagem){
+    public String inserir(Object object){
+        // Conversão
+        postagem = (Postagem) object;
         // Comando sql para inserir dentro da tabela Postagem
         String sql = "INSERT INTO POSTAGEM(id_postagem, ds_titulopost, ds_postagem, dt_postagem, st_postagem, geolocalizacao_id_geoloc, arquivo_id_arquivo, validacao_id_validacao, avaliacao_id_avaliacao, pontuacao_id_pontuacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         // Try with resourses
@@ -71,7 +75,9 @@ public class PostagemDAO {
     }
 
     // UPDATE
-    public void alterar(Postagem postagem, int idPostagem){
+    public String alterar(Object object){
+        // Conversão
+        postagem = (Postagem) object;
         // Comando sql para alterar dentro da tabela Postagem
         String sql = "UPDATE POSTAGEM SET ds_titulopost = ?, ds_postagem = ? WHERE id_postagem = ?";
         // Try with resourses
@@ -80,26 +86,58 @@ public class PostagemDAO {
             // Atribuindo valores ao comando INSERT
             ps.setString(1, postagem.getTitulo());
             ps.setString(2, postagem.getDescricao());
-            ps.setInt(3, idPostagem);
+            ps.setInt(3, postagem.getIdPostagem());
             // Verificação
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "Alterado com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                return "Alterado com Sucesso!";
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao Alterar!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return "Erro ao Alterar!";
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return "Erro de SQL: " + e.getMessage();
         }
     }
 
     // SELECT
-    public Postagem exibir(Postagem postagem, int idPostagem){
+    public String exibir(Object object){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        // Conversão
+        postagem = (Postagem) object;
         // Comando SQL
         String sql = "SELECT id_postagem, ds_titulopost, ds_postagem, dt_postagem FROM POSTAGEM WHERE id_postagem = ?";
         // try-with-resources
         try (PreparedStatement ps = getCon().prepareStatement(sql)){
             // Substituição de ?
-            ps.setInt(1, idPostagem);
+            ps.setInt(1, postagem.getIdPostagem());
+            try (ResultSet rs = ps.executeQuery()){
+                // Validação se há postagens
+                if (rs.next()) {
+                    postagem.setIdPostagem(rs.getInt("id_postagem"));
+                    postagem.setTitulo(rs.getString("ds_titulopost"));
+                    postagem.setDescricao(rs.getString("ds_postagem"));
+                    postagem.setDataPostagem(rs.getDate("dt_postagem").toLocalDate());
+                    return String.format("ID: %d\nTítulo: %s\nDescrição: %s\nData: %s", postagem.getIdPostagem(), rs.getString("ds_titulopost"), rs.getString("ds_postagem"), rs.getDate("dt_postagem").toLocalDate().format(dtf));
+                } else {
+                    return "Registro não encontrado!";
+                }
+            } catch (SQLException e) {
+                return "Erro: " + e.getMessage();
+            }
+        } catch (SQLException e) {
+            return "Erro de SQL!: " + e.getMessage();
+        }
+    }
+
+    // Exibir formato Objeto
+    public Postagem exibirObjeto(Object object){
+        // Conversão
+        postagem = (Postagem) object;
+        // Comando SQL
+        String sql = "SELECT id_postagem, ds_titulopost, ds_postagem, dt_postagem FROM POSTAGEM WHERE id_postagem = ?";
+        // try-with-resources
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            // Substituição de ?
+            ps.setInt(1, postagem.getIdPostagem());
             try (ResultSet rs = ps.executeQuery()){
                 // Validação se há postagens
                 if (rs.next()) {
@@ -115,28 +153,28 @@ public class PostagemDAO {
                 return null;
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL!: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             return null;
         }
     }
 
     // DELETE
-    public void excluir(int idPostagem){
+    public String excluir(Object object){
+        postagem = (Postagem) object;
         // Comando sql para deletar dentro da tabela Postagem
         String sql = "DELETE FROM POSTAGEM WHERE id_postagem = ?";
         // Try with resourses
         // Objeto criado e instanciado dentro do try para fechar automaticamente
         try (PreparedStatement ps = getCon().prepareStatement(sql)){
             // Atribuindo valores ao comando INSERT
-            ps.setInt(1, idPostagem);
+            ps.setInt(1, postagem.getIdPostagem());
             // Verificação
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "Excluido com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                return "Excluido com Sucesso!";
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return "Erro ao excluir!";
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return "Erro de SQL: " + e.getMessage();
         }
     }
 
@@ -193,7 +231,7 @@ public class PostagemDAO {
     }
 
     // Altera FK
-    public void alterarFKArquivo(int idPostagem, int idArquivo){
+    public String alterarFKArquivo(int idPostagem, int idArquivo){
         // Comando sql para alterar dentro da tabela Postagem
         String sql = "UPDATE POSTAGEM SET arquivo_id_arquivo = ? WHERE id_postagem = ?";
         // Try with resourses
@@ -204,17 +242,17 @@ public class PostagemDAO {
             ps.setInt(2, idPostagem);
             // Verificação
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "FK Alterada com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                return "FK Alterada com Sucesso!";
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao Alterar a FK!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return "Erro ao Alterar a FK!";
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return "Erro de SQL: " + e.getMessage();
         }
     }
 
     // Altera FK
-    public void alterarFKAvaliacao(int idPostagem, int idAvaliacao){
+    public String alterarFKAvaliacao(int idPostagem, int idAvaliacao){
         // Comando sql para alterar dentro da tabela Postagem
         String sql = "UPDATE POSTAGEM SET avaliacao_id_avaliacao = ? WHERE id_postagem = ?";
         // Try with resourses
@@ -225,17 +263,17 @@ public class PostagemDAO {
             ps.setInt(2, idPostagem);
             // Verificação
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "FK Alterada com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                return "FK Alterada com Sucesso!";
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao Alterar a FK!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return "Erro ao Alterar a FK!";
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return "Erro de SQL: " + e.getMessage();
         }
     }
 
     // Altera FK
-    public void alterarFKPontuacao(int idPostagem, int idPontuacao){
+    public String alterarFKPontuacao(int idPostagem, int idPontuacao){
         // Comando sql para alterar dentro da tabela Postagem
         String sql = "UPDATE POSTAGEM SET pontuacao_id_pontuacao = ? WHERE id_postagem = ?";
         // Try with resourses
@@ -246,12 +284,12 @@ public class PostagemDAO {
             ps.setInt(2, idPostagem);
             // Verificação
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "FK Alterada com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                return "FK Alterada com Sucesso!";
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao Alterar a FK!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return "Erro ao Alterar a FK!";
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return "Erro de SQL: " + e.getMessage();
         }
     }
 

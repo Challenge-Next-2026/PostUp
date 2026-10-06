@@ -1,14 +1,16 @@
-package br.com.fiap.dao;
+package br.com.fiap.model.dao;
 
-import br.com.fiap.dto.Usuario;
+import br.com.fiap.model.dto.Usuario;
 
 import javax.swing.*;
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class UsuarioDAO {
+public class UsuarioDAO implements IDAO{
     // Atributo
     private Connection con;
+    private Usuario usuario;
 
     // Construtor com passagem de parãmetro
     public UsuarioDAO(Connection con) {
@@ -71,7 +73,9 @@ public class UsuarioDAO {
     }
 
     // INSERT
-    public String inserir(Usuario usuario){
+    public String inserir(Object object){
+        // Convesão
+        usuario = (Usuario) object;
         // Comando sql para inserir dentro da tabela Usuario
         String sql = "INSERT INTO USUARIO(id_usuario, nm_usuario, ds_email, ds_senha, dt_cadastro, st_conta, num_posicaoranking) VALUES (?, ?, ?, ?, ?, ?, ?)";
         // Try with resourses
@@ -97,31 +101,28 @@ public class UsuarioDAO {
     }
 
     // SELECT
-    public Usuario exibir(Usuario usuario, int idUsuario){
+    public String exibir(Object object){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        // Conversão
+        usuario = (Usuario) object;
         // Comando SQL
         String sql = "SELECT id_usuario, nm_usuario, ds_email, ds_senha, dt_cadastro FROM USUARIO WHERE id_usuario = ?";
         // try-with-resources
         try (PreparedStatement ps = getCon().prepareStatement(sql)){
             // Substituição de ?
-            ps.setInt(1, idUsuario);
+            ps.setInt(1, usuario.getIdUsuario());
             try (ResultSet rs = ps.executeQuery()){
                 // Validação se há usuários
                 if (rs.next()) {
-                    usuario.setIdUsuario(rs.getInt("id_usuario"));
-                    usuario.setNome(rs.getString("nm_usuario"));
-                    usuario.setEmail(rs.getString("ds_email"));
-                    usuario.setSenha(rs.getString("ds_senha"));
-                    usuario.setDataCadastro(rs.getDate("dt_cadastro").toLocalDate());
-                    return usuario;
+                    return String.format("ID: %d\nNome: %s\nEmail: %s\nSenha: %s\nData: %s", usuario.getIdUsuario(), rs.getString("nm_usuario"), rs.getString("ds_email"), rs.getString("ds_senha"), rs.getDate("dt_cadastro").toLocalDate().format(dtf));
                 } else {
-                    return null;
+                    return "Registro não encontrado!";
                 }
             } catch (SQLException e) {
-                return null;
+                return "Erro: " + e.getMessage();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL!: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            return null;
+            return "Erro de SQL!: " + e.getMessage();
         }
     }
 
@@ -158,44 +159,48 @@ public class UsuarioDAO {
     }
 
     // Alterar email no banco
-    public void alterarEmail(Usuario usuario){
+    public String alterar(Object object){
+        // Conversão
+        usuario = (Usuario) object;
         // Comando sql para alterar dentro da tabela Usuario
-        String sql = "UPDATE USUARIO SET ds_email = ? WHERE id_usuario = ?";
+        String sql = "UPDATE USUARIO SET ds_email = ?, ds_senha = ? WHERE id_usuario = ?";
         // Try with resourses
         // Objeto criado e instanciado dentro do try para fechar automaticamente
         try (PreparedStatement ps = getCon().prepareStatement(sql)){
             // Atribuindo valores ao comando INSERT
             ps.setString(1, usuario.getEmail());
-            ps.setInt(2, usuario.getIdUsuario());
+            ps.setString(2, usuario.getSenha());
+            ps.setInt(3, usuario.getIdUsuario());
             // Verificação
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "Alterado com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                return "Alterado com sucesso!";
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao Alterar!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return "Erro ao Alterar!";
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return "Erro de SQl: " + e.getMessage();
         }
     }
 
-    // Alterar senha dentro do banco
-    public void alterarSenha(Usuario usuario){
-        // Comando sql para alterar dentro da tabela Usuario
-        String sql = "UPDATE USUARIO SET ds_senha = ? WHERE id_usuario = ?";
+    // Excluir
+    public String excluir(Object object){
+        // Conversão
+        usuario = (Usuario) object;
+        // Comando sql para excluir dentro da tabela Usuario
+        String sql = "DELETE FROM USUARIO WHERE id_usuario = ?";
         // Try with resourses
         // Objeto criado e instanciado dentro do try para fechar automaticamente
         try (PreparedStatement ps = getCon().prepareStatement(sql)){
             // Atribuindo valores ao comando INSERT
-            ps.setString(1, usuario.getSenha());
-            ps.setInt(2, usuario.getIdUsuario());
+            ps.setInt(1, usuario.getIdUsuario());
             // Verificação
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "Alterado com Sucesso!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                return "Excluido com sucesso!";
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao Alterar!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return "Erro ao Excluir!";
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            return "Erro de SQl: " + e.getMessage();
         }
     }
 }
