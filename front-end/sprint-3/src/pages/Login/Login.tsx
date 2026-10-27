@@ -1,4 +1,6 @@
     import { useState } from 'react';
+    import { Link } from 'react-router-dom';
+
     interface ApiResponse {
     token?: string;
     message?: string;
@@ -52,7 +54,7 @@
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 font-sans px-4">
         <div className="w-full max-w-md rounded-2xl border border-[#e5e7eb] bg-white p-8 shadow-xl shadow-gray-100">
             
-            {/* Cabeçário limpo apenas com o nome da marca */}
+            {/* Cabeçalho limpo com o nome da marca */}
             <div className="mb-8 text-center">
             <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
                 Post <span className="text-[#44c0c5]">Up</span>
@@ -77,13 +79,7 @@
             </div>
 
             <div className="flex flex-col gap-1.5">
-                <div className="flex items-center justify-between">
                 <label className="text-sm font-semibold text-gray-700">Senha</label>
-                {/* Opcional: Link de recuperar senha se necessário */}
-                <a href="#" className="text-xs font-medium text-[#44c0c5] hover:underline">
-                    Esqueceu a senha?
-                </a>
-                </div>
                 <input
                 type="password"
                 placeholder="••••••••"
@@ -117,7 +113,15 @@
             </button>
             </form>
 
-            {/* Rodapé do card opcional */}
+            {/* Seção de redirecionamento para o cadastro */}
+            <div className="mt-6 text-center text-sm text-gray-600">
+            Ainda não tem uma conta?{' '}
+            <Link to="/cadastro" className="font-semibold text-[#44c0c5] hover:underline">
+                Cadastre-se
+            </Link>
+            </div>
+
+            {/* Rodapé do card */}
             <p className="mt-8 text-center text-xs text-gray-400">
             Post Up Project &copy; {new Date().getFullYear()}
             </p>
