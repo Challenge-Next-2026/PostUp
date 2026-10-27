@@ -7,6 +7,7 @@ import Sistema from '../pages/Sistema/Sistema'
 import Sistema2 from '../pages/Sistema2/Sistema2'
 import Faq from '../pages/Faq/Faq'
 import Contato from '../pages/Contato/Contato'
+import Login from '../pages/Login/Login'
 
 export default function AppRoutes() {
     return (
@@ -17,6 +18,7 @@ export default function AppRoutes() {
             <Route path="/sistema2" element={<Sistema2 />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/contato" element={<Contato />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/sobre" element={<Sobre />} />
             <Route path="/*" element={<NotFound/>}/>
         </Routes>
