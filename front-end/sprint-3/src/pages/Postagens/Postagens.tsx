@@ -105,7 +105,7 @@ export function Postagens() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 font-sans p-4 sm:p-8">
+        <div className="min-h-screen bg-gradient from-gray-50 via-gray-100 to-gray-200 font-sans p-4 sm:p-8">
             <div className="max-w-3xl mx-auto space-y-6">
 
                 {/* Cabeçalho */}

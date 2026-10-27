@@ -69,7 +69,7 @@ export function Login() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 font-sans px-4">
+        <div className="flex min-h-screen items-center justify-center bg-gradient from-gray-50 to-gray-100 font-sans px-4">
             <div className="w-full max-w-md rounded-2xl border border-[#e5e7eb] bg-white p-8 shadow-xl shadow-gray-100">
 
                 {/* Cabeçalho limpo com o nome da marca */}
