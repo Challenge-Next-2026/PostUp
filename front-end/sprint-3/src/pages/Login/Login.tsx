@@ -27,7 +27,6 @@ export function Login() {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
-                // Alterado de 'password' para 'senha' (padrão comum em APIs em português)
                 body: JSON.stringify({
                     email,
                     senha: password
@@ -48,8 +47,9 @@ export function Login() {
                     localStorage.setItem('authToken', data.token);
                 }
 
+                // Redireciona para a página de postagens protegida
                 setTimeout(() => {
-                    navigate('/dashboard'); // Ajuste para a sua rota de dashboard/home
+                    navigate('/Postagens');
                 }, 1500);
 
             } else {
@@ -111,8 +111,8 @@ export function Login() {
                     {message && (
                         <div
                             className={`rounded-xl p-3.5 text-center text-sm font-medium animate-fadeIn ${message.type === 'error'
-                                    ? 'bg-red-50 text-red-600 border border-red-100'
-                                    : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
+                                ? 'bg-red-50 text-red-600 border border-red-100'
+                                : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
                                 }`}
                         >
                             {message.text}

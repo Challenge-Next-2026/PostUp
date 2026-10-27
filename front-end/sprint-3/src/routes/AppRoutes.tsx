@@ -28,8 +28,9 @@ export default function AppRoutes() {
             <Route path="/sobre" element={<Sobre />} />
             <Route path="/sistema" element={<Sistema />} />
             <Route path="/sistema2" element={<Sistema2 />} />
+            <Route path="/postagens" element={<Postagens />} />
             <Route element={<ProtectedRoute />}>
-                <Route path="/postagens" element={<Postagens />} />
+                
                 
             </Route>
             <Route path="*" element={<NotFound />} />
