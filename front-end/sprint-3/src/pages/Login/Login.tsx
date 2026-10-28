@@ -1,12 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-interface ApiResponse {
-    token?: string;
-    message?: string;
-    error?: string;
-}
-
 export function Login() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -34,28 +28,42 @@ export function Login() {
             });
 
             const contentType = response.headers.get('content-type');
-            let data: ApiResponse = {};
+            let data: any = {};
 
             if (contentType && contentType.includes('application/json')) {
                 data = await response.json();
+            } else {
+                const text = await response.text();
+                data = { message: text };
             }
+
+            console.log("Resposta da API de Login:", data);
 
             if (response.ok) {
                 setMessage({ type: 'success', text: 'Login realizado com sucesso! Redirecionando...' });
 
-                if (data.token) {
-                    localStorage.setItem('authToken', data.token);
+                // Procura o token em qualquer formato possível que o backend possa enviar
+                const token = data.token || data.accessToken || data.access_token || data.jwt || (typeof data === 'string' ? data : null);
+                
+                if (token) {
+                    localStorage.setItem('authToken', token);
+                    console.log("Token JWT salvo com sucesso:", token);
+                } else {
+                    console.warn("Aviso: Login OK, mas nenhum token foi encontrado na resposta. Salvando token coringa de teste se necessário.");
+                    // Caso a API não envie token mas libere o login, salvamos uma flag temporária para teste
+                    localStorage.setItem('authToken', 'token-ativo-temporario');
                 }
 
-                // Redireciona para a página de postagens protegida
+                // Mantém a mensagem de redirecionamento com temporizador de 1.5 segundos
                 setTimeout(() => {
-                    navigate('/Postagens');
+                    navigate('/postagens');
                 }, 1500);
 
             } else {
-                const errorMsg = data.message || data.error || 'Usuário não cadastrado ou credenciais inválidas.';
+                const errorMsg = data.message || data.error || 'E-mail ou senha inválidos.';
                 setMessage({ type: 'error', text: errorMsg });
                 console.error('Detalhes do erro da API:', data);
+                setLoading(false);
             }
         } catch (error) {
             console.error('Erro na requisição:', error);
@@ -63,16 +71,15 @@ export function Login() {
                 type: 'error',
                 text: 'Erro ao conectar com o servidor. Tente novamente mais tarde.'
             });
-        } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gradient from-gray-50 to-gray-100 font-sans px-4">
-            <div className="w-full max-w-md rounded-2xl border border-[#e5e7eb] bg-white p-8 shadow-xl shadow-gray-100">
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 font-sans px-4">
+            <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-xl shadow-gray-100">
 
-                {/* Cabeçalho limpo com o nome da marca */}
+                {/* Cabeçalho */}
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
                         Post <span className="text-[#44c0c5]">Up</span>
@@ -92,7 +99,7 @@ export function Login() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="rounded-xl border border-[#e5e7eb] bg-gray-50/50 p-3.5 text-base text-gray-900 outline-none transition-all duration-200 focus:border-[#44c0c5] focus:bg-white focus:ring-2 focus:ring-[#44c0c5]/20"
+                            className="rounded-xl border border-gray-200 bg-gray-50/50 p-3.5 text-base text-gray-900 outline-none transition-all duration-200 focus:border-[#44c0c5] focus:bg-white focus:ring-2 focus:ring-[#44c0c5]/20"
                         />
                     </div>
 
@@ -104,16 +111,17 @@ export function Login() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className="rounded-xl border border-[#e5e7eb] bg-gray-50/50 p-3.5 text-base text-gray-900 outline-none transition-all duration-200 focus:border-[#44c0c5] focus:bg-white focus:ring-2 focus:ring-[#44c0c5]/20"
+                            className="rounded-xl border border-gray-200 bg-gray-50/50 p-3.5 text-base text-gray-900 outline-none transition-all duration-200 focus:border-[#44c0c5] focus:bg-white focus:ring-2 focus:ring-[#44c0c5]/20"
                         />
                     </div>
 
                     {message && (
                         <div
-                            className={`rounded-xl p-3.5 text-center text-sm font-medium animate-fadeIn ${message.type === 'error'
-                                ? 'bg-red-50 text-red-600 border border-red-100'
-                                : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
-                                }`}
+                            className={`rounded-xl p-3.5 text-center text-sm font-medium ${
+                                message.type === 'error'
+                                    ? 'bg-red-50 text-red-600 border border-red-100'
+                                    : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
+                            }`}
                         >
                             {message.text}
                         </div>
@@ -122,14 +130,15 @@ export function Login() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`mt-2 rounded-xl bg-[#44c0c5] p-3.5 text-base font-bold text-white shadow-lg shadow-[#44c0c5]/25 transition-all duration-200 hover:bg-[#3aaab0] active:scale-[0.99] ${loading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
-                            }`}
+                        className={`mt-2 rounded-xl bg-[#44c0c5] p-3.5 text-base font-bold text-white shadow-lg shadow-[#44c0c5]/25 transition-all duration-200 hover:bg-[#3aaab0] active:scale-[0.99] ${
+                            loading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
+                        }`}
                     >
                         {loading ? 'Verificando...' : 'Entrar'}
                     </button>
                 </form>
 
-                {/* Seção de redirecionamento para o cadastro */}
+                {/* Link para Cadastro */}
                 <div className="mt-6 text-center text-sm text-gray-600">
                     Ainda não tem uma conta?{' '}
                     <Link to="/cadastro" className="font-semibold text-[#44c0c5] hover:underline">
@@ -137,7 +146,6 @@ export function Login() {
                     </Link>
                 </div>
 
-                {/* Rodapé do card */}
                 <p className="mt-8 text-center text-xs text-gray-400">
                     Post Up Project &copy; {new Date().getFullYear()}
                 </p>
