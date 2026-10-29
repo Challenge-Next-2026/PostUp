@@ -10,7 +10,8 @@ import java.time.LocalDate;
 
 public class ArquivoTO {
     // Atributos
-    private int idArquivo;
+    private Integer idArquivo;
+    private Integer idPostagem;
     @NotEmpty
     private String nomeArquivo;
     @NotEmpty
@@ -27,7 +28,7 @@ public class ArquivoTO {
     public ArquivoTO(){
     }
 
-    public ArquivoTO(int idArquivo, String nomeArquivo, String tipo, int tamanho, String url, LocalDate dataUpload) {
+    public ArquivoTO(Integer idArquivo, String nomeArquivo, String tipo, int tamanho, String url, LocalDate dataUpload) {
         this.idArquivo = idArquivo;
         this.nomeArquivo = nomeArquivo;
         this.tipo = tipo;
@@ -37,12 +38,20 @@ public class ArquivoTO {
     }
 
     // Getter e Setter
-    public int getIdArquivo() {
+    public Integer getIdArquivo() {
         return idArquivo;
     }
 
-    public void setIdArquivo(int idArquivo) {
+    public void setIdArquivo(Integer idArquivo) {
         this.idArquivo = idArquivo;
+    }
+
+    public Integer getIdPostagem() {
+        return idPostagem;
+    }
+
+    public void setIdPostagem(Integer idPostagem) {
+        this.idPostagem = idPostagem;
     }
 
     public String getNomeArquivo() {

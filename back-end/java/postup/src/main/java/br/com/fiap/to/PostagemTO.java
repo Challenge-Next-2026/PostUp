@@ -8,7 +8,8 @@ import java.time.LocalDate;
 
 public class PostagemTO {
     // Atributos
-    private int idPostagem;
+    private Integer idPostagem;
+    private Integer idUsuario;
     @NotEmpty
     private String titulo;
     @NotEmpty
@@ -20,7 +21,7 @@ public class PostagemTO {
     public PostagemTO() {
     }
 
-    public PostagemTO(int idPostagem, String titulo, String descricao, LocalDate dataPostagem) {
+    public PostagemTO(Integer idPostagem, String titulo, String descricao, LocalDate dataPostagem) {
         this.idPostagem = idPostagem;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -28,12 +29,20 @@ public class PostagemTO {
     }
 
     // Getter e Setter
-    public int getIdPostagem() {
+    public Integer getIdPostagem() {
         return idPostagem;
     }
 
-    public void setIdPostagem(int idPostagem) {
+    public void setIdPostagem(Integer idPostagem) {
         this.idPostagem = idPostagem;
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getTitulo() {

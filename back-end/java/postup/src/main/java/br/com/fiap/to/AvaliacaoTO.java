@@ -6,7 +6,8 @@ import java.time.LocalDate;
 
 public class AvaliacaoTO {
     // Atributos
-    private int idAvaliacao;
+    private Integer idAvaliacao;
+    private Integer idPostagem;
     @NotEmpty
     private String criterio;
     @NotNull
@@ -36,7 +37,7 @@ public class AvaliacaoTO {
     public AvaliacaoTO(){
     }
 
-    public AvaliacaoTO(int idAvaliacao, String criterio, int notaImpacto, int notaFrequencia, int notaDificuldade, int notaConfiabilidade, LocalDate dataAvaliacao) {
+    public AvaliacaoTO(Integer idAvaliacao, String criterio, int notaImpacto, int notaFrequencia, int notaDificuldade, int notaConfiabilidade, LocalDate dataAvaliacao) {
         this.idAvaliacao = idAvaliacao;
         this.criterio = criterio;
         this.notaImpacto = notaImpacto;
@@ -47,12 +48,20 @@ public class AvaliacaoTO {
     }
 
     // Getter e Setter
-    public int getIdAvaliacao() {
+    public Integer getIdAvaliacao() {
         return idAvaliacao;
     }
 
-    public void setIdAvaliacao(int idAvaliacao) {
+    public void setIdAvaliacao(Integer idAvaliacao) {
         this.idAvaliacao = idAvaliacao;
+    }
+
+    public Integer getIdPostagem() {
+        return idPostagem;
+    }
+
+    public void setIdPostagem(Integer idPostagem) {
+        this.idPostagem = idPostagem;
     }
 
     public String getCriterio() {

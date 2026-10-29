@@ -1,43 +1,35 @@
 package br.com.fiap.to;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 
-import javax.swing.*;
 import java.time.LocalDate;
 
 public class UsuarioTO {
     // Atributos
-    private int idUsuario;
+    private Integer idUsuario;
     @NotBlank
     private String nome;
     @NotEmpty
     @Email
     private String email;
-    @Min(8)
-    @Max(16)
+    // Annotation que envia a senha digitada na Request, mas não exibe ela na Response
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotEmpty
     private String senha;
     @PastOrPresent
     private LocalDate dataCadastro;
 
-    // Construtores
+    // Construtor vazio
     public UsuarioTO() {
     }
 
-    public UsuarioTO(int idUsuario, String nome, String email, String senha, LocalDate dataCadastro) {
-        this.idUsuario = idUsuario;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.dataCadastro = dataCadastro;
-    }
-
     // Getter e Setter
-    public int getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -72,29 +64,4 @@ public class UsuarioTO {
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
-
-    /*
-
-    // Metodos Exclusivos
-    // Cadastro de um objeto Usuário na memória
-    public String cadastrarUsuario()
-    {
-        LocalDate dataAtual = LocalDate.now();
-
-        setNome(JOptionPane.showInputDialog("Informe o Nome:"));
-        setEmail(JOptionPane.showInputDialog("Informe o Email:"));
-        setSenha(JOptionPane.showInputDialog("Informe a Senha:"));
-        setDataCadastro(dataAtual);
-        return "Usuário cadastrado com sucesso!";
-    }
-
-    // Alterar o email de um objeto Usuário na memória
-    public String alterar()
-    {
-        setEmail(JOptionPane.showInputDialog(String.format("Informe o novo Email: {%s}", getEmail())));
-        setSenha(JOptionPane.showInputDialog(String.format("Informe a nova Senha: {%s}", getSenha())));
-        return "Email e/ou Senha alterados!";
-    }
-
-    */
 }
