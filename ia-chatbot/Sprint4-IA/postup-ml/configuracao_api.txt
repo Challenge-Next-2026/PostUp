@@ -1,0 +1,52 @@
+CONFIGURAÇÃO DA API REST - POSTUP
+Turma: 1TDSPH
+
+1. TECNOLOGIAS UTILIZADAS
+- Python
+- FastAPI
+- Uvicorn
+- Scikit-learn
+- Pandas
+- Joblib
+
+2. ARQUIVOS NECESSÁRIOS
+Mantenha os seguintes arquivos na mesma pasta:
+- api.py
+- modelo_validacao_postup.joblib
+- modelo_score_postup.joblib
+- requirements.txt
+
+3. INSTALAÇÃO
+Abra o terminal na pasta do projeto e execute:
+
+python -m pip install -r requirements.txt
+
+Observação: o arquivo requirements.txt fixa o Scikit-learn na versão 1.6.1 para manter compatibilidade com os modelos serializados.
+
+4. EXECUÇÃO DA API
+No terminal, execute:
+
+uvicorn api:app --reload
+
+Por padrão, a API ficará disponível localmente em:
+http://127.0.0.1:8000
+
+5. DOCUMENTAÇÃO INTERATIVA
+Acesse:
+http://127.0.0.1:8000/docs
+
+Nessa página é possível visualizar e testar os endpoints da API.
+
+6. ENDPOINTS DISPONÍVEIS
+
+POST /validar
+Recebe os dados de validação de uma postagem e retorna a classificação prevista pelo modelo de Machine Learning.
+
+POST /score
+Recebe os valores de Impacto, Frequência, Dificuldade e Confiabilidade e retorna o Score previsto pelo modelo de regressão.
+
+7. OBSERVAÇÕES
+- Os modelos .joblib devem permanecer na mesma pasta do arquivo api.py.
+- Os dados enviados devem respeitar os campos e tipos esperados por cada endpoint.
+- A API foi testada localmente.
+- Os modelos foram treinados com uma base sintética de 49 postagens; os resultados são experimentais e não representam validação definitiva para uso real.
