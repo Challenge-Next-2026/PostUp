@@ -1,0 +1,19 @@
+Felipe Lima de Oliveira - rm569947
+Giovanni Zorzetto Oliveira - rm569464
+Raphael Gomes Brito - rm569947
+
+Turma: 1TDSPH
+
+## Resumo das atividades realizadas — PostUp Sprint 4
+
+Durante o Sprint 4, foram desenvolvidos e avaliados dois modelos de Machine Learning para o projeto PostUp, utilizando uma base de dados com 49 postagens sintéticas.
+
+O primeiro modelo realiza a **classificação de postagens**, identificando categorias como legítima, suspeita, duplicada, plágio, pouca informação ou falsa, com base em características relacionadas à validação do conteúdo.
+
+O segundo modelo realiza a **estimativa do Score** das postagens, considerando os critérios de impacto, frequência, dificuldade e confiabilidade.
+
+Os modelos foram treinados e avaliados no Google Colab, sendo posteriormente serializados em arquivos `.joblib` para utilização fora do ambiente de treinamento.
+
+Também foi desenvolvida uma **API REST utilizando FastAPI**, com os endpoints `/validar` e `/score`, permitindo realizar previsões por meio de requisições HTTP. A API foi testada localmente, e as dependências foram registradas no arquivo `requirements.txt`, incluindo a versão compatível do Scikit-learn.
+
+Por fim, foram organizados os arquivos necessários para a entrega, incluindo os modelos treinados, o código da API e a identificação dos integrantes do grupo.
