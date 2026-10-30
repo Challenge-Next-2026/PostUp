@@ -23,7 +23,7 @@ interface Arquivo {
     tamanho?: string;
     url?: string;
     dataUpload?: string;
-    postagemId?: number;
+    idPostagem?: number;
 }
 
 interface Avaliacao {
@@ -34,7 +34,7 @@ interface Avaliacao {
     notaDificuldade?: number;
     notaConfiabilidade?: number;
     dataAvaliacao?: string;
-    postagemId?: number;
+    idPostagem?: number;
 }
 
 interface Pontuacao {
@@ -94,7 +94,9 @@ export function Postagens() {
 
     const [editandoArqId, setEditandoArqId] = useState<number | null>(null);
     const [editArqNome, setEditArqNome] = useState('');
+    const [editArqTamanho, setEditArqTamanho] = useState('');
     const [editArqTipo, setEditArqTipo] = useState('');
+    const [editArqUrl, setEditArqUrl] = useState('');
 
     const [editandoAvalId, setEditandoAvalId] = useState<number | null>(null);
     const [editAvalCriterio, setEditAvalCriterio] = useState('');
@@ -341,7 +343,7 @@ export function Postagens() {
             const res = await apiFetch(`https://postup-api.onrender.com/postup/arquivo/${id}`, {
                 method: 'PUT',
                 headers: getHeaders(),
-                body: JSON.stringify({ nomeArquivo: editArqNome, tipo: editArqTipo })
+                body: JSON.stringify({ nomeArquivo: editArqNome, tipo: editArqTipo, tamanho: editArqTamanho, url: editArqUrl })
             });
             if (res.ok || res.status === 204) {
                 setMessage({ type: 'success', text: 'Arquivo atualizado com sucesso!' });
@@ -676,6 +678,8 @@ export function Postagens() {
                                         <div className="flex-1 space-y-2 mr-4">
                                             <input type="text" value={editArqNome} onChange={e => setEditArqNome(e.target.value)} placeholder="Novo Nome" className="w-full border p-2 rounded-xl text-sm" />
                                             <input type="text" value={editArqTipo} onChange={e => setEditArqTipo(e.target.value)} placeholder="Novo Tipo" className="w-full border p-2 rounded-xl text-sm" />
+                                            <input type="text" value={editArqTamanho} onChange={e => setEditArqTipo(e.target.value)} placeholder="Novo Tamanho" className="w-full border p-2 rounded-xl text-sm" />
+                                            <input type="text" value={editArqUrl} onChange={e => setEditArqTipo(e.target.value)} placeholder="Nova URL" className="w-full border p-2 rounded-xl text-sm" />
                                             <div className="flex gap-2">
                                                 <button onClick={() => handleAtualizarArquivo(a.idArquivo!)} className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-lg">Salvar</button>
                                                 <button onClick={() => setEditandoArqId(null)} className="px-3 py-1 bg-slate-300 text-slate-700 text-xs font-bold rounded-lg">Cancelar</button>
