@@ -17,6 +17,7 @@ export function Login() {
         try {
             const response = await fetch('https://postup-api.onrender.com/postup/usuario/login', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -39,31 +40,17 @@ export function Login() {
             console.log("Resposta da API de Login:", data);
 
             if (response.ok) {
-                setMessage({ type: 'success', text: 'Login realizado com sucesso! Redirecionando...' });
+                setMessage({
+                    type: 'success',
+                    text: 'Login realizado com sucesso! Redirecionando...'
+                });
 
-                // Extrai o token real retornado pelo back-end (seja objeto JSON ou texto puro)
-                let token = '';
-                if (typeof data === 'string') {
-                    token = data;
-                } else {
-                    token = data.token || data.accessToken || data.access_token || data.jwt || data.key;
-                }
+                sessionStorage.setItem('isLoggedIn', 'true');
 
-                if (!token) {
-                    token = responseText; // Fallback para o texto bruto caso venha sem chave específica
-                }
-                
-                // Salva o token real nos Cookies E no LocalStorage para garantir compatibilidade total
-                document.cookie = `authToken=${token}; path=/; max-age=86400; SameSite=Lax`;
-                localStorage.setItem('authToken', token);
-                
-                console.log("Token real salvo com sucesso:", token);
-
-                // Redireciona para o painel de postagens após 1.2 segundos
                 setTimeout(() => {
                     navigate('/postagens');
                 }, 1200);
-
+                
             } else {
                 const errorMsg = (typeof data === 'object' && (data.message || data.error)) || responseText || 'E-mail ou senha inválidos.';
                 setMessage({ type: 'error', text: errorMsg });

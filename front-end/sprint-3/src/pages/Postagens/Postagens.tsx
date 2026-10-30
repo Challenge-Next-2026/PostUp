@@ -86,6 +86,7 @@ export function Postagens() {
     const [editandoUsuarioId, setEditandoUsuarioId] = useState<number | null>(null);
     const [editUsuarioNome, setEditUsuarioNome] = useState('');
     const [editUsuarioEmail, setEditUsuarioEmail] = useState('');
+    const [editUsuarioSenha, setEditUsuarioSenha] = useState('');
 
     const [editandoPostId, setEditandoPostId] = useState<number | null>(null);
     const [editPostTitulo, setEditPostTitulo] = useState('');
@@ -119,23 +120,27 @@ export function Postagens() {
 
     // Recupera o token diretamente dos cookies do navegador
     const getHeaders = () => {
-        const token = getCookie('authToken') || getCookie('token') || getCookie('access_token');
-
         return {
-            'Content-Type': 'application/json',
-            ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+            'Content-Type': 'application/json'
         };
+    };
+
+    const apiFetch = (url: string, options: RequestInit = {}) => {
+        return fetch(url, {
+            ...options,
+            credentials: 'include'
+        });
     };
 
     const carregarDados = async () => {
         try {
             const headers = getHeaders();
             const [resUser, resPost, resArq, resAval, resPont] = await Promise.all([
-                fetch('https://postup-api.onrender.com/postup/usuario', { headers }),
-                fetch('https://postup-api.onrender.com/postup/postagem', { headers }),
-                fetch('https://postup-api.onrender.com/postup/arquivo', { headers }),
-                fetch('https://postup-api.onrender.com/postup/avaliacao', { headers }),
-                fetch('https://postup-api.onrender.com/postup/pontuacao', { headers }),
+                apiFetch('https://postup-api.onrender.com/postup/usuario', { headers }),
+                apiFetch('https://postup-api.onrender.com/postup/postagem', { headers }),
+                apiFetch('https://postup-api.onrender.com/postup/arquivo', { headers }),
+                apiFetch('https://postup-api.onrender.com/postup/avaliacao', { headers }),
+                apiFetch('https://postup-api.onrender.com/postup/pontuacao', { headers }),
             ]);
 
             if (resUser.ok) setUsuarios(await resUser.json());
@@ -160,26 +165,26 @@ export function Postagens() {
 
     // ================= USUÁRIO =================
     const handleLogout = async () => {
-        try {
-            await fetch('https://postup-api.onrender.com/postup/usuario/logout', {
+    try {
+        await apiFetch(
+            'https://postup-api.onrender.com/postup/usuario/logout',
+            {
                 method: 'POST',
                 headers: getHeaders()
-            });
-        } catch (e) {
-            console.error(e);
-        } finally {
-            // Remove os cookies de autenticação no logout
-            deleteCookie('authToken');
-            deleteCookie('token');
-            deleteCookie('access_token');
-            navigate('/login');
-        }
-    };
+            }
+        );
+    } catch (e) {
+        console.error(e);
+    } finally {
+        sessionStorage.removeItem('isLoggedIn');
+        navigate('/login');
+    }
+};
 
     const handleBuscarUsuarioPorId = async () => {
         if (!buscaUsuarioId) return;
         try {
-            const res = await fetch(`https://postup-api.onrender.com/postup/usuario/${buscaUsuarioId}`, { headers: getHeaders() });
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/usuario/${buscaUsuarioId}`, { headers: getHeaders() });
             if (res.ok) {
                 setUsuarioFiltrado(await res.json());
             } else {
@@ -193,10 +198,10 @@ export function Postagens() {
 
     const handleAtualizarUsuario = async (id: number) => {
         try {
-            const res = await fetch(`https://postup-api.onrender.com/postup/usuario/${id}`, {
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/usuario/${id}`, {
                 method: 'PUT',
                 headers: getHeaders(),
-                body: JSON.stringify({ nome: editUsuarioNome, email: editUsuarioEmail })
+                body: JSON.stringify({ nome: editUsuarioNome, email: editUsuarioEmail, senha: editUsuarioSenha })
             });
             if (res.ok || res.status === 204) {
                 setMessage({ type: 'success', text: 'Usuário atualizado com sucesso!' });
@@ -212,7 +217,7 @@ export function Postagens() {
 
     const handleExcluirUsuario = async (id?: number) => {
         if (!id || !confirm('Deseja excluir este usuário?')) return;
-        const res = await fetch(`https://postup-api.onrender.com/postup/usuario/${id}`, { method: 'DELETE', headers: getHeaders() });
+        const res = await apiFetch(`https://postup-api.onrender.com/postup/usuario/${id}`, { method: 'DELETE', headers: getHeaders() });
         if (res.ok || res.status === 204) {
             setMessage({ type: 'success', text: 'Usuário excluído com sucesso!' });
             setUsuarioFiltrado(null);
@@ -228,7 +233,7 @@ export function Postagens() {
         setMessage(null);
         try {
             const payload = { titulo: postTitulo, descricao: postDescricao };
-            const response = await fetch('https://postup-api.onrender.com/postup/postagem', {
+            const response = await apiFetch('https://postup-api.onrender.com/postup/postagem', {
                 method: 'POST',
                 headers: getHeaders(),
                 body: JSON.stringify(payload)
@@ -249,7 +254,7 @@ export function Postagens() {
     const handleBuscarPostPorId = async () => {
         if (!buscaPostId) return;
         try {
-            const res = await fetch(`https://postup-api.onrender.com/postup/postagem/${buscaPostId}`, { headers: getHeaders() });
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/postagem/${buscaPostId}`, { headers: getHeaders() });
             if (res.ok) {
                 setPostFiltrada(await res.json());
             } else {
@@ -263,7 +268,7 @@ export function Postagens() {
 
     const handleAtualizarPostagem = async (id: number) => {
         try {
-            const res = await fetch(`https://postup-api.onrender.com/postup/postagem/${id}`, {
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/postagem/${id}`, {
                 method: 'PUT',
                 headers: getHeaders(),
                 body: JSON.stringify({ titulo: editPostTitulo, descricao: editPostDescricao })
@@ -282,7 +287,7 @@ export function Postagens() {
 
     const handleExcluirPost = async (id?: number) => {
         if (!id || !confirm('Deseja excluir esta postagem?')) return;
-        const res = await fetch(`https://postup-api.onrender.com/postup/postagem/${id}`, { method: 'DELETE', headers: getHeaders() });
+        const res = await apiFetch(`https://postup-api.onrender.com/postup/postagem/${id}`, { method: 'DELETE', headers: getHeaders() });
         if (res.ok || res.status === 204) {
             setMessage({ type: 'success', text: 'Postagem excluída com sucesso!' });
             setPostFiltrada(null);
@@ -304,7 +309,7 @@ export function Postagens() {
                 url: arqUrl,
                 postagemId: Number(arqPostId)
             };
-            const res = await fetch('https://postup-api.onrender.com/postup/arquivo', {
+            const res = await apiFetch('https://postup-api.onrender.com/postup/arquivo', {
                 method: 'POST',
                 headers: getHeaders(),
                 body: JSON.stringify(payload)
@@ -324,7 +329,7 @@ export function Postagens() {
     const handleBuscarArquivoPorId = async () => {
         if (!buscaArqId) return;
         try {
-            const res = await fetch(`https://postup-api.onrender.com/postup/arquivo/${buscaArqId}`, { headers: getHeaders() });
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/arquivo/${buscaArqId}`, { headers: getHeaders() });
             if (res.ok) {
                 setArqFiltrado(await res.json());
             } else {
@@ -338,7 +343,7 @@ export function Postagens() {
 
     const handleAtualizarArquivo = async (id: number) => {
         try {
-            const res = await fetch(`https://postup-api.onrender.com/postup/arquivo/${id}`, {
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/arquivo/${id}`, {
                 method: 'PUT',
                 headers: getHeaders(),
                 body: JSON.stringify({ nomeArquivo: editArqNome, tipo: editArqTipo })
@@ -357,7 +362,7 @@ export function Postagens() {
 
     const handleExcluirArquivo = async (id?: number) => {
         if (!id || !confirm('Deseja excluir este arquivo?')) return;
-        const res = await fetch(`https://postup-api.onrender.com/postup/arquivo/${id}`, { method: 'DELETE', headers: getHeaders() });
+        const res = await apiFetch(`https://postup-api.onrender.com/postup/arquivo/${id}`, { method: 'DELETE', headers: getHeaders() });
         if (res.ok || res.status === 204) {
             setMessage({ type: 'success', text: 'Arquivo excluído com sucesso!' });
             setArqFiltrado(null);
@@ -380,7 +385,7 @@ export function Postagens() {
                 notaDificuldade: Number(avalDificuldade),
                 notaConfiabilidade: Number(avalConfiabilidade)
             };
-            const res = await fetch('https://postup-api.onrender.com/postup/avaliacao/postagem', {
+            const res = await apiFetch('https://postup-api.onrender.com/postup/avaliacao/postagem', {
                 method: 'POST',
                 headers: getHeaders(),
                 body: JSON.stringify(payload)
@@ -401,7 +406,7 @@ export function Postagens() {
     const handleBuscarAvaliacaoPorId = async () => {
         if (!buscaAvalId) return;
         try {
-            const res = await fetch(`https://postup-api.onrender.com/postup/avaliacao/${buscaAvalId}`, { headers: getHeaders() });
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/avaliacao/${buscaAvalId}`, { headers: getHeaders() });
             if (res.ok) {
                 setAvalFiltrada(await res.json());
             } else {
@@ -415,7 +420,7 @@ export function Postagens() {
 
     const handleAtualizarAvaliacao = async (id: number) => {
         try {
-            const res = await fetch(`https://postup-api.onrender.com/postup/avaliacao/${id}`, {
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/avaliacao/${id}`, {
                 method: 'PUT',
                 headers: getHeaders(),
                 body: JSON.stringify({ criterio: editAvalCriterio })
@@ -434,7 +439,7 @@ export function Postagens() {
 
     const handleExcluirAvaliacao = async (id?: number) => {
         if (!id || !confirm('Deseja excluir esta avaliação?')) return;
-        const res = await fetch(`https://postup-api.onrender.com/postup/avaliacao/${id}`, { method: 'DELETE', headers: getHeaders() });
+        const res = await apiFetch(`https://postup-api.onrender.com/postup/avaliacao/${id}`, { method: 'DELETE', headers: getHeaders() });
         if (res.ok || res.status === 204) {
             setMessage({ type: 'success', text: 'Avaliação excluída com sucesso!' });
             setAvalFiltrada(null);
@@ -448,7 +453,7 @@ export function Postagens() {
     const handleBuscarPontuacaoPorId = async () => {
         if (!buscaPontId) return;
         try {
-            const res = await fetch(`https://postup-api.onrender.com/postup/avaliacao/${buscaPontId}`, { headers: getHeaders() });
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/avaliacao/${buscaPontId}`, { headers: getHeaders() });
             if (res.ok) {
                 setPontFiltrada(await res.json());
             } else {
@@ -515,8 +520,9 @@ export function Postagens() {
                                         <div className="flex-1 space-y-2 mr-4">
                                             <input type="text" value={editUsuarioNome} onChange={e => setEditUsuarioNome(e.target.value)} placeholder="Novo Nome" className="w-full border p-2 rounded-xl text-sm" />
                                             <input type="email" value={editUsuarioEmail} onChange={e => setEditUsuarioEmail(e.target.value)} placeholder="Novo E-mail" className="w-full border p-2 rounded-xl text-sm" />
+                                            <input type="email" value={editUsuarioSenha} onChange={e => setEditUsuarioSenha(e.target.value)} placeholder="Nova Senha" className="w-full border p-2 rounded-xl text-sm" />
                                             <div className="flex gap-2">
-                                                <button onClick={() => handleAtualizarUsuario(u.idUsuario!)} className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-lg">Salvar</button>
+                                                <button onClick={() => handleAtualizarUsuario(u.idUsuario!)}     className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-lg">Salvar</button>
                                                 <button onClick={() => setEditandoUsuarioId(null)} className="px-3 py-1 bg-slate-300 text-slate-700 text-xs font-bold rounded-lg">Cancelar</button>
                                             </div>
                                         </div>
