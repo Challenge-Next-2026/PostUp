@@ -110,11 +110,6 @@ export function Postagens() {
     const [arqPostId, setArqPostId] = useState('');
 
     const [avalPostId, setAvalPostId] = useState('');
-    const [avalCriterio, setAvalCriterio] = useState('');
-    const [avalImpacto, setAvalImpacto] = useState('');
-    const [avalDificuldade, setAvalDificuldade] = useState('');
-    const [avalConfiabilidade, setAvalConfiabilidade] = useState('');
-    const [avalFrequencia, setAvalFrequencia] = useState('');
 
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -307,7 +302,7 @@ export function Postagens() {
                 tipo: arqTipo,
                 tamanho: arqTamanho,
                 url: arqUrl,
-                postagemId: Number(arqPostId)
+                idPostagem: Number(arqPostId)
             };
             const res = await apiFetch('https://postup-api.onrender.com/postup/arquivo', {
                 method: 'POST',
@@ -378,12 +373,7 @@ export function Postagens() {
         setMessage(null);
         try {
             const payload = {
-                postagemId: Number(avalPostId),
-                criterio: avalCriterio,
-                notaImpacto: Number(avalImpacto),
-                notaFrequencia: Number(avalFrequencia),
-                notaDificuldade: Number(avalDificuldade),
-                notaConfiabilidade: Number(avalConfiabilidade)
+                idPostagem: Number(avalPostId)
             };
             const res = await apiFetch('https://postup-api.onrender.com/postup/avaliacao/postagem', {
                 method: 'POST',
@@ -392,8 +382,7 @@ export function Postagens() {
             });
             if (res.ok || res.status === 201 || res.status === 204) {
                 setMessage({ type: 'success', text: 'Avaliação cadastrada com sucesso!' });
-                setAvalPostId(''); setAvalCriterio(''); setAvalImpacto(''); setAvalFrequencia('');
-                setAvalDificuldade(''); setAvalConfiabilidade('');
+                setAvalPostId('');
                 carregarDados();
             } else {
                 setMessage({ type: 'error', text: 'Erro ao cadastrar avaliação.' });
@@ -730,28 +719,6 @@ export function Postagens() {
                                 <div className="space-y-1">
                                     <label className="text-xs font-bold text-slate-600">Postagem Id</label>
                                     <input type="number" value={avalPostId} onChange={e => setAvalPostId(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Critério</label>
-                                    <input type="text" value={avalCriterio} onChange={e => setAvalCriterio(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Nota Impacto</label>
-                                    <input type="number" value={avalImpacto} onChange={e => setAvalImpacto(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Nota Frequência</label>
-                                    <input type="number" value={avalFrequencia} onChange={e => setAvalFrequencia(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Nota Dificuldade</label>
-                                    <input type="number" value={avalDificuldade} onChange={e => setAvalDificuldade(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Nota Confiabilidade</label>
-                                    <input type="number" value={avalConfiabilidade} onChange={e => setAvalConfiabilidade(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
                                 </div>
                             </div>
                             <button type="submit" className="px-6 py-2.5 bg-[#44c0c5] hover:bg-[#3aaab0] text-white font-bold text-sm rounded-xl shadow-md cursor-pointer">
