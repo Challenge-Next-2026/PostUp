@@ -33,7 +33,7 @@ export function Login() {
             try {
                 data = JSON.parse(responseText);
             } catch {
-                data = { message: responseText };
+                data = responseText; // Caso a API retorne o token diretamente como uma string de texto puro
             }
 
             console.log("Resposta da API de Login:", data);
@@ -41,11 +41,23 @@ export function Login() {
             if (response.ok) {
                 setMessage({ type: 'success', text: 'Login realizado com sucesso! Redirecionando...' });
 
-                // Extrai o token de qualquer propriedade possível ou define um token padrão para destravar os testes
-                const token = data.token || data.accessToken || data.access_token || data.jwt || (typeof data === 'string' ? data : 'token-ativo-temporario');
+                // Extrai o token real retornado pelo back-end (seja objeto JSON ou texto puro)
+                let token = '';
+                if (typeof data === 'string') {
+                    token = data;
+                } else {
+                    token = data.token || data.accessToken || data.access_token || data.jwt || data.key;
+                }
+
+                if (!token) {
+                    token = responseText; // Fallback para o texto bruto caso venha sem chave específica
+                }
                 
+                // Salva o token real nos Cookies E no LocalStorage para garantir compatibilidade total
+                document.cookie = `authToken=${token}; path=/; max-age=86400; SameSite=Lax`;
                 localStorage.setItem('authToken', token);
-                console.log("Token salvo no localStorage:", token);
+                
+                console.log("Token real salvo com sucesso:", token);
 
                 // Redireciona para o painel de postagens após 1.2 segundos
                 setTimeout(() => {
@@ -53,7 +65,7 @@ export function Login() {
                 }, 1200);
 
             } else {
-                const errorMsg = data.message || data.error || responseText || 'E-mail ou senha inválidos.';
+                const errorMsg = (typeof data === 'object' && (data.message || data.error)) || responseText || 'E-mail ou senha inválidos.';
                 setMessage({ type: 'error', text: errorMsg });
                 setLoading(false);
             }

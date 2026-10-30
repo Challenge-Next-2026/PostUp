@@ -44,6 +44,18 @@ interface Pontuacao {
     [key: string]: any;
 }
 
+// Função auxiliar para buscar o valor de um cookie pelo nome
+const getCookie = (name: string): string | undefined => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+};
+
+// Função auxiliar para remover um cookie
+const deleteCookie = (name: string) => {
+    document.cookie = `${name}=; path=/; max-age=0;`;
+};
+
 export function Postagens() {
     const navigate = useNavigate();
 
@@ -86,7 +98,7 @@ export function Postagens() {
     const [editandoAvalId, setEditandoAvalId] = useState<number | null>(null);
     const [editAvalCriterio, setEditAvalCriterio] = useState('');
 
-    // Estados dos Formulários de Cadastro (mapeados com base nas classes DTO)
+    // Estados dos Formulários de Cadastro
     const [postTitulo, setPostTitulo] = useState('');
     const [postDescricao, setPostDescricao] = useState('');
 
@@ -105,11 +117,9 @@ export function Postagens() {
 
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
+    // Recupera o token diretamente dos cookies do navegador
     const getHeaders = () => {
-        const token = 
-            localStorage.getItem('authToken') || 
-            localStorage.getItem('token') || 
-            localStorage.getItem('access_token');
+        const token = getCookie('authToken') || getCookie('token') || getCookie('access_token');
 
         return {
             'Content-Type': 'application/json',
@@ -139,10 +149,7 @@ export function Postagens() {
     };
 
     useEffect(() => {
-        const token = 
-            localStorage.getItem('authToken') || 
-            localStorage.getItem('token') || 
-            localStorage.getItem('access_token');
+        const token = getCookie('authToken') || getCookie('token') || getCookie('access_token');
 
         if (!token) {
             navigate('/login');
@@ -161,7 +168,10 @@ export function Postagens() {
         } catch (e) {
             console.error(e);
         } finally {
-            localStorage.clear();
+            // Remove os cookies de autenticação no logout
+            deleteCookie('authToken');
+            deleteCookie('token');
+            deleteCookie('access_token');
             navigate('/login');
         }
     };
@@ -217,7 +227,6 @@ export function Postagens() {
         e.preventDefault();
         setMessage(null);
         try {
-            // Baseado nos atributos da classe DTO Postagem: titulo, descricao
             const payload = { titulo: postTitulo, descricao: postDescricao };
             const response = await fetch('https://postup-api.onrender.com/postup/postagem', {
                 method: 'POST',
@@ -288,7 +297,6 @@ export function Postagens() {
         e.preventDefault();
         setMessage(null);
         try {
-            // Baseado nos atributos da classe DTO Arquivo: nomeArquivo, tipo, tamanho, url
             const payload = {
                 nomeArquivo: arqNome,
                 tipo: arqTipo,
@@ -364,7 +372,6 @@ export function Postagens() {
         e.preventDefault();
         setMessage(null);
         try {
-            // Baseado nos atributos da classe DTO Avaliacao: criterio, notaImpacto, notaFrequencia, notaDificuldade, notaConfiabilidade
             const payload = {
                 postagemId: Number(avalPostId),
                 criterio: avalCriterio,
