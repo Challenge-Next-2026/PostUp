@@ -44,16 +44,13 @@ interface Pontuacao {
     [key: string]: any;
 }
 
+type MessageState = { type: 'success' | 'error'; text: string } | null;
+
 // Função auxiliar para buscar o valor de um cookie pelo nome
 const getCookie = (name: string): string | undefined => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop()?.split(';').shift();
-};
-
-// Função auxiliar para remover um cookie
-const deleteCookie = (name: string) => {
-    document.cookie = `${name}=; path=/; max-age=0;`;
 };
 
 export function Postagens() {
@@ -65,6 +62,13 @@ export function Postagens() {
     const [arquivos, setArquivos] = useState<Arquivo[]>([]);
     const [avaliacoes, setAvaliacoes] = useState<Avaliacao[]>([]);
     const [pontuacoes, setPontuacoes] = useState<Pontuacao[]>([]);
+
+    // Estados de Mensagem por Seção
+    const [msgUsuario, setMsgUsuario] = useState<MessageState>(null);
+    const [msgPostagem, setMsgPostagem] = useState<MessageState>(null);
+    const [msgArquivo, setMsgArquivo] = useState<MessageState>(null);
+    const [msgAvaliacao, setMsgAvaliacao] = useState<MessageState>(null);
+    const [msgPontuacao, setMsgPontuacao] = useState<MessageState>(null);
 
     // Estados de Consulta Individual por ID
     const [buscaUsuarioId, setBuscaUsuarioId] = useState('');
@@ -113,9 +117,6 @@ export function Postagens() {
 
     const [avalPostId, setAvalPostId] = useState('');
 
-    const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-    // Recupera o token diretamente dos cookies do navegador
     const getHeaders = () => {
         return {
             'Content-Type': 'application/json'
@@ -127,6 +128,28 @@ export function Postagens() {
             ...options,
             credentials: 'include'
         });
+    };
+
+    // Função para traduzir o status HTTP em mensagem
+    const tratarRespostaApi = async (res: Response, sucessoPadrao: string): Promise<MessageState> => {
+        if (res.ok || res.status === 201 || res.status === 204) {
+            return { type: 'success', text: sucessoPadrao };
+        }
+        
+        // Tenta obter mensagem personalizada da API
+        try {
+            const data = await res.json();
+            if (data.message) return { type: 'error', text: `Erro (${res.status}): ${data.message}` };
+        } catch {}
+
+        switch (res.status) {
+            case 400: return { type: 'error', text: 'Erro 400: Dados inválidos ou campos obrigatórios ausentes.' };
+            case 401: return { type: 'error', text: 'Erro 401: Não autorizado. Faça login novamente.' };
+            case 403: return { type: 'error', text: 'Erro 403: Você não tem permissão para realizar esta ação.' };
+            case 404: return { type: 'error', text: 'Erro 404: Registro não encontrado no servidor.' };
+            case 500: return { type: 'error', text: 'Erro 500: Erro interno no servidor.' };
+            default: return { type: 'error', text: `Erro ${res.status}: Falha ao processar a requisição.` };
+        }
     };
 
     const carregarDados = async () => {
@@ -152,7 +175,6 @@ export function Postagens() {
 
     useEffect(() => {
         const token = getCookie('authToken') || getCookie('token') || getCookie('access_token');
-
         if (!token) {
             navigate('/login');
             return;
@@ -160,74 +182,90 @@ export function Postagens() {
         carregarDados();
     }, [navigate]);
 
+    // Componente reutilizável para renderizar alertas nas seções
+    const AlertMessage = ({ message }: { message: MessageState }) => {
+        if (!message) return null;
+        return (
+            <div className={`p-4 rounded-2xl text-sm font-semibold mb-4 transition-all ${
+                message.type === 'error' 
+                    ? 'bg-rose-50 text-rose-600 border border-rose-200' 
+                    : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+            }`}>
+                {message.text}
+            </div>
+        );
+    };
+
     // ================= USUÁRIO =================
     const handleLogout = async () => {
-    try {
-        await apiFetch(
-            'https://postup-api.onrender.com/postup/usuario/logout',
-            {
+        try {
+            await apiFetch('https://postup-api.onrender.com/postup/usuario/logout', {
                 method: 'POST',
                 headers: getHeaders()
-            }
-        );
-    } catch (e) {
-        console.error(e);
-    } finally {
-        sessionStorage.removeItem('isLoggedIn');
-        navigate('/login');
-    }
-};
+            });
+        } catch (e) {
+            console.error(e);
+        } finally {
+            sessionStorage.removeItem('isLoggedIn');
+            navigate('/login');
+        }
+    };
 
     const handleBuscarUsuarioPorId = async () => {
         if (!buscaUsuarioId) return;
+        setMsgUsuario(null);
         try {
             const res = await apiFetch(`https://postup-api.onrender.com/postup/usuario/${buscaUsuarioId}`, { headers: getHeaders() });
             if (res.ok) {
                 setUsuarioFiltrado(await res.json());
             } else {
                 setUsuarioFiltrado(null);
-                setMessage({ type: 'error', text: 'Usuário não encontrado.' });
+                setMsgUsuario(await tratarRespostaApi(res, ''));
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro ao buscar usuário.' });
+            setMsgUsuario({ type: 'error', text: 'Erro ao conectar ao servidor.' });
         }
     };
 
     const handleAtualizarUsuario = async (id: number) => {
+        setMsgUsuario(null);
         try {
             const res = await apiFetch(`https://postup-api.onrender.com/postup/usuario/${id}`, {
                 method: 'PUT',
                 headers: getHeaders(),
                 body: JSON.stringify({ nome: editUsuarioNome, email: editUsuarioEmail, senha: editUsuarioSenha })
             });
-            if (res.ok || res.status === 204) {
-                setMessage({ type: 'success', text: 'Usuário atualizado com sucesso!' });
+            const msg = await tratarRespostaApi(res, 'Usuário atualizado com sucesso!');
+            setMsgUsuario(msg);
+            if (msg?.type === 'success') {
                 setEditandoUsuarioId(null);
                 carregarDados();
-            } else {
-                setMessage({ type: 'error', text: 'Erro ao atualizar usuário.' });
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro de conexão.' });
+            setMsgUsuario({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     const handleExcluirUsuario = async (id?: number) => {
         if (!id || !confirm('Deseja excluir este usuário?')) return;
-        const res = await apiFetch(`https://postup-api.onrender.com/postup/usuario/${id}`, { method: 'DELETE', headers: getHeaders() });
-        if (res.ok || res.status === 204) {
-            setMessage({ type: 'success', text: 'Usuário excluído com sucesso!' });
-            setUsuarioFiltrado(null);
-            carregarDados();
-        } else {
-            setMessage({ type: 'error', text: 'Erro ao excluir usuário.' });
+        setMsgUsuario(null);
+        try {
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/usuario/${id}`, { method: 'DELETE', headers: getHeaders() });
+            const msg = await tratarRespostaApi(res, 'Usuário excluído com sucesso!');
+            setMsgUsuario(msg);
+            if (msg?.type === 'success') {
+                setUsuarioFiltrado(null);
+                carregarDados();
+            }
+        } catch {
+            setMsgUsuario({ type: 'error', text: 'Erro ao conectar ao servidor.' });
         }
     };
 
     // ================= POSTAGEM =================
     const handleCriarPostagem = async (e: React.FormEvent) => {
         e.preventDefault();
-        setMessage(null);
+        setMsgPostagem(null);
         try {
             const payload = { titulo: postTitulo, descricao: postDescricao };
             const response = await apiFetch('https://postup-api.onrender.com/postup/postagem', {
@@ -235,69 +273,73 @@ export function Postagens() {
                 headers: getHeaders(),
                 body: JSON.stringify(payload)
             });
-            if (response.ok || response.status === 201 || response.status === 204) {
-                setMessage({ type: 'success', text: 'Postagem cadastrada com sucesso!' });
+            const msg = await tratarRespostaApi(response, 'Postagem cadastrada com sucesso!');
+            setMsgPostagem(msg);
+            if (msg?.type === 'success') {
                 setPostTitulo('');
                 setPostDescricao('');
                 carregarDados();
-            } else {
-                setMessage({ type: 'error', text: 'Erro ao cadastrar postagem.' });
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro de conexão.' });
+            setMsgPostagem({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     const handleBuscarPostPorId = async () => {
         if (!buscaPostId) return;
+        setMsgPostagem(null);
         try {
             const res = await apiFetch(`https://postup-api.onrender.com/postup/postagem/${buscaPostId}`, { headers: getHeaders() });
             if (res.ok) {
                 setPostFiltrada(await res.json());
             } else {
                 setPostFiltrada(null);
-                setMessage({ type: 'error', text: 'Postagem não encontrada.' });
+                setMsgPostagem(await tratarRespostaApi(res, ''));
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro ao buscar postagem.' });
+            setMsgPostagem({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     const handleAtualizarPostagem = async (id: number) => {
+        setMsgPostagem(null);
         try {
             const res = await apiFetch(`https://postup-api.onrender.com/postup/postagem/${id}`, {
                 method: 'PUT',
                 headers: getHeaders(),
                 body: JSON.stringify({ titulo: editPostTitulo, descricao: editPostDescricao })
             });
-            if (res.ok || res.status === 204) {
-                setMessage({ type: 'success', text: 'Postagem atualizada com sucesso!' });
+            const msg = await tratarRespostaApi(res, 'Postagem atualizada com sucesso!');
+            setMsgPostagem(msg);
+            if (msg?.type === 'success') {
                 setEditandoPostId(null);
                 carregarDados();
-            } else {
-                setMessage({ type: 'error', text: 'Erro ao atualizar postagem.' });
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro de conexão.' });
+            setMsgPostagem({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     const handleExcluirPost = async (id?: number) => {
         if (!id || !confirm('Deseja excluir esta postagem?')) return;
-        const res = await apiFetch(`https://postup-api.onrender.com/postup/postagem/${id}`, { method: 'DELETE', headers: getHeaders() });
-        if (res.ok || res.status === 204) {
-            setMessage({ type: 'success', text: 'Postagem excluída com sucesso!' });
-            setPostFiltrada(null);
-            carregarDados();
-        } else {
-            setMessage({ type: 'error', text: 'Erro ao excluir postagem.' });
+        setMsgPostagem(null);
+        try {
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/postagem/${id}`, { method: 'DELETE', headers: getHeaders() });
+            const msg = await tratarRespostaApi(res, 'Postagem excluída com sucesso!');
+            setMsgPostagem(msg);
+            if (msg?.type === 'success') {
+                setPostFiltrada(null);
+                carregarDados();
+            }
+        } catch {
+            setMsgPostagem({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     // ================= ARQUIVO =================
     const handleCriarArquivo = async (e: React.FormEvent) => {
         e.preventDefault();
-        setMessage(null);
+        setMsgArquivo(null);
         try {
             const payload = {
                 nomeArquivo: arqNome,
@@ -311,148 +353,155 @@ export function Postagens() {
                 headers: getHeaders(),
                 body: JSON.stringify(payload)
             });
-            if (res.ok || res.status === 201 || res.status === 204) {
-                setMessage({ type: 'success', text: 'Arquivo cadastrado com sucesso!' });
+            const msg = await tratarRespostaApi(res, 'Arquivo cadastrado com sucesso!');
+            setMsgArquivo(msg);
+            if (msg?.type === 'success') {
                 setArqNome(''); setArqTipo(''); setArqTamanho(''); setArqUrl(''); setArqPostId('');
                 carregarDados();
-            } else {
-                setMessage({ type: 'error', text: 'Erro ao cadastrar arquivo.' });
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro de conexão.' });
+            setMsgArquivo({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     const handleBuscarArquivoPorId = async () => {
         if (!buscaArqId) return;
+        setMsgArquivo(null);
         try {
             const res = await apiFetch(`https://postup-api.onrender.com/postup/arquivo/${buscaArqId}`, { headers: getHeaders() });
             if (res.ok) {
                 setArqFiltrado(await res.json());
             } else {
                 setArqFiltrado(null);
-                setMessage({ type: 'error', text: 'Arquivo não encontrado.' });
+                setMsgArquivo(await tratarRespostaApi(res, ''));
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro ao buscar arquivo.' });
+            setMsgArquivo({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     const handleAtualizarArquivo = async (id: number) => {
+        setMsgArquivo(null);
         try {
             const res = await apiFetch(`https://postup-api.onrender.com/postup/arquivo/${id}`, {
                 method: 'PUT',
                 headers: getHeaders(),
                 body: JSON.stringify({ nomeArquivo: editArqNome, tipo: editArqTipo, tamanho: editArqTamanho, url: editArqUrl })
             });
-            if (res.ok || res.status === 204) {
-                setMessage({ type: 'success', text: 'Arquivo atualizado com sucesso!' });
+            const msg = await tratarRespostaApi(res, 'Arquivo atualizado com sucesso!');
+            setMsgArquivo(msg);
+            if (msg?.type === 'success') {
                 setEditandoArqId(null);
                 carregarDados();
-            } else {
-                setMessage({ type: 'error', text: 'Erro ao atualizar arquivo.' });
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro de conexão.' });
+            setMsgArquivo({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     const handleExcluirArquivo = async (id?: number) => {
         if (!id || !confirm('Deseja excluir este arquivo?')) return;
-        const res = await apiFetch(`https://postup-api.onrender.com/postup/arquivo/${id}`, { method: 'DELETE', headers: getHeaders() });
-        if (res.ok || res.status === 204) {
-            setMessage({ type: 'success', text: 'Arquivo excluído com sucesso!' });
-            setArqFiltrado(null);
-            carregarDados();
-        } else {
-            setMessage({ type: 'error', text: 'Erro ao excluir arquivo.' });
+        setMsgArquivo(null);
+        try {
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/arquivo/${id}`, { method: 'DELETE', headers: getHeaders() });
+            const msg = await tratarRespostaApi(res, 'Arquivo excluído com sucesso!');
+            setMsgArquivo(msg);
+            if (msg?.type === 'success') {
+                setArqFiltrado(null);
+                carregarDados();
+            }
+        } catch {
+            setMsgArquivo({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     // ================= AVALIAÇÃO =================
     const handleCriarAvaliacao = async (e: React.FormEvent) => {
         e.preventDefault();
-        setMessage(null);
+        setMsgAvaliacao(null);
         try {
-            const payload = {
-                idPostagem: Number(avalPostId)
-            };
+            const payload = { idPostagem: Number(avalPostId) };
             const res = await apiFetch('https://postup-api.onrender.com/postup/avaliacao/postagem', {
                 method: 'POST',
                 headers: getHeaders(),
                 body: JSON.stringify(payload)
             });
-            if (res.ok || res.status === 201 || res.status === 204) {
-                setMessage({ type: 'success', text: 'Avaliação cadastrada com sucesso!' });
+            const msg = await tratarRespostaApi(res, 'Avaliação cadastrada com sucesso!');
+            setMsgAvaliacao(msg);
+            if (msg?.type === 'success') {
                 setAvalPostId('');
                 carregarDados();
-            } else {
-                setMessage({ type: 'error', text: 'Erro ao cadastrar avaliação.' });
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro de conexão.' });
+            setMsgAvaliacao({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     const handleBuscarAvaliacaoPorId = async () => {
         if (!buscaAvalId) return;
+        setMsgAvaliacao(null);
         try {
             const res = await apiFetch(`https://postup-api.onrender.com/postup/avaliacao/${buscaAvalId}`, { headers: getHeaders() });
             if (res.ok) {
                 setAvalFiltrada(await res.json());
             } else {
                 setAvalFiltrada(null);
-                setMessage({ type: 'error', text: 'Avaliação não encontrada.' });
+                setMsgAvaliacao(await tratarRespostaApi(res, ''));
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro ao buscar avaliação.' });
+            setMsgAvaliacao({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     const handleAtualizarAvaliacao = async (id: number) => {
+        setMsgAvaliacao(null);
         try {
             const res = await apiFetch(`https://postup-api.onrender.com/postup/avaliacao/${id}`, {
                 method: 'PUT',
                 headers: getHeaders(),
                 body: JSON.stringify({ criterio: editAvalCriterio })
             });
-            if (res.ok || res.status === 204) {
-                setMessage({ type: 'success', text: 'Avaliação atualizada com sucesso!' });
+            const msg = await tratarRespostaApi(res, 'Avaliação atualizada com sucesso!');
+            setMsgAvaliacao(msg);
+            if (msg?.type === 'success') {
                 setEditandoAvalId(null);
                 carregarDados();
-            } else {
-                setMessage({ type: 'error', text: 'Erro ao atualizar avaliação.' });
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro de conexão.' });
+            setMsgAvaliacao({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     const handleExcluirAvaliacao = async (id?: number) => {
         if (!id || !confirm('Deseja excluir esta avaliação?')) return;
-        const res = await apiFetch(`https://postup-api.onrender.com/postup/avaliacao/${id}`, { method: 'DELETE', headers: getHeaders() });
-        if (res.ok || res.status === 204) {
-            setMessage({ type: 'success', text: 'Avaliação excluída com sucesso!' });
-            setAvalFiltrada(null);
-            carregarDados();
-        } else {
-            setMessage({ type: 'error', text: 'Erro ao excluir avaliação.' });
+        setMsgAvaliacao(null);
+        try {
+            const res = await apiFetch(`https://postup-api.onrender.com/postup/avaliacao/${id}`, { method: 'DELETE', headers: getHeaders() });
+            const msg = await tratarRespostaApi(res, 'Avaliação excluída com sucesso!');
+            setMsgAvaliacao(msg);
+            if (msg?.type === 'success') {
+                setAvalFiltrada(null);
+                carregarDados();
+            }
+        } catch {
+            setMsgAvaliacao({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
     // ================= PONTUAÇÃO =================
     const handleBuscarPontuacaoPorId = async () => {
         if (!buscaPontId) return;
+        setMsgPontuacao(null);
         try {
             const res = await apiFetch(`https://postup-api.onrender.com/postup/avaliacao/${buscaPontId}`, { headers: getHeaders() });
             if (res.ok) {
                 setPontFiltrada(await res.json());
             } else {
                 setPontFiltrada(null);
-                setMessage({ type: 'error', text: 'Pontuação/Avaliação não encontrada.' });
+                setMsgPontuacao(await tratarRespostaApi(res, ''));
             }
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro ao buscar pontuação.' });
+            setMsgPontuacao({ type: 'error', text: 'Erro de conexão.' });
         }
     };
 
@@ -472,12 +521,6 @@ export function Postagens() {
                     </button>
                 </header>
 
-                {message && (
-                    <div className={`p-4 rounded-2xl text-sm font-semibold ${message.type === 'error' ? 'bg-rose-50 text-rose-600 border border-rose-200' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'}`}>
-                        {message.text}
-                    </div>
-                )}
-
                 {/* Seção Usuários */}
                 <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
                     <div className="flex justify-between items-center border-b pb-4">
@@ -490,10 +533,12 @@ export function Postagens() {
                         </button>
                     </div>
 
+                    <AlertMessage message={msgUsuario} />
+
                     <div className="flex gap-2">
                         <input type="number" placeholder="Buscar usuário por ID" value={buscaUsuarioId} onChange={e => setBuscaUsuarioId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#44c0c5]" />
                         <button onClick={handleBuscarUsuarioPorId} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl cursor-pointer">Buscar por ID</button>
-                        <button onClick={() => setUsuarioFiltrado(null)} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
+                        <button onClick={() => { setUsuarioFiltrado(null); setMsgUsuario(null); }} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
                     </div>
 
                     {usuarioFiltrado ? (
@@ -511,9 +556,9 @@ export function Postagens() {
                                         <div className="flex-1 space-y-2 mr-4">
                                             <input type="text" value={editUsuarioNome} onChange={e => setEditUsuarioNome(e.target.value)} placeholder="Novo Nome" className="w-full border p-2 rounded-xl text-sm" />
                                             <input type="email" value={editUsuarioEmail} onChange={e => setEditUsuarioEmail(e.target.value)} placeholder="Novo E-mail" className="w-full border p-2 rounded-xl text-sm" />
-                                            <input type="email" value={editUsuarioSenha} onChange={e => setEditUsuarioSenha(e.target.value)} placeholder="Nova Senha" className="w-full border p-2 rounded-xl text-sm" />
+                                            <input type="password" value={editUsuarioSenha} onChange={e => setEditUsuarioSenha(e.target.value)} placeholder="Nova Senha" className="w-full border p-2 rounded-xl text-sm" />
                                             <div className="flex gap-2">
-                                                <button onClick={() => handleAtualizarUsuario(u.idUsuario!)}     className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-lg">Salvar</button>
+                                                <button onClick={() => handleAtualizarUsuario(u.idUsuario!)} className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-lg">Salvar</button>
                                                 <button onClick={() => setEditandoUsuarioId(null)} className="px-3 py-1 bg-slate-300 text-slate-700 text-xs font-bold rounded-lg">Cancelar</button>
                                             </div>
                                         </div>
@@ -548,6 +593,8 @@ export function Postagens() {
                         </button>
                     </div>
 
+                    <AlertMessage message={msgPostagem} />
+
                     <div className="space-y-4 bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
                         <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">Cadastrar registro</h3>
                         <form onSubmit={handleCriarPostagem} className="space-y-4">
@@ -570,7 +617,7 @@ export function Postagens() {
                     <div className="flex gap-2">
                         <input type="number" placeholder="Buscar postagens por ID" value={buscaPostId} onChange={e => setBuscaPostId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#44c0c5]" />
                         <button onClick={handleBuscarPostPorId} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl cursor-pointer">Buscar por ID</button>
-                        <button onClick={() => setPostFiltrada(null)} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
+                        <button onClick={() => { setPostFiltrada(null); setMsgPostagem(null); }} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
                     </div>
 
                     {postFiltrada ? (
@@ -624,6 +671,8 @@ export function Postagens() {
                         </button>
                     </div>
 
+                    <AlertMessage message={msgArquivo} />
+
                     <div className="space-y-4 bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
                         <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">Cadastrar registro</h3>
                         <form onSubmit={handleCriarArquivo} className="space-y-4">
@@ -660,7 +709,7 @@ export function Postagens() {
                     <div className="flex gap-2">
                         <input type="number" placeholder="Buscar arquivo por ID" value={buscaArqId} onChange={e => setBuscaArqId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#44c0c5]" />
                         <button onClick={handleBuscarArquivoPorId} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl cursor-pointer">Buscar por ID</button>
-                        <button onClick={() => setArqFiltrado(null)} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
+                        <button onClick={() => { setArqFiltrado(null); setMsgArquivo(null); }} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
                     </div>
 
                     {arqFiltrado ? (
@@ -678,8 +727,8 @@ export function Postagens() {
                                         <div className="flex-1 space-y-2 mr-4">
                                             <input type="text" value={editArqNome} onChange={e => setEditArqNome(e.target.value)} placeholder="Novo Nome" className="w-full border p-2 rounded-xl text-sm" />
                                             <input type="text" value={editArqTipo} onChange={e => setEditArqTipo(e.target.value)} placeholder="Novo Tipo" className="w-full border p-2 rounded-xl text-sm" />
-                                            <input type="text" value={editArqTamanho} onChange={e => setEditArqTipo(e.target.value)} placeholder="Novo Tamanho" className="w-full border p-2 rounded-xl text-sm" />
-                                            <input type="text" value={editArqUrl} onChange={e => setEditArqTipo(e.target.value)} placeholder="Nova URL" className="w-full border p-2 rounded-xl text-sm" />
+                                            <input type="text" value={editArqTamanho} onChange={e => setEditArqTamanho(e.target.value)} placeholder="Novo Tamanho" className="w-full border p-2 rounded-xl text-sm" />
+                                            <input type="text" value={editArqUrl} onChange={e => setEditArqUrl(e.target.value)} placeholder="Nova URL" className="w-full border p-2 rounded-xl text-sm" />
                                             <div className="flex gap-2">
                                                 <button onClick={() => handleAtualizarArquivo(a.idArquivo!)} className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-lg">Salvar</button>
                                                 <button onClick={() => setEditandoArqId(null)} className="px-3 py-1 bg-slate-300 text-slate-700 text-xs font-bold rounded-lg">Cancelar</button>
@@ -716,6 +765,8 @@ export function Postagens() {
                         </button>
                     </div>
 
+                    <AlertMessage message={msgAvaliacao} />
+
                     <div className="space-y-4 bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
                         <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">Cadastrar registro</h3>
                         <form onSubmit={handleCriarAvaliacao} className="space-y-4">
@@ -734,7 +785,7 @@ export function Postagens() {
                     <div className="flex gap-2">
                         <input type="number" placeholder="Buscar avaliação por ID" value={buscaAvalId} onChange={e => setBuscaAvalId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#44c0c5]" />
                         <button onClick={handleBuscarAvaliacaoPorId} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl cursor-pointer">Buscar por ID</button>
-                        <button onClick={() => setAvalFiltrada(null)} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
+                        <button onClick={() => { setAvalFiltrada(null); setMsgAvaliacao(null); }} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
                     </div>
 
                     {avalFiltrada ? (
@@ -787,10 +838,12 @@ export function Postagens() {
                         </button>
                     </div>
 
+                    <AlertMessage message={msgPontuacao} />
+
                     <div className="flex gap-2">
                         <input type="number" placeholder="Consultar pontuação por ID (/postup/avaliacao/{id})" value={buscaPontId} onChange={e => setBuscaPontId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#44c0c5]" />
                         <button onClick={handleBuscarPontuacaoPorId} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl cursor-pointer">Consultar por ID</button>
-                        <button onClick={() => setPontFiltrada(null)} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
+                        <button onClick={() => { setPontFiltrada(null); setMsgPontuacao(null); }} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
                     </div>
 
                     {pontFiltrada ? (
