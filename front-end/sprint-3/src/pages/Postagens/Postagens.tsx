@@ -136,7 +136,6 @@ export function Postagens() {
             return { type: 'success', text: sucessoPadrao };
         }
         
-        // Tenta obter mensagem personalizada da API
         try {
             const data = await res.json();
             if (data.message) return { type: 'error', text: `Erro (${res.status}): ${data.message}` };
@@ -182,11 +181,11 @@ export function Postagens() {
         carregarDados();
     }, [navigate]);
 
-    // Componente reutilizável para renderizar alertas nas seções
+    // Componente reutilizável para renderizar alertas nas seções com tamanho ampliado
     const AlertMessage = ({ message }: { message: MessageState }) => {
         if (!message) return null;
         return (
-            <div className={`p-4 rounded-2xl text-sm font-semibold mb-4 transition-all ${
+            <div className={`p-5 rounded-2xl text-base font-semibold mb-5 transition-all ${
                 message.type === 'error' 
                     ? 'bg-rose-50 text-rose-600 border border-rose-200' 
                     : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
@@ -506,74 +505,75 @@ export function Postagens() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-100 font-sans text-slate-800 p-6 sm:p-10">
-            <div className="max-w-4xl mx-auto space-y-10">
+        <div className="min-h-screen bg-slate-100 font-sans text-slate-800 p-8 sm:p-12">
+            <div className="max-w-5xl mx-auto space-y-12">
 
-                <header className="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                {/* Cabeçalho */}
+                <header className="flex justify-between items-center bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
                     <div>
-                        <h1 className="text-2xl font-black text-slate-900">
+                        <h1 className="text-3xl sm:text-4xl font-black text-slate-900">
                             Post <span className="text-[#44c0c5]">Up</span> - Painel de Controle
                         </h1>
-                        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Gerenciamento completo do sistema</p>
+                        <p className="text-sm font-semibold text-slate-400 uppercase tracking-wider mt-1">Gerenciamento completo do sistema</p>
                     </div>
-                    <button onClick={handleLogout} className="px-4 py-2 bg-rose-50 text-rose-600 rounded-xl font-bold text-sm hover:bg-rose-100 cursor-pointer">
+                    <button onClick={handleLogout} className="px-5 py-3 bg-rose-50 text-rose-600 rounded-2xl font-bold text-base hover:bg-rose-100 cursor-pointer transition">
                         Sair
                     </button>
                 </header>
 
                 {/* Seção Usuários */}
-                <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
-                    <div className="flex justify-between items-center border-b pb-4">
+                <section className="bg-white p-10 rounded-3xl shadow-sm border border-slate-200 space-y-8">
+                    <div className="flex justify-between items-center border-b pb-6">
                         <div>
-                            <h2 className="text-xl font-bold text-slate-900">Usuários</h2>
-                            <p className="text-xs text-slate-500">Gerencie os dados de usuários do sistema.</p>
+                            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Usuários</h2>
+                            <p className="text-sm text-slate-500 mt-1">Gerencie os dados de usuários do sistema.</p>
                         </div>
-                        <button onClick={carregarDados} className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer">
+                        <button onClick={carregarDados} className="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-2xl transition cursor-pointer">
                             Atualizar lista
                         </button>
                     </div>
 
                     <AlertMessage message={msgUsuario} />
 
-                    <div className="flex gap-2">
-                        <input type="number" placeholder="Buscar usuário por ID" value={buscaUsuarioId} onChange={e => setBuscaUsuarioId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#44c0c5]" />
-                        <button onClick={handleBuscarUsuarioPorId} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl cursor-pointer">Buscar por ID</button>
-                        <button onClick={() => { setUsuarioFiltrado(null); setMsgUsuario(null); }} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
+                    <div className="flex gap-3">
+                        <input type="number" placeholder="Buscar usuário por ID" value={buscaUsuarioId} onChange={e => setBuscaUsuarioId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-base outline-none focus:border-[#44c0c5]" />
+                        <button onClick={handleBuscarUsuarioPorId} className="px-6 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-base rounded-2xl cursor-pointer transition">Buscar por ID</button>
+                        <button onClick={() => { setUsuarioFiltrado(null); setMsgUsuario(null); }} className="px-5 py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-base rounded-2xl cursor-pointer transition">Limpar busca</button>
                     </div>
 
                     {usuarioFiltrado ? (
-                        <div className="border border-slate-200 rounded-2xl p-5 space-y-3 bg-slate-50/50">
-                            <span className="text-xs font-bold bg-[#44c0c5]/10 text-[#44c0c5] px-2.5 py-1 rounded-lg">ID: {usuarioFiltrado.idUsuario}</span>
-                            <p className="text-sm"><strong>Nome:</strong> {usuarioFiltrado.nome}</p>
-                            <p className="text-sm"><strong>E-mail:</strong> {usuarioFiltrado.email}</p>
-                            <button onClick={() => handleExcluirUsuario(usuarioFiltrado.idUsuario)} className="px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold rounded-lg cursor-pointer">Excluir</button>
+                        <div className="border border-slate-200 rounded-2xl p-6 space-y-4 bg-slate-50/50">
+                            <span className="text-sm font-bold bg-[#44c0c5]/10 text-[#44c0c5] px-3.5 py-1.5 rounded-xl">ID: {usuarioFiltrado.idUsuario}</span>
+                            <p className="text-base"><strong>Nome:</strong> {usuarioFiltrado.nome}</p>
+                            <p className="text-base"><strong>E-mail:</strong> {usuarioFiltrado.email}</p>
+                            <button onClick={() => handleExcluirUsuario(usuarioFiltrado.idUsuario)} className="px-4 py-2 bg-rose-50 text-rose-600 text-sm font-bold rounded-xl cursor-pointer transition">Excluir</button>
                         </div>
                     ) : (
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                             {usuarios.map(u => (
-                                <div key={u.idUsuario} className="border border-slate-200 rounded-2xl p-5 bg-white shadow-xs flex justify-between items-center">
+                                <div key={u.idUsuario} className="border border-slate-200 rounded-2xl p-6 bg-white shadow-xs flex justify-between items-center">
                                     {editandoUsuarioId === u.idUsuario ? (
-                                        <div className="flex-1 space-y-2 mr-4">
-                                            <input type="text" value={editUsuarioNome} onChange={e => setEditUsuarioNome(e.target.value)} placeholder="Novo Nome" className="w-full border p-2 rounded-xl text-sm" />
-                                            <input type="email" value={editUsuarioEmail} onChange={e => setEditUsuarioEmail(e.target.value)} placeholder="Novo E-mail" className="w-full border p-2 rounded-xl text-sm" />
-                                            <input type="password" value={editUsuarioSenha} onChange={e => setEditUsuarioSenha(e.target.value)} placeholder="Nova Senha" className="w-full border p-2 rounded-xl text-sm" />
-                                            <div className="flex gap-2">
-                                                <button onClick={() => handleAtualizarUsuario(u.idUsuario!)} className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-lg">Salvar</button>
-                                                <button onClick={() => setEditandoUsuarioId(null)} className="px-3 py-1 bg-slate-300 text-slate-700 text-xs font-bold rounded-lg">Cancelar</button>
+                                        <div className="flex-1 space-y-3 mr-4">
+                                            <input type="text" value={editUsuarioNome} onChange={e => setEditUsuarioNome(e.target.value)} placeholder="Novo Nome" className="w-full border p-3 rounded-xl text-base" />
+                                            <input type="email" value={editUsuarioEmail} onChange={e => setEditUsuarioEmail(e.target.value)} placeholder="Novo E-mail" className="w-full border p-3 rounded-xl text-base" />
+                                            <input type="password" value={editUsuarioSenha} onChange={e => setEditUsuarioSenha(e.target.value)} placeholder="Nova Senha" className="w-full border p-3 rounded-xl text-base" />
+                                            <div className="flex gap-3">
+                                                <button onClick={() => handleAtualizarUsuario(u.idUsuario!)} className="px-4 py-2 bg-emerald-500 text-white text-sm font-bold rounded-xl">Salvar</button>
+                                                <button onClick={() => setEditandoUsuarioId(null)} className="px-4 py-2 bg-slate-300 text-slate-700 text-sm font-bold rounded-xl">Cancelar</button>
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
-                                            <span className="text-xs font-bold bg-[#44c0c5]/10 text-[#44c0c5] px-2 py-0.5 rounded-md">ID: {u.idUsuario}</span>
-                                            <h4 className="font-bold text-base text-slate-900 mt-2">{u.nome}</h4>
-                                            <p className="text-xs text-slate-500 mt-1">{u.email}</p>
+                                            <span className="text-sm font-bold bg-[#44c0c5]/10 text-[#44c0c5] px-3 py-1 rounded-lg">ID: {u.idUsuario}</span>
+                                            <h4 className="font-bold text-lg text-slate-900 mt-2">{u.nome}</h4>
+                                            <p className="text-sm text-slate-500 mt-1">{u.email}</p>
                                         </div>
                                     )}
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-3">
                                         {editandoUsuarioId !== u.idUsuario && (
-                                            <button onClick={() => { setEditandoUsuarioId(u.idUsuario!); setEditUsuarioNome(u.nome || ''); setEditUsuarioEmail(u.email || ''); }} className="px-3 py-1.5 bg-sky-50 text-sky-600 text-xs font-bold rounded-lg cursor-pointer">Editar</button>
+                                            <button onClick={() => { setEditandoUsuarioId(u.idUsuario!); setEditUsuarioNome(u.nome || ''); setEditUsuarioEmail(u.email || ''); }} className="px-4 py-2 bg-sky-50 text-sky-600 text-sm font-bold rounded-xl cursor-pointer transition">Editar</button>
                                         )}
-                                        <button onClick={() => handleExcluirUsuario(u.idUsuario)} className="px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold rounded-lg cursor-pointer">Excluir</button>
+                                        <button onClick={() => handleExcluirUsuario(u.idUsuario)} className="px-4 py-2 bg-rose-50 text-rose-600 text-sm font-bold rounded-xl cursor-pointer transition">Excluir</button>
                                     </div>
                                 </div>
                             ))}
@@ -582,76 +582,76 @@ export function Postagens() {
                 </section>
 
                 {/* Seção Postagens */}
-                <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
-                    <div className="flex justify-between items-center border-b pb-4">
+                <section className="bg-white p-10 rounded-3xl shadow-sm border border-slate-200 space-y-8">
+                    <div className="flex justify-between items-center border-b pb-6">
                         <div>
-                            <h2 className="text-xl font-bold text-slate-900">Postagens</h2>
-                            <p className="text-xs text-slate-500">Gerencie os dados de postagens.</p>
+                            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Postagens</h2>
+                            <p className="text-sm text-slate-500 mt-1">Gerencie os dados de postagens.</p>
                         </div>
-                        <button onClick={carregarDados} className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer">
+                        <button onClick={carregarDados} className="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-2xl transition cursor-pointer">
                             Atualizar lista
                         </button>
                     </div>
 
                     <AlertMessage message={msgPostagem} />
 
-                    <div className="space-y-4 bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
-                        <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">Cadastrar registro</h3>
-                        <form onSubmit={handleCriarPostagem} className="space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Título</label>
-                                    <input type="text" value={postTitulo} onChange={e => setPostTitulo(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
+                    <div className="space-y-4 bg-slate-50/50 p-8 rounded-2xl border border-slate-100">
+                        <h3 className="text-base font-extrabold text-slate-900 uppercase tracking-wider">Cadastrar registro</h3>
+                        <form onSubmit={handleCriarPostagem} className="space-y-5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-slate-600">Título</label>
+                                    <input type="text" value={postTitulo} onChange={e => setPostTitulo(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-2xl p-4 text-base outline-none focus:border-[#44c0c5]" />
                                 </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Descrição</label>
-                                    <textarea value={postDescricao} onChange={e => setPostDescricao(e.target.value)} required rows={2} className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5] resize-none" />
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-slate-600">Descrição</label>
+                                    <textarea value={postDescricao} onChange={e => setPostDescricao(e.target.value)} required rows={3} className="w-full bg-white border border-slate-200 rounded-2xl p-4 text-base outline-none focus:border-[#44c0c5] resize-none" />
                                 </div>
                             </div>
-                            <button type="submit" className="px-6 py-2.5 bg-[#44c0c5] hover:bg-[#3aaab0] text-white font-bold text-sm rounded-xl shadow-md cursor-pointer">
+                            <button type="submit" className="px-7 py-3.5 bg-[#44c0c5] hover:bg-[#3aaab0] text-white font-bold text-base rounded-2xl shadow-md cursor-pointer transition">
                                 Cadastrar
                             </button>
                         </form>
                     </div>
 
-                    <div className="flex gap-2">
-                        <input type="number" placeholder="Buscar postagens por ID" value={buscaPostId} onChange={e => setBuscaPostId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#44c0c5]" />
-                        <button onClick={handleBuscarPostPorId} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl cursor-pointer">Buscar por ID</button>
-                        <button onClick={() => { setPostFiltrada(null); setMsgPostagem(null); }} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
+                    <div className="flex gap-3">
+                        <input type="number" placeholder="Buscar postagens por ID" value={buscaPostId} onChange={e => setBuscaPostId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-base outline-none focus:border-[#44c0c5]" />
+                        <button onClick={handleBuscarPostPorId} className="px-6 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-base rounded-2xl cursor-pointer transition">Buscar por ID</button>
+                        <button onClick={() => { setPostFiltrada(null); setMsgPostagem(null); }} className="px-5 py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-base rounded-2xl cursor-pointer transition">Limpar busca</button>
                     </div>
 
                     {postFiltrada ? (
-                        <div className="border border-slate-200 rounded-2xl p-5 space-y-3 bg-slate-50/50">
-                            <span className="text-xs font-bold bg-[#44c0c5]/10 text-[#44c0c5] px-2.5 py-1 rounded-lg">ID: {postFiltrada.idPostagem}</span>
-                            <p className="text-sm"><strong>Título:</strong> {postFiltrada.titulo}</p>
-                            <p className="text-sm"><strong>Descrição:</strong> {postFiltrada.descricao}</p>
-                            <button onClick={() => handleExcluirPost(postFiltrada.idPostagem)} className="px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold rounded-lg cursor-pointer">Excluir</button>
+                        <div className="border border-slate-200 rounded-2xl p-6 space-y-4 bg-slate-50/50">
+                            <span className="text-sm font-bold bg-[#44c0c5]/10 text-[#44c0c5] px-3.5 py-1.5 rounded-xl">ID: {postFiltrada.idPostagem}</span>
+                            <p className="text-base"><strong>Título:</strong> {postFiltrada.titulo}</p>
+                            <p className="text-base"><strong>Descrição:</strong> {postFiltrada.descricao}</p>
+                            <button onClick={() => handleExcluirPost(postFiltrada.idPostagem)} className="px-4 py-2 bg-rose-50 text-rose-600 text-sm font-bold rounded-xl cursor-pointer transition">Excluir</button>
                         </div>
                     ) : (
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                             {postagens.map(p => (
-                                <div key={p.idPostagem} className="border border-slate-200 rounded-2xl p-5 space-y-2 bg-white shadow-xs flex justify-between items-start">
+                                <div key={p.idPostagem} className="border border-slate-200 rounded-2xl p-6 space-y-3 bg-white shadow-xs flex justify-between items-start">
                                     {editandoPostId === p.idPostagem ? (
-                                        <div className="flex-1 space-y-2 mr-4">
-                                            <input type="text" value={editPostTitulo} onChange={e => setEditPostTitulo(e.target.value)} placeholder="Novo Título" className="w-full border p-2 rounded-xl text-sm" />
-                                            <textarea value={editPostDescricao} onChange={e => setEditPostDescricao(e.target.value)} placeholder="Nova Descrição" rows={2} className="w-full border p-2 rounded-xl text-sm" />
-                                            <div className="flex gap-2">
-                                                <button onClick={() => handleAtualizarPostagem(p.idPostagem!)} className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-lg">Salvar</button>
-                                                <button onClick={() => setEditandoPostId(null)} className="px-3 py-1 bg-slate-300 text-slate-700 text-xs font-bold rounded-lg">Cancelar</button>
+                                        <div className="flex-1 space-y-3 mr-4">
+                                            <input type="text" value={editPostTitulo} onChange={e => setEditPostTitulo(e.target.value)} placeholder="Novo Título" className="w-full border p-3 rounded-xl text-base" />
+                                            <textarea value={editPostDescricao} onChange={e => setEditPostDescricao(e.target.value)} placeholder="Nova Descrição" rows={3} className="w-full border p-3 rounded-xl text-base" />
+                                            <div className="flex gap-3">
+                                                <button onClick={() => handleAtualizarPostagem(p.idPostagem!)} className="px-4 py-2 bg-emerald-500 text-white text-sm font-bold rounded-xl">Salvar</button>
+                                                <button onClick={() => setEditandoPostId(null)} className="px-4 py-2 bg-slate-300 text-slate-700 text-sm font-bold rounded-xl">Cancelar</button>
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
-                                            <span className="text-xs font-bold bg-[#44c0c5]/10 text-[#44c0c5] px-2 py-0.5 rounded-md">ID: {p.idPostagem}</span>
-                                            <h4 className="font-bold text-base text-slate-900 mt-2">{p.titulo}</h4>
-                                            <p className="text-xs text-slate-500 mt-1">{p.descricao}</p>
+                                            <span className="text-sm font-bold bg-[#44c0c5]/10 text-[#44c0c5] px-3 py-1 rounded-lg">ID: {p.idPostagem}</span>
+                                            <h4 className="font-bold text-lg text-slate-900 mt-2">{p.titulo}</h4>
+                                            <p className="text-sm text-slate-500 mt-1">{p.descricao}</p>
                                         </div>
                                     )}
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-3">
                                         {editandoPostId !== p.idPostagem && (
-                                            <button onClick={() => { setEditandoPostId(p.idPostagem!); setEditPostTitulo(p.titulo || ''); setEditPostDescricao(p.descricao || ''); }} className="px-3 py-1.5 bg-sky-50 text-sky-600 text-xs font-bold rounded-lg cursor-pointer">Editar</button>
+                                            <button onClick={() => { setEditandoPostId(p.idPostagem!); setEditPostTitulo(p.titulo || ''); setEditPostDescricao(p.descricao || ''); }} className="px-4 py-2 bg-sky-50 text-sky-600 text-sm font-bold rounded-xl cursor-pointer transition">Editar</button>
                                         )}
-                                        <button onClick={() => handleExcluirPost(p.idPostagem)} className="px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold rounded-lg cursor-pointer">Excluir</button>
+                                        <button onClick={() => handleExcluirPost(p.idPostagem)} className="px-4 py-2 bg-rose-50 text-rose-600 text-sm font-bold rounded-xl cursor-pointer transition">Excluir</button>
                                     </div>
                                 </div>
                             ))}
@@ -660,92 +660,92 @@ export function Postagens() {
                 </section>
 
                 {/* Seção Arquivos */}
-                <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
-                    <div className="flex justify-between items-center border-b pb-4">
+                <section className="bg-white p-10 rounded-3xl shadow-sm border border-slate-200 space-y-8">
+                    <div className="flex justify-between items-center border-b pb-6">
                         <div>
-                            <h2 className="text-xl font-bold text-slate-900">Arquivos</h2>
-                            <p className="text-xs text-slate-500">Gerencie os dados de arquivos.</p>
+                            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Arquivos</h2>
+                            <p className="text-sm text-slate-500 mt-1">Gerencie os dados de arquivos.</p>
                         </div>
-                        <button onClick={carregarDados} className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer">
+                        <button onClick={carregarDados} className="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-2xl transition cursor-pointer">
                             Atualizar lista
                         </button>
                     </div>
 
                     <AlertMessage message={msgArquivo} />
 
-                    <div className="space-y-4 bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
-                        <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">Cadastrar registro</h3>
-                        <form onSubmit={handleCriarArquivo} className="space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Nome do Arquivo</label>
-                                    <input type="text" value={arqNome} onChange={e => setArqNome(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
+                    <div className="space-y-4 bg-slate-50/50 p-8 rounded-2xl border border-slate-100">
+                        <h3 className="text-base font-extrabold text-slate-900 uppercase tracking-wider">Cadastrar registro</h3>
+                        <form onSubmit={handleCriarArquivo} className="space-y-5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-slate-600">Nome do Arquivo</label>
+                                    <input type="text" value={arqNome} onChange={e => setArqNome(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-2xl p-4 text-base outline-none focus:border-[#44c0c5]" />
                                 </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Tipo</label>
-                                    <input type="text" value={arqTipo} onChange={e => setArqTipo(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Tamanho</label>
-                                    <input type="text" value={arqTamanho} onChange={e => setArqTamanho(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">URL</label>
-                                    <input type="text" value={arqUrl} onChange={e => setArqUrl(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
-                                </div>
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Postagem Id</label>
-                                    <input type="number" value={arqPostId} onChange={e => setArqPostId(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-slate-600">Tipo</label>
+                                    <input type="text" value={arqTipo} onChange={e => setArqTipo(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-2xl p-4 text-base outline-none focus:border-[#44c0c5]" />
                                 </div>
                             </div>
-                            <button type="submit" className="px-6 py-2.5 bg-[#44c0c5] hover:bg-[#3aaab0] text-white font-bold text-sm rounded-xl shadow-md cursor-pointer">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-slate-600">Tamanho</label>
+                                    <input type="text" value={arqTamanho} onChange={e => setArqTamanho(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-2xl p-4 text-base outline-none focus:border-[#44c0c5]" />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-slate-600">URL</label>
+                                    <input type="text" value={arqUrl} onChange={e => setArqUrl(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-2xl p-4 text-base outline-none focus:border-[#44c0c5]" />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-slate-600">Postagem Id</label>
+                                    <input type="number" value={arqPostId} onChange={e => setArqPostId(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-2xl p-4 text-base outline-none focus:border-[#44c0c5]" />
+                                </div>
+                            </div>
+                            <button type="submit" className="px-7 py-3.5 bg-[#44c0c5] hover:bg-[#3aaab0] text-white font-bold text-base rounded-2xl shadow-md cursor-pointer transition">
                                 Cadastrar
                             </button>
                         </form>
                     </div>
 
-                    <div className="flex gap-2">
-                        <input type="number" placeholder="Buscar arquivo por ID" value={buscaArqId} onChange={e => setBuscaArqId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#44c0c5]" />
-                        <button onClick={handleBuscarArquivoPorId} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl cursor-pointer">Buscar por ID</button>
-                        <button onClick={() => { setArqFiltrado(null); setMsgArquivo(null); }} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
+                    <div className="flex gap-3">
+                        <input type="number" placeholder="Buscar arquivo por ID" value={buscaArqId} onChange={e => setBuscaArqId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-base outline-none focus:border-[#44c0c5]" />
+                        <button onClick={handleBuscarArquivoPorId} className="px-6 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-base rounded-2xl cursor-pointer transition">Buscar por ID</button>
+                        <button onClick={() => { setArqFiltrado(null); setMsgArquivo(null); }} className="px-5 py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-base rounded-2xl cursor-pointer transition">Limpar busca</button>
                     </div>
 
                     {arqFiltrado ? (
-                        <div className="border border-slate-200 rounded-2xl p-5 space-y-3 bg-slate-50/50">
-                            <span className="text-xs font-bold bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-lg">ID: {arqFiltrado.idArquivo}</span>
-                            <p className="text-sm"><strong>Nome:</strong> {arqFiltrado.nomeArquivo}</p>
-                            <p className="text-sm"><strong>Tipo:</strong> {arqFiltrado.tipo} | Tamanho: {arqFiltrado.tamanho}</p>
-                            <button onClick={() => handleExcluirArquivo(arqFiltrado.idArquivo)} className="px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold rounded-lg cursor-pointer">Excluir</button>
+                        <div className="border border-slate-200 rounded-2xl p-6 space-y-4 bg-slate-50/50">
+                            <span className="text-sm font-bold bg-indigo-50 text-indigo-600 px-3.5 py-1.5 rounded-xl">ID: {arqFiltrado.idArquivo}</span>
+                            <p className="text-base"><strong>Nome:</strong> {arqFiltrado.nomeArquivo}</p>
+                            <p className="text-base"><strong>Tipo:</strong> {arqFiltrado.tipo} | Tamanho: {arqFiltrado.tamanho}</p>
+                            <button onClick={() => handleExcluirArquivo(arqFiltrado.idArquivo)} className="px-4 py-2 bg-rose-50 text-rose-600 text-sm font-bold rounded-xl cursor-pointer transition">Excluir</button>
                         </div>
                     ) : (
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                             {arquivos.map(a => (
-                                <div key={a.idArquivo} className="border border-slate-200 rounded-2xl p-5 bg-white shadow-xs flex justify-between items-center">
+                                <div key={a.idArquivo} className="border border-slate-200 rounded-2xl p-6 bg-white shadow-xs flex justify-between items-center">
                                     {editandoArqId === a.idArquivo ? (
-                                        <div className="flex-1 space-y-2 mr-4">
-                                            <input type="text" value={editArqNome} onChange={e => setEditArqNome(e.target.value)} placeholder="Novo Nome" className="w-full border p-2 rounded-xl text-sm" />
-                                            <input type="text" value={editArqTipo} onChange={e => setEditArqTipo(e.target.value)} placeholder="Novo Tipo" className="w-full border p-2 rounded-xl text-sm" />
-                                            <input type="text" value={editArqTamanho} onChange={e => setEditArqTamanho(e.target.value)} placeholder="Novo Tamanho" className="w-full border p-2 rounded-xl text-sm" />
-                                            <input type="text" value={editArqUrl} onChange={e => setEditArqUrl(e.target.value)} placeholder="Nova URL" className="w-full border p-2 rounded-xl text-sm" />
-                                            <div className="flex gap-2">
-                                                <button onClick={() => handleAtualizarArquivo(a.idArquivo!)} className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-lg">Salvar</button>
-                                                <button onClick={() => setEditandoArqId(null)} className="px-3 py-1 bg-slate-300 text-slate-700 text-xs font-bold rounded-lg">Cancelar</button>
+                                        <div className="flex-1 space-y-3 mr-4">
+                                            <input type="text" value={editArqNome} onChange={e => setEditArqNome(e.target.value)} placeholder="Novo Nome" className="w-full border p-3 rounded-xl text-base" />
+                                            <input type="text" value={editArqTipo} onChange={e => setEditArqTipo(e.target.value)} placeholder="Novo Tipo" className="w-full border p-3 rounded-xl text-base" />
+                                            <input type="text" value={editArqTamanho} onChange={e => setEditArqTamanho(e.target.value)} placeholder="Novo Tamanho" className="w-full border p-3 rounded-xl text-base" />
+                                            <input type="text" value={editArqUrl} onChange={e => setEditArqUrl(e.target.value)} placeholder="Nova URL" className="w-full border p-3 rounded-xl text-base" />
+                                            <div className="flex gap-3">
+                                                <button onClick={() => handleAtualizarArquivo(a.idArquivo!)} className="px-4 py-2 bg-emerald-500 text-white text-sm font-bold rounded-xl">Salvar</button>
+                                                <button onClick={() => setEditandoArqId(null)} className="px-4 py-2 bg-slate-300 text-slate-700 text-sm font-bold rounded-xl">Cancelar</button>
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
-                                            <span className="text-xs font-bold bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-md">ID: {a.idArquivo}</span>
-                                            <h4 className="font-bold text-base text-slate-900 mt-2">{a.nomeArquivo}</h4>
-                                            <p className="text-xs text-slate-500 mt-1">Tipo: {a.tipo} | Tamanho: {a.tamanho}</p>
+                                            <span className="text-sm font-bold bg-indigo-50 text-indigo-600 px-3 py-1 rounded-lg">ID: {a.idArquivo}</span>
+                                            <h4 className="font-bold text-lg text-slate-900 mt-2">{a.nomeArquivo}</h4>
+                                            <p className="text-sm text-slate-500 mt-1">Tipo: {a.tipo} | Tamanho: {a.tamanho}</p>
                                         </div>
                                     )}
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-3">
                                         {editandoArqId !== a.idArquivo && (
-                                            <button onClick={() => { setEditandoArqId(a.idArquivo!); setEditArqNome(a.nomeArquivo || ''); setEditArqTipo(a.tipo || ''); }} className="px-3 py-1.5 bg-sky-50 text-sky-600 text-xs font-bold rounded-lg cursor-pointer">Editar</button>
+                                            <button onClick={() => { setEditandoArqId(a.idArquivo!); setEditArqNome(a.nomeArquivo || ''); setEditArqTipo(a.tipo || ''); }} className="px-4 py-2 bg-sky-50 text-sky-600 text-sm font-bold rounded-xl cursor-pointer transition">Editar</button>
                                         )}
-                                        <button onClick={() => handleExcluirArquivo(a.idArquivo)} className="px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold rounded-lg cursor-pointer">Excluir</button>
+                                        <button onClick={() => handleExcluirArquivo(a.idArquivo)} className="px-4 py-2 bg-rose-50 text-rose-600 text-sm font-bold rounded-xl cursor-pointer transition">Excluir</button>
                                     </div>
                                 </div>
                             ))}
@@ -754,71 +754,71 @@ export function Postagens() {
                 </section>
 
                 {/* Seção Avaliações */}
-                <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
-                    <div className="flex justify-between items-center border-b pb-4">
+                <section className="bg-white p-10 rounded-3xl shadow-sm border border-slate-200 space-y-8">
+                    <div className="flex justify-between items-center border-b pb-6">
                         <div>
-                            <h2 className="text-xl font-bold text-slate-900">Avaliações</h2>
-                            <p className="text-xs text-slate-500">Gerencie os dados de avaliações e critérios.</p>
+                            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Avaliações</h2>
+                            <p className="text-sm text-slate-500 mt-1">Gerencie os dados de avaliações e critérios.</p>
                         </div>
-                        <button onClick={carregarDados} className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer">
+                        <button onClick={carregarDados} className="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-2xl transition cursor-pointer">
                             Atualizar lista
                         </button>
                     </div>
 
                     <AlertMessage message={msgAvaliacao} />
 
-                    <div className="space-y-4 bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
-                        <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">Cadastrar registro</h3>
-                        <form onSubmit={handleCriarAvaliacao} className="space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-600">Postagem Id</label>
-                                    <input type="number" value={avalPostId} onChange={e => setAvalPostId(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm outline-none focus:border-[#44c0c5]" />
+                    <div className="space-y-4 bg-slate-50/50 p-8 rounded-2xl border border-slate-100">
+                        <h3 className="text-base font-extrabold text-slate-900 uppercase tracking-wider">Cadastrar registro</h3>
+                        <form onSubmit={handleCriarAvaliacao} className="space-y-5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-slate-600">Postagem Id</label>
+                                    <input type="number" value={avalPostId} onChange={e => setAvalPostId(e.target.value)} required className="w-full bg-white border border-slate-200 rounded-2xl p-4 text-base outline-none focus:border-[#44c0c5]" />
                                 </div>
                             </div>
-                            <button type="submit" className="px-6 py-2.5 bg-[#44c0c5] hover:bg-[#3aaab0] text-white font-bold text-sm rounded-xl shadow-md cursor-pointer">
+                            <button type="submit" className="px-7 py-3.5 bg-[#44c0c5] hover:bg-[#3aaab0] text-white font-bold text-base rounded-2xl shadow-md cursor-pointer transition">
                                 Cadastrar Avaliação
                             </button>
                         </form>
                     </div>
 
-                    <div className="flex gap-2">
-                        <input type="number" placeholder="Buscar avaliação por ID" value={buscaAvalId} onChange={e => setBuscaAvalId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#44c0c5]" />
-                        <button onClick={handleBuscarAvaliacaoPorId} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl cursor-pointer">Buscar por ID</button>
-                        <button onClick={() => { setAvalFiltrada(null); setMsgAvaliacao(null); }} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
+                    <div className="flex gap-3">
+                        <input type="number" placeholder="Buscar avaliação por ID" value={buscaAvalId} onChange={e => setBuscaAvalId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-base outline-none focus:border-[#44c0c5]" />
+                        <button onClick={handleBuscarAvaliacaoPorId} className="px-6 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-base rounded-2xl cursor-pointer transition">Buscar por ID</button>
+                        <button onClick={() => { setAvalFiltrada(null); setMsgAvaliacao(null); }} className="px-5 py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-base rounded-2xl cursor-pointer transition">Limpar busca</button>
                     </div>
 
                     {avalFiltrada ? (
-                        <div className="border border-slate-200 rounded-2xl p-5 space-y-3 bg-slate-50/50">
-                            <span className="text-xs font-bold bg-amber-50 text-amber-600 px-2.5 py-1 rounded-lg">ID: {avalFiltrada.idAvaliacao}</span>
-                            <p className="text-sm"><strong>Critério:</strong> {avalFiltrada.criterio}</p>
-                            <p className="text-xs text-slate-500">Impacto: {avalFiltrada.notaImpacto} | Frequência: {avalFiltrada.notaFrequencia} | Dificuldade: {avalFiltrada.notaDificuldade} | Confiabilidade: {avalFiltrada.notaConfiabilidade}</p>
-                            <button onClick={() => handleExcluirAvaliacao(avalFiltrada.idAvaliacao)} className="px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold rounded-lg cursor-pointer">Excluir</button>
+                        <div className="border border-slate-200 rounded-2xl p-6 space-y-4 bg-slate-50/50">
+                            <span className="text-sm font-bold bg-amber-50 text-amber-600 px-3.5 py-1.5 rounded-xl">ID: {avalFiltrada.idAvaliacao}</span>
+                            <p className="text-base"><strong>Critério:</strong> {avalFiltrada.criterio}</p>
+                            <p className="text-sm text-slate-500">Impacto: {avalFiltrada.notaImpacto} | Frequência: {avalFiltrada.notaFrequencia} | Dificuldade: {avalFiltrada.notaDificuldade} | Confiabilidade: {avalFiltrada.notaConfiabilidade}</p>
+                            <button onClick={() => handleExcluirAvaliacao(avalFiltrada.idAvaliacao)} className="px-4 py-2 bg-rose-50 text-rose-600 text-sm font-bold rounded-xl cursor-pointer transition">Excluir</button>
                         </div>
                     ) : (
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                             {avaliacoes.map(av => (
-                                <div key={av.idAvaliacao} className="border border-slate-200 rounded-2xl p-5 bg-white shadow-xs flex justify-between items-center">
+                                <div key={av.idAvaliacao} className="border border-slate-200 rounded-2xl p-6 bg-white shadow-xs flex justify-between items-center">
                                     {editandoAvalId === av.idAvaliacao ? (
-                                        <div className="flex-1 space-y-2 mr-4">
-                                            <input type="text" value={editAvalCriterio} onChange={e => setEditAvalCriterio(e.target.value)} placeholder="Novo Critério" className="w-full border p-2 rounded-xl text-sm" />
-                                            <div className="flex gap-2">
-                                                <button onClick={() => handleAtualizarAvaliacao(av.idAvaliacao!)} className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-lg">Salvar</button>
-                                                <button onClick={() => setEditandoAvalId(null)} className="px-3 py-1 bg-slate-300 text-slate-700 text-xs font-bold rounded-lg">Cancelar</button>
+                                        <div className="flex-1 space-y-3 mr-4">
+                                            <input type="text" value={editAvalCriterio} onChange={e => setEditAvalCriterio(e.target.value)} placeholder="Novo Critério" className="w-full border p-3 rounded-xl text-base" />
+                                            <div className="flex gap-3">
+                                                <button onClick={() => handleAtualizarAvaliacao(av.idAvaliacao!)} className="px-4 py-2 bg-emerald-500 text-white text-sm font-bold rounded-xl">Salvar</button>
+                                                <button onClick={() => setEditandoAvalId(null)} className="px-4 py-2 bg-slate-300 text-slate-700 text-sm font-bold rounded-xl">Cancelar</button>
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
-                                            <span className="text-xs font-bold bg-amber-50 text-amber-600 px-2 py-0.5 rounded-md">ID: {av.idAvaliacao}</span>
-                                            <p className="text-sm mt-2"><strong>Critério:</strong> {av.criterio}</p>
-                                            <p className="text-xs text-slate-500 mt-0.5">Impacto: {av.notaImpacto} | Frequência: {av.notaFrequencia} | Dificuldade: {av.notaDificuldade}</p>
+                                            <span className="text-sm font-bold bg-amber-50 text-amber-600 px-3 py-1 rounded-lg">ID: {av.idAvaliacao}</span>
+                                            <p className="text-base mt-2"><strong>Critério:</strong> {av.criterio}</p>
+                                            <p className="text-sm text-slate-500 mt-1">Impacto: {av.notaImpacto} | Frequência: {av.notaFrequencia} | Dificuldade: {av.notaDificuldade}</p>
                                         </div>
                                     )}
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-3">
                                         {editandoAvalId !== av.idAvaliacao && (
-                                            <button onClick={() => { setEditandoAvalId(av.idAvaliacao!); setEditAvalCriterio(av.criterio || ''); }} className="px-3 py-1.5 bg-sky-50 text-sky-600 text-xs font-bold rounded-lg cursor-pointer">Editar</button>
+                                            <button onClick={() => { setEditandoAvalId(av.idAvaliacao!); setEditAvalCriterio(av.criterio || ''); }} className="px-4 py-2 bg-sky-50 text-sky-600 text-sm font-bold rounded-xl cursor-pointer transition">Editar</button>
                                         )}
-                                        <button onClick={() => handleExcluirAvaliacao(av.idAvaliacao)} className="px-3 py-1.5 bg-rose-50 text-rose-600 text-xs font-bold rounded-lg cursor-pointer">Excluir</button>
+                                        <button onClick={() => handleExcluirAvaliacao(av.idAvaliacao)} className="px-4 py-2 bg-rose-50 text-rose-600 text-sm font-bold rounded-xl cursor-pointer transition">Excluir</button>
                                     </div>
                                 </div>
                             ))}
@@ -827,36 +827,36 @@ export function Postagens() {
                 </section>
 
                 {/* Seção Pontuações */}
-                <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
-                    <div className="flex justify-between items-center border-b pb-4">
+                <section className="bg-white p-10 rounded-3xl shadow-sm border border-slate-200 space-y-8">
+                    <div className="flex justify-between items-center border-b pb-6">
                         <div>
-                            <h2 className="text-xl font-bold text-slate-900">Pontuações</h2>
-                            <p className="text-xs text-slate-500">Média gerada automaticamente a partir das avaliações.</p>
+                            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Pontuações</h2>
+                            <p className="text-sm text-slate-500 mt-1">Média gerada automaticamente a partir das avaliações.</p>
                         </div>
-                        <button onClick={carregarDados} className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer">
+                        <button onClick={carregarDados} className="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-2xl transition cursor-pointer">
                             Atualizar lista
                         </button>
                     </div>
 
                     <AlertMessage message={msgPontuacao} />
 
-                    <div className="flex gap-2">
-                        <input type="number" placeholder="Consultar pontuação por ID (/postup/avaliacao/{id})" value={buscaPontId} onChange={e => setBuscaPontId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#44c0c5]" />
-                        <button onClick={handleBuscarPontuacaoPorId} className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl cursor-pointer">Consultar por ID</button>
-                        <button onClick={() => { setPontFiltrada(null); setMsgPontuacao(null); }} className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl cursor-pointer">Limpar busca</button>
+                    <div className="flex gap-3">
+                        <input type="number" placeholder="Consultar pontuação por ID (/postup/avaliacao/{id})" value={buscaPontId} onChange={e => setBuscaPontId(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-base outline-none focus:border-[#44c0c5]" />
+                        <button onClick={handleBuscarPontuacaoPorId} className="px-6 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-base rounded-2xl cursor-pointer transition">Consultar por ID</button>
+                        <button onClick={() => { setPontFiltrada(null); setMsgPontuacao(null); }} className="px-5 py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-base rounded-2xl cursor-pointer transition">Limpar busca</button>
                     </div>
 
                     {pontFiltrada ? (
-                        <div className="border border-slate-200 rounded-2xl p-5 space-y-3 bg-slate-50/50">
-                            <span className="text-xs font-bold bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-lg">ID: {pontFiltrada.idPontuacao || pontFiltrada.id}</span>
-                            <p className="text-sm"><strong>Dados da Pontuação:</strong> {JSON.stringify(pontFiltrada)}</p>
+                        <div className="border border-slate-200 rounded-2xl p-6 space-y-4 bg-slate-50/50">
+                            <span className="text-sm font-bold bg-emerald-50 text-emerald-600 px-3.5 py-1.5 rounded-xl">ID: {pontFiltrada.idPontuacao || pontFiltrada.id}</span>
+                            <p className="text-base"><strong>Dados da Pontuação:</strong> {JSON.stringify(pontFiltrada)}</p>
                         </div>
                     ) : (
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                             {pontuacoes.map(pt => (
-                                <div key={pt.idPontuacao || Math.random()} className="border border-slate-200 rounded-2xl p-5 bg-white shadow-xs">
-                                    <span className="text-xs font-bold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-md">ID: {pt.idPontuacao || 'N/A'}</span>
-                                    <p className="text-sm mt-2"><strong>Valor da Pontuação:</strong> {pt.valor}</p>
+                                <div key={pt.idPontuacao || Math.random()} className="border border-slate-200 rounded-2xl p-6 bg-white shadow-xs">
+                                    <span className="text-sm font-bold bg-emerald-50 text-emerald-600 px-3 py-1 rounded-lg">ID: {pt.idPontuacao || 'N/A'}</span>
+                                    <p className="text-base mt-2"><strong>Valor da Pontuação:</strong> {pt.valor}</p>
                                 </div>
                             ))}
                         </div>
