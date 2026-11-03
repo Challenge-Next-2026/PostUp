@@ -53,6 +53,9 @@ export default function Header() {
                 <li className="text-[var(--text-title)] text-[1.6rem] sm:text-[2.2rem] hover:opacity-80 transition-opacity">
                     <Link to="/contato">Contato</Link>
                 </li>
+                <li className="text-[var(--text-title)] text-[1.6rem] sm:text-[2.2rem] hover:opacity-80 transition-opacity">
+                    <Link to="/login">Login</Link>
+                </li>
 
                 </ul>
             </nav>
