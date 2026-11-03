@@ -46,13 +46,6 @@ interface Pontuacao {
 
 type MessageState = { type: 'success' | 'error'; text: string } | null;
 
-// Função auxiliar para buscar o valor de um cookie pelo nome
-const getCookie = (name: string): string | undefined => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift();
-};
-
 export function Postagens() {
     const navigate = useNavigate();
 
@@ -173,11 +166,6 @@ export function Postagens() {
     };
 
     useEffect(() => {
-        const token = getCookie('authToken') || getCookie('token') || getCookie('access_token');
-        if (!token) {
-            navigate('/login');
-            return;
-        }
         carregarDados();
     }, [navigate]);
 
