@@ -1,9 +1,4 @@
-"""PostUp - Sprint 4. Evolução do projeto original de listas para Oracle.
 
-CRUD de usuários e postagens, avaliação, pontuação, APIs e JSON.
-O banco compartilhado usa senhas em texto simples (modelo acadêmico legado).
-Nunca envie o arquivo .env com suas credenciais.
-"""
 import json
 from datetime import datetime
 from getpass import getpass
