@@ -8,7 +8,8 @@
 > 6. Representação do Projeto
 > 7. Pitch de Apresentação
 > 8. Link do Repositório
-> 9. Contato
+> 9. Link do deploy no Vercel
+> 10. Contato
 > ---
 > ### 1. Título e Descrição
 > - Somos a **PostUp** e em união com a empresa parceira **SoulUp** temos a tarefa de solucionar o **Desafio 01** proposto pela empresa. 
@@ -16,9 +17,6 @@
 > - Para saber mais sobre as características exclusivas da PostUp como detalhes da solução e diferenciáis, acesse a pasta **document** deste repositório.
 > ---
 > ### 2. Tecnologias
-> #### - **IA e ChatBot**
-> <img src="https://www.ibm.com/content/dam/connectedassets-adobe-cms/worldwide-content/creative-assets/s-migr/ul/g/35/c1/IBM-cloud.component.content-item-nocrop-xl.ts=1756408632197.png/content/adobe-cms/br/pt/consulting/cloud/jcr:content/root/table_of_contents/logo/contentItem-4/image" width="200px" height="140px" padding="0"></img>
-> <img src="https://www.ibm.com/adobe/dynamicmedia/deliver/dm-aid--81111370-f893-4469-b3e7-49c3c03559de/huggingface-logo-venture.png?preferwebp=true&width=320" width="160px" height="130px" padding="0"></img>
 > #### - **Back-End**
 > <img src="https://assets.dio.me/NWp0ked1gAcRd2n_uPBhJUJVmS5mkR31t0YiPMYMdpA/f:webp/q:80/L2FydGljbGVzL2NvdmVyLzdiODlmZGEyLTRhZjMtNGFlMC05OGJjLWFkMmI2NTg1NDkwOS5wbmc" width="150px"></img>
 > <img src="https://hotmart.s3.amazonaws.com/product_pictures/8b711a2d-4c30-4c1f-9b61-5d6a950b5bfe/PythonSymbol.png" width="150px"></img>
@@ -150,12 +148,14 @@
 > <img src="./front-end/img/Fluxo-ScoreDinâmico.png" width="1000"></img>
 > ---
 > ### 7. Link do Vídeo Pitch
-> - <https://youtu.be/hId_HgK9PV0>
+> - <https://youtu.be/yUK8hoBHkbI>
 > ---
 > ### 8. Link do Repositório
 > - <https://github.com/Challenge-Next-2026/PostUp>
 > ---
-> ### 9. Contato
+> ### 9. Link do deploy no Vercel
+> - <https://post-up-six.vercel.app>
+> ### 10. Contato
 > - <challengeCFGR.2026@gmail.com>
 > - +55 (11) 94306-3646
 > - +55 (11) 96993-7538
