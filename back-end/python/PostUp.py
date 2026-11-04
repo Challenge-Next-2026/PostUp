@@ -28,7 +28,7 @@ def confirmar():
 
 
 def id_novo(cursor, tabela, coluna):
-    # Identificadores fixos e internos: nunca recebem texto do usuário.
+    
     permitidos = {
         ('USUARIO', 'ID_USUARIO'), ('POSTAGEM', 'ID_POSTAGEM'),
         ('AVALIACAO', 'ID_AVALIACAO'), ('PONTUACAO', 'ID_PONTUACAO')
@@ -308,7 +308,7 @@ def criar_postagem(usuario):
         return
     cursor = banco.cursor()
     try:
-        # Tudo na mesma transação: falha em qualquer etapa => rollback completo.
+        
         av_id, po_id, avaliacao, pontos = criar_avaliacao_e_pontuacao(cursor, titulo)
         post_id = id_novo(cursor, 'POSTAGEM', 'ID_POSTAGEM')
         cursor.execute('''
@@ -377,7 +377,7 @@ def editar_postagem(usuario):
             print('Postagem não encontrada para este usuário.')
             banco.rollback()
             return
-        # Recalcula pontuação quando o título é alterado; inclui legado sem avaliação.
+        
         avaliacao = avaliar_postagem(titulo)
         pontos = calcular_pontuacao(avaliacao)
         av_id, po_id = atual[2], atual[3]
@@ -443,7 +443,7 @@ def excluir_postagem(usuario):
         cursor.execute('DELETE FROM POSTAGEM_USUARIO WHERE ID_POSTAGEM = :id',
                        {'id': post_id})
         cursor.execute('DELETE FROM POSTAGEM WHERE ID_POSTAGEM = :id', {'id': post_id})
-        # Só remove registros auxiliares quando nenhuma outra postagem os utiliza.
+       
         if atual[2] is not None:
             cursor.execute('''DELETE FROM AVALIACAO WHERE ID_AVALIACAO = :id
                               AND NOT EXISTS (SELECT 1 FROM POSTAGEM
@@ -558,7 +558,7 @@ def menu_usuario(usuario):
         print('11 - Excluir minha postagem')
         print('0 - Logout')
         opcao = input('Opção: ').strip()
-        # Mantemos if/elif como no projeto original.
+        
         if opcao == '1':
             criar_postagem(usuario)
         elif opcao == '2':
