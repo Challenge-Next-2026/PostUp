@@ -9,7 +9,8 @@
 > 7. Pitch de Apresentação
 > 8. Link do Repositório
 > 9. Link do deploy no Vercel
-> 10. Contato
+> 10. Link da API Java
+> 11. Contato
 > ---
 > ### 1. Título e Descrição
 > - Somos a **PostUp** e em união com a empresa parceira **SoulUp** temos a tarefa de solucionar o **Desafio 01** proposto pela empresa. 
@@ -155,7 +156,9 @@
 > ---
 > ### 9. Link do deploy no Vercel
 > - <https://post-up-six.vercel.app>
-> ### 10. Contato
+> ### 10. Link da API Java
+> - <https://postup-api.onrender.com>
+> ### 11. Contato
 > - <challengeCFGR.2026@gmail.com>
 > - +55 (11) 94306-3646
 > - +55 (11) 96993-7538
